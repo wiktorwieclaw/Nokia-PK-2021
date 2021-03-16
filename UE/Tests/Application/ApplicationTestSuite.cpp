@@ -54,13 +54,6 @@ TEST_F(ApplicationNotConnectedTestSuite, shallSendAttachRequestOnSib)
     // everything in constructor
 }
 
-TEST_F(ApplicationConnectingTestSuite, shallShowConnectedOnAttachAccept)
-{
-    EXPECT_CALL(userPortMock, showConnected());
-    EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleAttachAccept();
-}
-
 TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachReject)
 {
     EXPECT_CALL(userPortMock, showNotConnected());
@@ -73,5 +66,30 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleTimeout();
 }
+
+struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
+{
+    ApplicationConnectedTestSuite();
+};
+
+ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
+{
+    EXPECT_CALL(userPortMock, showConnected());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleAttachAccept();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallShowConnectedOnAttachAccept)
+{
+    // see test-suite constructor
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconnectFromBts)
+{
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleDisconnected();
+}
+
+
 
 }

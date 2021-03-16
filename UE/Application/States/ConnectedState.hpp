@@ -9,6 +9,10 @@ class ConnectedState : public BaseState
 {
 public:
     ConnectedState(Context& context);
+
+    // IBtsEventsHandler interface
+public:
+    void handleDisconnected() final;
 };
 
 }
