@@ -39,9 +39,15 @@ struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
 struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
 {
     ApplicationConnectingTestSuite();
+    void doConnecting();
 };
 
 ApplicationConnectingTestSuite::ApplicationConnectingTestSuite()
+{
+    doConnecting();
+}
+
+void ApplicationConnectingTestSuite::doConnecting()
 {
     EXPECT_CALL(userPortMock, showConnecting());
     EXPECT_CALL(btsPortMock, sendAttachRequest(BTS_ID));
@@ -70,9 +76,15 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
     ApplicationConnectedTestSuite();
+    void doConnected();
 };
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
+{
+    doConnected();
+}
+
+void ApplicationConnectedTestSuite::doConnected()
 {
     EXPECT_CALL(userPortMock, showConnected());
     EXPECT_CALL(timerPortMock, stopTimer());
@@ -88,6 +100,15 @@ TEST_F(ApplicationConnectedTestSuite, shallShowNotConnectedOnDisconnectFromBts)
 {
     EXPECT_CALL(userPortMock, showNotConnected());
     objectUnderTest.handleDisconnected();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallReattach)
+{
+    EXPECT_CALL(userPortMock, showNotConnected());
+    objectUnderTest.handleDisconnected();
+
+    doConnecting();
+    doConnected();
 }
 
 
