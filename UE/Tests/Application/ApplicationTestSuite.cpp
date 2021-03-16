@@ -36,11 +36,32 @@ protected:
 struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
 {};
 
-TEST_F(ApplicationNotConnectedTestSuite, shallSendAttachRequestOnSib)
+struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
 {
+    ApplicationConnectingTestSuite();
+};
+
+ApplicationConnectingTestSuite::ApplicationConnectingTestSuite()
+{
+    EXPECT_CALL(userPortMock, showConnecting());
     EXPECT_CALL(btsPortMock, sendAttachRequest(BTS_ID));
     EXPECT_CALL(timerPortMock, startTimer(500ms));
     objectUnderTest.handleSib(BTS_ID);
 }
+
+TEST_F(ApplicationNotConnectedTestSuite, shallSendAttachRequestOnSib)
+{
+    // everything in constructor
+}
+
+TEST_F(ApplicationConnectingTestSuite, shallShowConnectedOnAttachAccept)
+{
+    EXPECT_CALL(userPortMock, showConnected());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleAttachAccept();
+}
+
+
+
 
 }
