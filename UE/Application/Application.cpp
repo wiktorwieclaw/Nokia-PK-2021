@@ -46,4 +46,9 @@ void Application::handleAttachReject()
     context.state->handleAttachReject();
 }
 
+void Application::handleSms(const Sms& sms)
+{
+    context.state->handleSms(sms);
 }
+
+} // namespace ue

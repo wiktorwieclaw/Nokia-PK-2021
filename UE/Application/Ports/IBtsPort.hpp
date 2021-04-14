@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Messages/BtsId.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -14,6 +15,7 @@ public:
     virtual void handleSib(common::BtsId) = 0;
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
+    virtual void handleSms(const Sms& sms) = 0;
 };
 
 class IBtsPort

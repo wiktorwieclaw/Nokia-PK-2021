@@ -29,8 +29,9 @@ public:
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
+    void handleSms(const Sms &sms) override;
 
-private:
+  private:
     Context context;
     common::PrefixedLogger logger;
 

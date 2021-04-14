@@ -18,8 +18,9 @@ public:
     void showNotConnected() override;
     void showConnecting() override;
     void showConnected() override;
+    void showNewSmsNotification() override;
 
-private:
+  private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
