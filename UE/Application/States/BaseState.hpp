@@ -3,6 +3,7 @@
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "Context.hpp"
+#include "SmsDb.hpp"
 
 namespace ue
 {
@@ -21,6 +22,7 @@ public:
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
+    void handleSms(const Sms& sms) override;
 
 protected:
     Context& context;

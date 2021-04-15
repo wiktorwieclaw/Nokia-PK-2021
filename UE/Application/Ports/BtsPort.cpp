@@ -56,6 +56,11 @@ void BtsPort::handleMessage(BinaryMessage msg)
                 handler->handleAttachReject();
             break;
         }
+        case common::MessageId::Sms:
+        {
+            const auto sms = Sms{from, reader.readRemainingText()};
+            handler->handleSms(sms);
+        }
         default:
             logger.logError("unknow message: ", msgId, ", from: ", from);
 

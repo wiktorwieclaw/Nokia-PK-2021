@@ -8,6 +8,7 @@
 #include "Mocks/ITimerPortMock.hpp"
 #include "Messages/PhoneNumber.hpp"
 #include "Messages/BtsId.hpp"
+#include "Mocks/ISmsDbMock.hpp"
 #include <memory>
 
 namespace ue
@@ -24,13 +25,15 @@ protected:
     StrictMock<IBtsPortMock> btsPortMock;
     StrictMock<IUserPortMock> userPortMock;
     StrictMock<ITimerPortMock> timerPortMock;
+    StrictMock<ISmsDbMock> smsDbMock;
 
     Expectation expectShowNotConnected = EXPECT_CALL(userPortMock, showNotConnected());
     Application objectUnderTest{PHONE_NUMBER,
                                 loggerMock,
                                 btsPortMock,
                                 userPortMock,
-                                timerPortMock};
+                                timerPortMock,
+                                smsDbMock};
 };
 
 struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
@@ -111,6 +114,13 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
     doConnected();
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
+{
+    Sms sms{PHONE_NUMBER, "example sms message"};
 
-
+    EXPECT_CALL(userPortMock, showNewSmsNotification());
+    EXPECT_CALL(smsDbMock, addReceivedSms(sms));
+    objectUnderTest.handleSms(sms);
 }
+
+} // namespace ue

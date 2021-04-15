@@ -40,4 +40,9 @@ void BaseState::handleAttachReject()
     logger.logError("Uexpected: handleAttachReject");
 }
 
+void BaseState::handleSms(const Sms& sms)
+{
+    logger.logError("Uexpected: handleSms");
 }
+
+} // namespace ue

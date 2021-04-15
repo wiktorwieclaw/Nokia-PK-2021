@@ -15,4 +15,10 @@ void ConnectedState::handleDisconnected()
     context.setState<NotConnectedState>();
 }
 
+void ConnectedState::handleSms(const Sms& sms)
+{
+    context.user.showNewSmsNotification();
+    context.smsDb.addReceivedSms(sms);
 }
+
+} // namespace ue
