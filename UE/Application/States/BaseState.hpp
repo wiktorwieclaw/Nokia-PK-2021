@@ -3,7 +3,7 @@
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "Context.hpp"
-#include "Sms.hpp"
+#include "SmsDb.hpp"
 
 namespace ue
 {
