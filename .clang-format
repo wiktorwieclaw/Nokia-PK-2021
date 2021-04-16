@@ -1,0 +1,32 @@
+BasedOnStyle: Google
+ColumnLimit: 0
+IndentWidth: 4
+AccessModifierOffset: -4
+IndentCaseLabels: false
+BreakBeforeBraces: Custom
+DerivePointerAlignment: false
+PointerAlignment: Left
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: Always
+  AfterObjCDeclaration: true
+  AfterClass: true
+  AfterStruct: true
+  AfterExternBlock: true
+  AfterNamespace: true
+  AfterUnion: true
+  AfterEnum: true
+  AfterCaseLabel: true
+  BeforeLambdaBody: false
+  BeforeCatch: true
+  BeforeElse: true
+  IndentBraces: false
+  SplitEmptyNamespace: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+BinPackParameters: false
+BinPackArguments: false
+AllowAllArgumentsOnNextLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowAllConstructorInitializersOnNextLine: false
+
