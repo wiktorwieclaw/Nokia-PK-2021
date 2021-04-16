@@ -1,15 +1,16 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Application.hpp"
-#include "Mocks/ILoggerMock.hpp"
-#include "Mocks/IBtsPortMock.hpp"
-#include "Mocks/IUserPortMock.hpp"
-#include "Mocks/ITimerPortMock.hpp"
-#include "Messages/PhoneNumber.hpp"
-#include "Messages/BtsId.hpp"
-#include "Mocks/ISmsDbMock.hpp"
 #include <memory>
+
+#include "Application.hpp"
+#include "Messages/BtsId.hpp"
+#include "Messages/PhoneNumber.hpp"
+#include "Mocks/IBtsPortMock.hpp"
+#include "Mocks/ILoggerMock.hpp"
+#include "Mocks/ISmsDbMock.hpp"
+#include "Mocks/ITimerPortMock.hpp"
+#include "Mocks/IUserPortMock.hpp"
 
 namespace ue
 {
@@ -123,4 +124,4 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
     objectUnderTest.handleSms(sms);
 }
 
-} // namespace ue
+}  // namespace ue

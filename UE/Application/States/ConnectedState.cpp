@@ -1,10 +1,10 @@
 #include "ConnectedState.hpp"
+
 #include "NotConnectedState.hpp"
 
 namespace ue
 {
-
-ConnectedState::ConnectedState(Context &context)
+ConnectedState::ConnectedState(Context& context)
     : BaseState(context, "ConnectedState")
 {
     context.user.showConnected();
@@ -21,4 +21,4 @@ void ConnectedState::handleSms(const Sms& sms)
     context.smsDb.addReceivedSms(sms);
 }
 
-} // namespace ue
+}  // namespace ue

@@ -4,7 +4,6 @@
 
 namespace ue
 {
-
 class NotConnectedState : public BaseState
 {
 public:
@@ -15,4 +14,4 @@ public:
     void handleSib(common::BtsId) final;
 };
 
-}
+}  // namespace ue

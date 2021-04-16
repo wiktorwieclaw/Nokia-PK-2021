@@ -2,8 +2,7 @@
 
 namespace ue
 {
-
-BaseState::BaseState(Context &context, const std::string &name)
+BaseState::BaseState(Context& context, const std::string& name)
     : context(context),
       logger(context.logger, "[" + name + "]")
 {
@@ -45,4 +44,4 @@ void BaseState::handleSms(const Sms& sms)
     logger.logError("Uexpected: handleSms");
 }
 
-} // namespace ue
+}  // namespace ue

@@ -1,10 +1,10 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Ports/TimerPort.hpp"
+#include "Messages/PhoneNumber.hpp"
 #include "Mocks/ILoggerMock.hpp"
 #include "Mocks/ITimerPortMock.hpp"
-#include "Messages/PhoneNumber.hpp"
+#include "Ports/TimerPort.hpp"
 
 namespace ue
 {
@@ -16,7 +16,6 @@ protected:
     const common::PhoneNumber PHONE_NUMBER{112};
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<ITimerEventsHandlerMock> handlerMock;
-
 
     TimerPort objectUnderTest{loggerMock};
 
@@ -34,4 +33,4 @@ TEST_F(TimerPortTestSuite, shallStart)
 {
 }
 
-}
+}  // namespace ue

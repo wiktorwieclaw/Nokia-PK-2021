@@ -1,9 +1,7 @@
 #pragma once
 
-
 namespace ue
 {
-
 class IUserEventsHandler
 {
 public:
@@ -21,4 +19,4 @@ public:
     virtual void showNewSmsNotification() = 0;
 };
 
-}
+}  // namespace ue

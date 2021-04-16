@@ -1,13 +1,13 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Ports/BtsPort.hpp"
-#include "Mocks/ILoggerMock.hpp"
-#include "Mocks/IBtsPortMock.hpp"
-#include "Messages/PhoneNumber.hpp"
-#include "Mocks/ITransportMock.hpp"
-#include "Messages/OutgoingMessage.hpp"
 #include "Messages/IncomingMessage.hpp"
+#include "Messages/OutgoingMessage.hpp"
+#include "Messages/PhoneNumber.hpp"
+#include "Mocks/IBtsPortMock.hpp"
+#include "Mocks/ILoggerMock.hpp"
+#include "Mocks/ITransportMock.hpp"
+#include "Ports/BtsPort.hpp"
 
 namespace ue
 {
@@ -29,14 +29,13 @@ protected:
     BtsPortTestSuite()
     {
         EXPECT_CALL(transportMock, registerMessageCallback(_))
-                .WillOnce(SaveArg<0>(&messageCallback));
+            .WillOnce(SaveArg<0>(&messageCallback));
         EXPECT_CALL(transportMock, registerDisconnectedCallback(_))
-                .WillOnce(SaveArg<0>(&disconnectCallback));
+            .WillOnce(SaveArg<0>(&disconnectCallback));
         objectUnderTest.start(handlerMock);
     }
     ~BtsPortTestSuite()
     {
-
         EXPECT_CALL(transportMock, registerMessageCallback(IsNull()));
         EXPECT_CALL(transportMock, registerDisconnectedCallback(IsNull()));
         objectUnderTest.stop();
@@ -96,11 +95,11 @@ TEST_F(BtsPortTestSuite, shallSendAttachRequest)
     EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
     objectUnderTest.sendAttachRequest(BTS_ID);
     common::IncomingMessage reader(msg);
-    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::AttachRequest, reader.readMessageId()) );
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::AttachRequest, reader.readMessageId()));
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ(common::PhoneNumber{}, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ(BTS_ID, reader.readBtsId()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 
-}
+}  // namespace ue

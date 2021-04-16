@@ -4,7 +4,6 @@
 
 namespace ue
 {
-
 class ConnectedState : public BaseState
 {
 public:
@@ -16,4 +15,4 @@ public:
     void handleSms(const Sms& sms) final;
 };
 
-}
+}  // namespace ue

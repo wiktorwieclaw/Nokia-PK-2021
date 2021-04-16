@@ -5,7 +5,6 @@
 
 namespace ue
 {
-
 class IBtsEventsHandler
 {
 public:
@@ -26,4 +25,4 @@ public:
     virtual void sendAttachRequest(common::BtsId) = 0;
 };
 
-}
+}  // namespace ue

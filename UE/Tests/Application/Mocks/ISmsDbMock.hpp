@@ -6,7 +6,6 @@
 
 namespace ue
 {
-
 class ISmsDbMock : public ISmsDb
 {
 public:
@@ -16,4 +15,4 @@ public:
     MOCK_METHOD(void, addReceivedSms, (const Sms&), (final));
 };
 
-} // namespace ue
+}  // namespace ue

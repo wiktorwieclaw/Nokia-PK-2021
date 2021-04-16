@@ -1,13 +1,12 @@
 #pragma once
 
+#include "IUeGui.hpp"
 #include "IUserPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
-#include "IUeGui.hpp"
 #include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
-
 class UserPort : public IUserPort
 {
 public:
@@ -20,11 +19,11 @@ public:
     void showConnected() override;
     void showNewSmsNotification() override;
 
-  private:
+private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
 };
 
-}
+}  // namespace ue

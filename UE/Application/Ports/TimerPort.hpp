@@ -5,7 +5,6 @@
 
 namespace ue
 {
-
 class TimerPort : public ITimerPort
 {
 public:
@@ -23,4 +22,4 @@ private:
     ITimerEventsHandler* handler = nullptr;
 };
 
-}
+}  // namespace ue

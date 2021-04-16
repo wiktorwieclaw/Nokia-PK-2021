@@ -1,13 +1,12 @@
 #pragma once
 
+#include "Context.hpp"
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
-#include "Context.hpp"
 #include "SmsDb.hpp"
 
 namespace ue
 {
-
 class BaseState : public IEventsHandler
 {
 public:
@@ -29,4 +28,4 @@ protected:
     common::PrefixedLogger logger;
 };
 
-}
+}  // namespace ue

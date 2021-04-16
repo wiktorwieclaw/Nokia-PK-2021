@@ -1,11 +1,11 @@
 #include "ConnectingState.hpp"
+
 #include "ConnectedState.hpp"
 #include "NotConnectedState.hpp"
 
 namespace ue
 {
-
-ConnectingState::ConnectingState(Context &context, common::BtsId btsId)
+ConnectingState::ConnectingState(Context& context, common::BtsId btsId)
     : BaseState(context, "ConnectingState")
 {
     context.user.showConnecting();
@@ -31,6 +31,4 @@ void ConnectingState::handleAttachReject()
     context.setState<NotConnectedState>();
 }
 
-}
-
-
+}  // namespace ue

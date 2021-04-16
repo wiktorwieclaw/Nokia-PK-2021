@@ -1,8 +1,8 @@
 #include "Application.hpp"
 #include "ApplicationEnvironmentFactory.hpp"
 #include "Ports/BtsPort.hpp"
-#include "Ports/UserPort.hpp"
 #include "Ports/TimerPort.hpp"
+#include "Ports/UserPort.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -28,4 +28,3 @@ int main(int argc, char* argv[])
     user.stop();
     timer.stop();
 }
-
