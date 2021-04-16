@@ -1,11 +1,11 @@
 #pragma once
 
 #include <gmock/gmock.h>
+
 #include "Ports/IBtsPort.hpp"
 
 namespace ue
 {
-
 class IBtsEventsHandlerMock : public IBtsEventsHandler
 {
 public:
@@ -28,4 +28,4 @@ public:
     MOCK_METHOD(void, sendAttachRequest, (common::BtsId), (final));
 };
 
-}
+}  // namespace ue

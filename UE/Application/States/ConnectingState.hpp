@@ -4,7 +4,6 @@
 
 namespace ue
 {
-
 class ConnectingState : public BaseState
 {
 public:
@@ -20,4 +19,4 @@ public:
     void handleAttachReject() final;
 };
 
-}
+}  // namespace ue

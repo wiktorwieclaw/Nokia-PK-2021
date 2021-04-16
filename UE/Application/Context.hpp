@@ -1,12 +1,12 @@
 #pragma once
 
+#include <memory>
+
 #include "IEventsHandler.hpp"
 #include "Logger/ILogger.hpp"
-#include <memory>
 
 namespace ue
 {
-
 struct Context
 {
     common::ILogger& logger;
@@ -16,11 +16,11 @@ struct Context
     ISmsDb& smsDb;
     std::unique_ptr<IEventsHandler> state{};
 
-    template <typename State, typename ...Arg>
-    void setState(Arg&& ...arg)
+    template <typename State, typename... Arg>
+    void setState(Arg&&... arg)
     {
         state = std::make_unique<State>(*this, std::forward<Arg>(arg)...);
     }
 };
 
-}
+}  // namespace ue

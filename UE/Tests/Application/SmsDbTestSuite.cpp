@@ -1,13 +1,14 @@
 #include <gtest/gtest.h>
 
-#include "SmsDb.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "SmsDb.hpp"
 
-namespace ue {
-
+namespace ue
+{
 using namespace ::testing;
 
-class SmsDbTestSuite : public Test {
+class SmsDbTestSuite : public Test
+{
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
 
@@ -24,4 +25,4 @@ TEST_F(SmsDbTestSuite, shallAddReceivedSms)
     ASSERT_EQ(smsState, SmsState::NotViewed);
 }
 
-} // namespace ue
+}  // namespace ue

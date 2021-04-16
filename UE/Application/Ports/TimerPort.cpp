@@ -2,12 +2,11 @@
 
 namespace ue
 {
-
-TimerPort::TimerPort(common::ILogger &logger)
+TimerPort::TimerPort(common::ILogger& logger)
     : logger(logger, "[TIMER PORT]")
 {}
 
-void TimerPort::start(ITimerEventsHandler &handler)
+void TimerPort::start(ITimerEventsHandler& handler)
 {
     logger.logDebug("Started");
     this->handler = &handler;
@@ -15,7 +14,7 @@ void TimerPort::start(ITimerEventsHandler &handler)
 
 void TimerPort::stop()
 {
-    logger.logDebug("Stoped");
+    logger.logDebug("Stopped");
     handler = nullptr;
 }
 
@@ -29,4 +28,4 @@ void TimerPort::stopTimer()
     logger.logDebug("Stop timer");
 }
 
-}
+}  // namespace ue

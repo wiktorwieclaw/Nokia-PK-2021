@@ -1,16 +1,16 @@
 #include "UserPort.hpp"
+
 #include "UeGui/IListViewMode.hpp"
 
 namespace ue
 {
-
-UserPort::UserPort(common::ILogger &logger, IUeGui &gui, common::PhoneNumber phoneNumber)
+UserPort::UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber)
     : logger(logger, "[USER-PORT]"),
       gui(gui),
       phoneNumber(phoneNumber)
 {}
 
-void UserPort::start(IUserEventsHandler &handler)
+void UserPort::start(IUserEventsHandler& handler)
 {
     this->handler = &handler;
     gui.setTitle("Nokia " + to_string(phoneNumber));
@@ -44,4 +44,4 @@ void UserPort::showNewSmsNotification()
     gui.showNewSms();
 }
 
-} // namespace ue
+}  // namespace ue

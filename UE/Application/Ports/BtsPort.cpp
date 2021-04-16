@@ -1,20 +1,20 @@
 #include "BtsPort.hpp"
+
 #include "Messages/IncomingMessage.hpp"
 #include "Messages/OutgoingMessage.hpp"
 
 namespace ue
 {
-
-BtsPort::BtsPort(common::ILogger &logger, common::ITransport &transport, common::PhoneNumber phoneNumber)
+BtsPort::BtsPort(common::ILogger& logger, common::ITransport& transport, common::PhoneNumber phoneNumber)
     : logger(logger, "[BTS-PORT]"),
       transport(transport),
       phoneNumber(phoneNumber)
 {}
 
-void BtsPort::start(IBtsEventsHandler &handler)
+void BtsPort::start(IBtsEventsHandler& handler)
 {
-    transport.registerMessageCallback([this](BinaryMessage msg) {handleMessage(msg);});
-    transport.registerDisconnectedCallback([this]() {handleDisconnected();});
+    transport.registerMessageCallback([this](BinaryMessage msg) { handleMessage(msg); });
+    transport.registerDisconnectedCallback([this]() { handleDisconnected(); });
     this->handler = &handler;
 }
 
@@ -49,11 +49,15 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::AttachResponse:
         {
-            bool accept = reader.readNumber<std::uint8_t>() != 0u;
+            bool accept = reader.readNumber<std::uint8_t>() != 0U;
             if (accept)
+            {
                 handler->handleAttachAccept();
+            }
             else
+            {
                 handler->handleAttachReject();
+            }
             break;
         }
         case common::MessageId::Sms:
@@ -62,8 +66,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleSms(sms);
         }
         default:
-            logger.logError("unknow message: ", msgId, ", from: ", from);
-
+            logger.logError("unknown message: ", msgId, ", from: ", from);
         }
     }
     catch (std::exception const& ex)
@@ -71,7 +74,6 @@ void BtsPort::handleMessage(BinaryMessage msg)
         logger.logError("handleMessage error: ", ex.what());
     }
 }
-
 
 void BtsPort::sendAttachRequest(common::BtsId btsId)
 {
@@ -81,8 +83,6 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
                                 common::PhoneNumber{}};
     msg.writeBtsId(btsId);
     transport.sendMessage(msg.getMessage());
-
-
 }
 
-}
+}  // namespace ue

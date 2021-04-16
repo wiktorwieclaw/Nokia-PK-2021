@@ -1,13 +1,12 @@
 #pragma once
 
 #include "IBtsPort.hpp"
-#include "Logger/PrefixedLogger.hpp"
 #include "ITransport.hpp"
+#include "Logger/PrefixedLogger.hpp"
 #include "Messages/PhoneNumber.hpp"
 
 namespace ue
 {
-
 class BtsPort : public IBtsPort
 {
 public:
@@ -28,4 +27,4 @@ private:
     IBtsEventsHandler* handler = nullptr;
 };
 
-}
+}  // namespace ue

@@ -5,11 +5,10 @@
 
 namespace ue
 {
-
 class TimerPort : public ITimerPort
 {
 public:
-    TimerPort(common::ILogger& logger);
+    explicit TimerPort(common::ILogger& logger);
 
     void start(ITimerEventsHandler& handler);
     void stop();
@@ -23,4 +22,4 @@ private:
     ITimerEventsHandler* handler = nullptr;
 };
 
-}
+}  // namespace ue

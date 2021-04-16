@@ -1,17 +1,16 @@
 #pragma once
 
 #include <gmock/gmock.h>
+
 #include "Ports/IUserPort.hpp"
 
 namespace ue
 {
-
 class IUserEventsHandlerMock : public IUserEventsHandler
 {
 public:
     IUserEventsHandlerMock();
     ~IUserEventsHandlerMock() override;
-
 };
 
 class IUserPortMock : public IUserPort
@@ -26,4 +25,4 @@ public:
     MOCK_METHOD(void, showNewSmsNotification, (), (final));
 };
 
-}
+}  // namespace ue

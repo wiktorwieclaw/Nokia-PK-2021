@@ -4,7 +4,6 @@
 
 namespace ue
 {
-
 class ITimerEventsHandler
 {
 public:
@@ -24,4 +23,4 @@ public:
     virtual void stopTimer() = 0;
 };
 
-}
+}  // namespace ue

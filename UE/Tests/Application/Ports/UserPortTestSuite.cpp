@@ -1,11 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "Ports/UserPort.hpp"
-#include "Mocks/ILoggerMock.hpp"
-#include "Mocks/IUserPortMock.hpp"
 #include "Messages/PhoneNumber.hpp"
+#include "Mocks/ILoggerMock.hpp"
 #include "Mocks/IUeGuiMock.hpp"
+#include "Mocks/IUserPortMock.hpp"
+#include "Ports/UserPort.hpp"
 
 namespace ue
 {
@@ -27,7 +27,7 @@ protected:
         EXPECT_CALL(guiMock, setTitle(HasSubstr(to_string(PHONE_NUMBER))));
         objectUnderTest.start(handlerMock);
     }
-    ~UserPortTestSuite()
+    ~UserPortTestSuite() override
     {
         objectUnderTest.stop();
     }
@@ -57,4 +57,4 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     objectUnderTest.showConnected();
 }
 
-}
+}  // namespace ue

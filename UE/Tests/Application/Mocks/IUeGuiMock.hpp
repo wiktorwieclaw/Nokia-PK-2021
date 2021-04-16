@@ -1,16 +1,16 @@
 #pragma once
 
 #include <gmock/gmock.h>
+
 #include "IUeGui.hpp"
+#include "UeGui/ICallMode.hpp"
+#include "UeGui/IDialMode.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
-#include "UeGui/IDialMode.hpp"
-#include "UeGui/ICallMode.hpp"
 #include "UeGui/ITextMode.hpp"
 
 namespace ue
 {
-
 struct IUeGuiMock : public IUeGui
 {
     IUeGuiMock();
@@ -19,7 +19,7 @@ struct IUeGuiMock : public IUeGui
     MOCK_METHOD(void, setCloseGuard, (CloseGuard closeGuard), (final));
     MOCK_METHOD(void, setAcceptCallback, (Callback), (final));
     MOCK_METHOD(void, setRejectCallback, (Callback), (final));
-    MOCK_METHOD(void, setTitle, (const std::string &title), (final));
+    MOCK_METHOD(void, setTitle, (const std::string& title), (final));
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showNotConnected, (), (final));
@@ -41,7 +41,7 @@ public:
     ~IListViewModeMock() override;
 
     MOCK_METHOD(OptionalSelection, getCurrentItemIndex, (), (const, final));
-    MOCK_METHOD(void, addSelectionListItem, (const std::string &label, const std::string &tooltip), (final));
+    MOCK_METHOD(void, addSelectionListItem, (const std::string& label, const std::string& tooltip), (final));
     MOCK_METHOD(void, clearSelectionList, (), (final));
 };
 
@@ -51,7 +51,7 @@ public:
     ITextModeMock();
     ~ITextModeMock() override;
 
-    MOCK_METHOD(void, setText, (const std::string &text), (final));
+    MOCK_METHOD(void, setText, (const std::string& text), (final));
 };
 
 class ISmsComposeModeMock : public IUeGui::ISmsComposeMode
@@ -71,7 +71,7 @@ public:
     ICallModeMock();
     ~ICallModeMock() override;
 
-    MOCK_METHOD(void, appendIncomingText, (const std::string &text), (final));
+    MOCK_METHOD(void, appendIncomingText, (const std::string& text), (final));
     MOCK_METHOD(void, clearOutgoingText, (), (final));
     MOCK_METHOD(std::string, getOutgoingText, (), (const, final));
 };
@@ -85,4 +85,4 @@ public:
     MOCK_METHOD(PhoneNumber, getPhoneNumber, (), (const, final));
 };
 
-}
+}  // namespace ue

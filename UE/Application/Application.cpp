@@ -1,15 +1,15 @@
 #include "Application.hpp"
+
 #include "States/NotConnectedState.hpp"
 
 namespace ue
 {
-
 Application::Application(common::PhoneNumber phoneNumber,
-                         common::ILogger &iLogger,
-                         IBtsPort &bts,
-                         IUserPort &user,
-                         ITimerPort &timer,
-                         ISmsDb &smsDb)
+                         common::ILogger& iLogger,
+                         IBtsPort& bts,
+                         IUserPort& user,
+                         ITimerPort& timer,
+                         ISmsDb& smsDb)
     : context{iLogger, bts, user, timer, smsDb},
       logger(iLogger, "[APP] ")
 {
@@ -52,4 +52,4 @@ void Application::handleSms(const Sms& sms)
     context.state->handleSms(sms);
 }
 
-} // namespace ue
+}  // namespace ue

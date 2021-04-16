@@ -4,11 +4,10 @@
 
 namespace ue
 {
-
 class ConnectedState : public BaseState
 {
 public:
-    ConnectedState(Context& context);
+    explicit ConnectedState(Context& context);
 
     // IBtsEventsHandler interface
 public:
@@ -16,4 +15,4 @@ public:
     void handleSms(const Sms& sms) final;
 };
 
-}
+}  // namespace ue

@@ -1,15 +1,14 @@
 #pragma once
 
+#include "Context.hpp"
+#include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
 #include "Messages/PhoneNumber.hpp"
-#include "IEventsHandler.hpp"
-#include "Context.hpp"
 
 namespace ue
 {
-
-using common::PhoneNumber;
 using common::ILogger;
+using common::PhoneNumber;
 
 class Application : public IEventsHandler
 {
@@ -20,7 +19,7 @@ public:
                 IUserPort& user,
                 ITimerPort& timer,
                 ISmsDb& smsDB);
-    ~Application();
+    ~Application() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
@@ -30,12 +29,11 @@ public:
     void handleSib(common::BtsId btsId) override;
     void handleAttachAccept() override;
     void handleAttachReject() override;
-    void handleSms(const Sms &sms) override;
+    void handleSms(const Sms& sms) override;
 
-  private:
+private:
     Context context;
     common::PrefixedLogger logger;
-
 };
 
-} // namespace ue
+}  // namespace ue
