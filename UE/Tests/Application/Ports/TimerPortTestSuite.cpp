@@ -23,7 +23,7 @@ protected:
     {
         objectUnderTest.start(handlerMock);
     }
-    ~TimerPortTestSuite()
+    ~TimerPortTestSuite() override
     {
         objectUnderTest.stop();
     }

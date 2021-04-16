@@ -19,7 +19,7 @@ public:
                 IUserPort& user,
                 ITimerPort& timer,
                 ISmsDb& smsDB);
-    ~Application();
+    ~Application() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;

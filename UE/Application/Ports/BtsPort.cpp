@@ -49,11 +49,15 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::AttachResponse:
         {
-            bool accept = reader.readNumber<std::uint8_t>() != 0u;
+            bool accept = reader.readNumber<std::uint8_t>() != 0U;
             if (accept)
+            {
                 handler->handleAttachAccept();
+            }
             else
+            {
                 handler->handleAttachReject();
+            }
             break;
         }
         case common::MessageId::Sms:
@@ -62,7 +66,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleSms(sms);
         }
         default:
-            logger.logError("unknow message: ", msgId, ", from: ", from);
+            logger.logError("unknown message: ", msgId, ", from: ", from);
         }
     }
     catch (std::exception const& ex)

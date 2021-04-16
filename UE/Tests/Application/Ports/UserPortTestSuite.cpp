@@ -27,7 +27,7 @@ protected:
         EXPECT_CALL(guiMock, setTitle(HasSubstr(to_string(PHONE_NUMBER))));
         objectUnderTest.start(handlerMock);
     }
-    ~UserPortTestSuite()
+    ~UserPortTestSuite() override
     {
         objectUnderTest.stop();
     }

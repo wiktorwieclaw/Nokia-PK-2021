@@ -17,7 +17,7 @@ class BtsPortTestSuite : public Test
 {
 protected:
     const common::PhoneNumber PHONE_NUMBER{112};
-    const common::BtsId BTS_ID{13121981ll};
+    const common::BtsId BTS_ID{13121981LL};
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IBtsEventsHandlerMock> handlerMock;
     StrictMock<common::ITransportMock> transportMock;
@@ -34,7 +34,7 @@ protected:
             .WillOnce(SaveArg<0>(&disconnectCallback));
         objectUnderTest.start(handlerMock);
     }
-    ~BtsPortTestSuite()
+    ~BtsPortTestSuite() override
     {
         EXPECT_CALL(transportMock, registerMessageCallback(IsNull()));
         EXPECT_CALL(transportMock, registerDisconnectedCallback(IsNull()));

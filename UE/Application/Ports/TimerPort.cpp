@@ -14,7 +14,7 @@ void TimerPort::start(ITimerEventsHandler& handler)
 
 void TimerPort::stop()
 {
-    logger.logDebug("Stoped");
+    logger.logDebug("Stopped");
     handler = nullptr;
 }
 

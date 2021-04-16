@@ -7,7 +7,7 @@ namespace ue
 class NotConnectedState : public BaseState
 {
 public:
-    NotConnectedState(Context& context);
+    explicit NotConnectedState(Context& context);
 
     // IBtsEventsHandler interface
 public:
