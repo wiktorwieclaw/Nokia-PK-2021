@@ -2,6 +2,7 @@
 
 #include "Messages/IncomingMessage.hpp"
 #include "Messages/OutgoingMessage.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {

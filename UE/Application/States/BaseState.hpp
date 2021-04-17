@@ -3,10 +3,11 @@
 #include "Context.hpp"
 #include "IEventsHandler.hpp"
 #include "Logger/PrefixedLogger.hpp"
-#include "SmsDb.hpp"
 
 namespace ue
 {
+class Sms;
+
 class BaseState : public IEventsHandler
 {
 public:

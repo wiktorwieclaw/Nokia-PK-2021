@@ -20,7 +20,7 @@ add_subdirectory(Tests)
 
 set_qt_options()
 aux_source_directory(. SRC_LIST)
-add_executable(${PROJECT_NAME} ${SRC_LIST})
+add_executable(${PROJECT_NAME} ${SRC_LIST} Application/Sms.hpp)
 
 
 target_link_libraries(${PROJECT_NAME} Common)

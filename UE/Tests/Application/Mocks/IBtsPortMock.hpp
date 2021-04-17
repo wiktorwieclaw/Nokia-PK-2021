@@ -6,6 +6,8 @@
 
 namespace ue
 {
+class Sms;
+
 class IBtsEventsHandlerMock : public IBtsEventsHandler
 {
 public:

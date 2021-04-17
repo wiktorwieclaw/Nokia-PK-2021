@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "IEventsHandler.hpp"
+#include "ISmsDb.hpp"
 #include "Logger/ILogger.hpp"
 
 namespace ue

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "Messages/PhoneNumber.hpp"
+#include "Sms.hpp"
 #include "SmsDb.hpp"
 
 namespace ue
@@ -10,14 +11,14 @@ using namespace ::testing;
 class SmsDbTestSuite : public Test
 {
 protected:
-    const common::PhoneNumber PHONE_NUMBER{112};
+    static constexpr common::PhoneNumber phoneNumber{112};
 
     SmsDb objectUnderTest;
 };
 
 TEST_F(SmsDbTestSuite, shallAddReceivedSms)
 {
-    const Sms sms{PHONE_NUMBER, "example text"};
+    const Sms sms{phoneNumber, "example text"};
     objectUnderTest.addReceivedSms(sms);
 
     const auto& messages = objectUnderTest.getSmsMessages();

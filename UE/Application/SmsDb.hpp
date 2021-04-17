@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "ISmsDb.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {

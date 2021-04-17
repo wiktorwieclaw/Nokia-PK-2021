@@ -1,5 +1,7 @@
 #include "IBtsPortMock.hpp"
 
+#include "Sms.hpp"
+
 namespace ue
 {
 IBtsEventsHandlerMock::IBtsEventsHandlerMock() = default;

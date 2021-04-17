@@ -1,5 +1,7 @@
 #include "SmsDb.hpp"
 
+#include "Sms.hpp"
+
 namespace ue
 {
 void SmsDb::addReceivedSms(const Sms& sms)
