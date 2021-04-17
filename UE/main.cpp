@@ -3,6 +3,7 @@
 #include "Ports/BtsPort.hpp"
 #include "Ports/TimerPort.hpp"
 #include "Ports/UserPort.hpp"
+#include "SmsDb.hpp"
 
 int main(int argc, char* argv[])
 {

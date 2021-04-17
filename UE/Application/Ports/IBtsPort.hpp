@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Messages/BtsId.hpp"
-#include "SmsDb.hpp"
 
 namespace ue
 {
+class Sms;
+
 class IBtsEventsHandler
 {
 public:

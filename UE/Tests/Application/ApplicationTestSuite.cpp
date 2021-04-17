@@ -11,6 +11,7 @@
 #include "Mocks/ISmsDbMock.hpp"
 #include "Mocks/ITimerPortMock.hpp"
 #include "Mocks/IUserPortMock.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {

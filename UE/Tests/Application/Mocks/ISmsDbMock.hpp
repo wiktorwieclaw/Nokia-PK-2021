@@ -6,11 +6,13 @@
 
 namespace ue
 {
+class Sms;
+
 class ISmsDbMock : public ISmsDb
 {
 public:
-    ISmsDbMock() = default;
-    ~ISmsDbMock() override = default;
+    ISmsDbMock();
+    ~ISmsDbMock() override;
 
     MOCK_METHOD(void, addReceivedSms, (const Sms&), (final));
 };
