@@ -13,6 +13,8 @@ public:
 public:
     void handleDisconnected() final;
     void handleSms(const Sms& sms) final;
+    // IUserEventsHandler interface
+    void handleComposeSms() final;
 };
 
 }  // namespace ue

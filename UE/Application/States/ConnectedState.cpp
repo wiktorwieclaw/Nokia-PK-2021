@@ -21,4 +21,9 @@ void ConnectedState::handleSms(const Sms& sms)
     context.smsDb.addReceivedSms(sms);
 }
 
+void ConnectedState::handleComposeSms()
+{
+    context.user.showNewSmsToEdit();
+}
+
 }  // namespace ue

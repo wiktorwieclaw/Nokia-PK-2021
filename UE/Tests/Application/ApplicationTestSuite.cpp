@@ -125,4 +125,9 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
     objectUnderTest.handleSms(sms);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms){
+    EXPECT_CALL(userPortMock, showNewSmsToEdit());
+    objectUnderTest.handleComposeSms();
+}
+
 }  // namespace ue

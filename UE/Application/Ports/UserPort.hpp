@@ -18,6 +18,7 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSmsNotification() override;
+    void showNewSmsToEdit() override;
 
 private:
     common::PrefixedLogger logger;

@@ -24,6 +24,9 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
 
+    // IUserEventsHandler interface
+    void handleComposeSms() override;
+
 protected:
     Context& context;
     common::PrefixedLogger logger;
