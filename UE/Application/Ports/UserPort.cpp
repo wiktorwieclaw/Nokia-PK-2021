@@ -37,7 +37,6 @@ void UserPort::showConnected()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
-    menu.addSelectionListItem("Send SMS", "");
 }
 
 void UserPort::showNewSmsNotification()

@@ -9,17 +9,17 @@ namespace ue
 {
 struct Sms
 {
-    common::PhoneNumber from;
+    common::PhoneNumber number;
     std::string text;
 
     Sms(common::PhoneNumber from, std::string text)
-        : from{from},
+        : number{from},
           text{std::move(text)}
     {}
 
     [[nodiscard]] auto tie() const
     {
-        return std::tie(from, text);
+        return std::tie(number, text);
     }
 };
 

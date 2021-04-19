@@ -26,6 +26,7 @@ public:
 
     // IUserEventsHandler interface
     void handleComposeSms() override;
+    void handleSendSms() override;
 
 protected:
     Context& context;

@@ -15,6 +15,7 @@ public:
     ~ISmsDbMock() override;
 
     MOCK_METHOD(void, addReceivedSms, (const Sms&), (final));
+    MOCK_METHOD(void, addSms, (const common::PhoneNumber& senderPhoneNumber, const std::string& text), (final));
 };
 
 }  // namespace ue

@@ -13,6 +13,7 @@ public:
     ~IUserEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleComposeSms, (), (final));
+    MOCK_METHOD(void, handleSendSms, (), (final));
 };
 
 class IUserPortMock : public IUserPort

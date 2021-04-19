@@ -8,6 +8,7 @@ public:
     virtual ~IUserEventsHandler() = default;
 
     virtual void handleComposeSms() = 0;
+    virtual void handleSendSms() = 0;
 };
 
 class IUserPort

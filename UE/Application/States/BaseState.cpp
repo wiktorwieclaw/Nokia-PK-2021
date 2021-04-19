@@ -49,4 +49,9 @@ void BaseState::handleComposeSms()
     logger.logError("Unexpected: handleComposeSms");
 }
 
+void BaseState::handleSendSms()
+{
+    logger.logError("Unexpected: handleSendSms");
+}
+
 }  // namespace ue

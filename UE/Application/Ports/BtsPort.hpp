@@ -15,6 +15,7 @@ public:
     void stop();
 
     void sendAttachRequest(common::BtsId) override;
+    void sendSms(const common::PhoneNumber &receiverPhoneNumber,const std::string& text) override;
 
 private:
     void handleDisconnected();

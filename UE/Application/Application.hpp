@@ -33,6 +33,7 @@ public:
 
     //IUserEventsHandler interface
     void handleComposeSms() override;
+    void handleSendSms() override;
 
 private:
     Context context;
