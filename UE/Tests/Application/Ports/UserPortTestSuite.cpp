@@ -57,4 +57,6 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     objectUnderTest.showConnected();
 }
 
+//TODO write test shallViewSmsList
+
 }  // namespace ue

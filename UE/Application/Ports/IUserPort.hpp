@@ -6,6 +6,8 @@ class IUserEventsHandler
 {
 public:
     virtual ~IUserEventsHandler() = default;
+
+    virtual void handleShowSmsList() = 0;
 };
 
 class IUserPort
@@ -17,6 +19,7 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
     virtual void showNewSmsNotification() = 0;
+    virtual void viewSmsList() = 0;
 };
 
 }  // namespace ue

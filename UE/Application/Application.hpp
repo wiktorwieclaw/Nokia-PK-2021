@@ -21,6 +21,9 @@ public:
                 ISmsDb& smsDB);
     ~Application() override;
 
+    // IUserEventsHandler interface
+    void handleShowSmsList() override;
+
     // ITimerEventsHandler interface
     void handleTimeout() override;
 

@@ -14,6 +14,9 @@ public:
     BaseState(Context& context, const std::string& name);
     ~BaseState() override;
 
+    // IUserEventsHandler interface
+    void handleShowSmsList() override;
+
     // ITimerEventsHandler interface
     void handleTimeout() override;
 

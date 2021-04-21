@@ -52,4 +52,9 @@ void Application::handleSms(const Sms& sms)
     context.state->handleSms(sms);
 }
 
+void Application::handleShowSmsList()
+{
+    context.state->handleShowSmsList();
+}
+
 }  // namespace ue

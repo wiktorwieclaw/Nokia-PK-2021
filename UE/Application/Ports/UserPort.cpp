@@ -44,4 +44,8 @@ void UserPort::showNewSmsNotification()
     gui.showNewSms();
 }
 
+void UserPort::viewSmsList() {
+    //TODO show list of sms in gui
+}
+
 }  // namespace ue
