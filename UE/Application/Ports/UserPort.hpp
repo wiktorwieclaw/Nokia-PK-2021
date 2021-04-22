@@ -18,6 +18,8 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSmsNotification() override;
+    void showCallRequest(common::PhoneNumber from) override;
+    void showTalking() override;
 
 private:
     common::PrefixedLogger logger;

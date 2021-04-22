@@ -52,4 +52,14 @@ void Application::handleSms(const Sms& sms)
     context.state->handleSms(sms);
 }
 
+void Application::handleCallRequest(common::PhoneNumber from)
+{
+    context.state->handleCallRequest(from);
+}
+
+void Application::handleCallAccept(common::PhoneNumber to)
+{
+    context.state->handleCallAccept(to);
+}
+
 }  // namespace ue

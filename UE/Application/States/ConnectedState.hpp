@@ -13,6 +13,10 @@ public:
 public:
     void handleDisconnected() final;
     void handleSms(const Sms& sms) final;
+    void handleCallRequest(common::PhoneNumber from) final;
+
+    // IUserEventsHandler interface
+    void handleCallAccept(common::PhoneNumber to) final;
 };
 
 }  // namespace ue

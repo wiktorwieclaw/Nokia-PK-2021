@@ -125,4 +125,19 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
     objectUnderTest.handleSms(sms);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    EXPECT_CALL(userPortMock, showCallRequest(_));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+{
+    EXPECT_CALL(btsPortMock, sendCallAccepted(_));
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleCallAccept(common::PhoneNumber{});
+}
+
 }  // namespace ue

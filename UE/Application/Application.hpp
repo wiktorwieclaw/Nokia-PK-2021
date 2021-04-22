@@ -30,6 +30,10 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
+    void handleCallRequest(common::PhoneNumber from) override;
+
+    // IUserEventsHandler interface
+    void handleCallAccept(common::PhoneNumber to) override;
 
 private:
     Context context;
