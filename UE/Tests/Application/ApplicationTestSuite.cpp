@@ -133,8 +133,10 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
 {
-    EXPECT_CALL(btsPortMock, sendSms(PHONE_NUMBER, "example"));
-    EXPECT_CALL(smsDbMock, addSms(PHONE_NUMBER, "example"));
+    std::pair<common::PhoneNumber,IUserPort::SmsText> smsData;
+    EXPECT_CALL(userPortMock, getSmsData()).WillOnce(Return(smsData));
+    EXPECT_CALL(btsPortMock, sendSms(common::PhoneNumber{}, ""));
+    EXPECT_CALL(smsDbMock, addSms(common::PhoneNumber{}, ""));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendSms();
 }

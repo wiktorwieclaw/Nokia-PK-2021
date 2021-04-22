@@ -27,6 +27,7 @@ public:
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showNewSmsNotification, (), (final));
     MOCK_METHOD(void, showNewSmsToEdit, (), (final));
+    MOCK_METHOD((std::pair<common::PhoneNumber,IUserPort::SmsText>), getSmsData, (), (final));
 };
 
 }  // namespace ue
