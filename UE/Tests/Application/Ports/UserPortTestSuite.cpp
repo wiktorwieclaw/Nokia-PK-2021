@@ -59,4 +59,6 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
 
 //TODO write test shallViewSmsList
 
+//TODO write test shallViewSms
+
 }  // namespace ue

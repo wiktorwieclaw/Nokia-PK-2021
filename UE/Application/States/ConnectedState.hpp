@@ -14,6 +14,7 @@ public:
     void handleDisconnected() final;
     void handleSms(const Sms& sms) final;
     void handleShowSmsList() final;
+    void handleShowSms(const unsigned) final;
 };
 
 }  // namespace ue

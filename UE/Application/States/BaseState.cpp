@@ -49,4 +49,8 @@ void BaseState::handleShowSmsList()
     logger.logError("Unexpected: handleShowSmsList");
 }
 
+void BaseState::handleShowSms(const unsigned) {
+    logger.logError("Unexpected: handleShowSms");
+}
+
 }  // namespace ue

@@ -26,4 +26,10 @@ TEST_F(SmsDbTestSuite, shallAddReceivedSms)
     ASSERT_EQ(smsState, SmsState::NotViewed);
 }
 
+//todo add test getMesagesTest
+
+//todo add test getSms
+
+//todo add test updateSmsState
+
 }  // namespace ue

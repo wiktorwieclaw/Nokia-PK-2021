@@ -57,4 +57,8 @@ void Application::handleShowSmsList()
     context.state->handleShowSmsList();
 }
 
+void Application::handleShowSms(const unsigned indexOfSms) {
+    context.state->handleShowSms(indexOfSms);
+}
+
 }  // namespace ue

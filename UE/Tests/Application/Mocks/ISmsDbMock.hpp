@@ -15,6 +15,9 @@ public:
     ~ISmsDbMock() override;
 
     MOCK_METHOD(void, addReceivedSms, (const Sms&), (final));
+    MOCK_METHOD(const SmsMessages&, getSmsMessages, (), (final));
+    MOCK_METHOD(void, updateSmsState, (const int), (final));
+    MOCK_METHOD(const Sms&, getSms, (int), (final));
 };
 
 }  // namespace ue

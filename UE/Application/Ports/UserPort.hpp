@@ -10,6 +10,8 @@ namespace ue
 class UserPort : public IUserPort
 {
 public:
+    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
+
     UserPort(common::ILogger& logger, IUeGui& gui, common::PhoneNumber phoneNumber);
     void start(IUserEventsHandler& handler);
     void stop();
@@ -18,7 +20,8 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSmsNotification() override;
-    void viewSmsList() override;
+    void viewSmsList(const SmsMessages&) override;
+    void viewSms(const Sms &) override;
 
 private:
     common::PrefixedLogger logger;

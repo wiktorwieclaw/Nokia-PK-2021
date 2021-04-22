@@ -23,6 +23,8 @@ public:
 
     // IUserEventsHandler interface
     void handleShowSmsList() override;
+    void handleShowSms(const unsigned) override;
+
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
