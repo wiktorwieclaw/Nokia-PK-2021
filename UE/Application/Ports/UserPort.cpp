@@ -59,7 +59,7 @@ void UserPort::viewSmsList(const SmsMessages& smsList) {
     IUeGui::IListViewMode& menu = gui.setListViewMode();
     menu.clearSelectionList();
     for(auto e : smsList){
-        std::string label = e.second == SmsState::Viewed ? to_string(e.first.from) : "[New]" +to_string(e.first.from);
+        std::string label = e.second == SmsState::Viewed ? to_string(e.first.from) : "[New] " +to_string(e.first.from);
         menu.addSelectionListItem(label, "");
     }
     gui.setAcceptCallback([this,&menu]{

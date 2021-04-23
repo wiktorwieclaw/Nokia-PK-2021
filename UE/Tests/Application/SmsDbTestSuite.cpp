@@ -26,10 +26,29 @@ TEST_F(SmsDbTestSuite, shallAddReceivedSms)
     ASSERT_EQ(smsState, SmsState::NotViewed);
 }
 
-//todo add test getMesagesTest
+TEST_F(SmsDbTestSuite, shallgetSms)
+{
+    const Sms sms{phoneNumber, "example text"};
+    objectUnderTest.addReceivedSms(sms);
 
-//todo add test getSms
+    const auto& smsFromDb = objectUnderTest.getSms(0);
+    ASSERT_EQ(smsFromDb, sms);
+}
 
-//todo add test updateSmsState
+TEST_F(SmsDbTestSuite, shallUpdateSmsState)
+{
+    const Sms sms{phoneNumber, "example text"};
+    objectUnderTest.addReceivedSms(sms);
+
+    const auto& messagesBeforeUpdate = objectUnderTest.getSmsMessages();
+    auto [sms1, smsStateBeforeUpdate] = messagesBeforeUpdate[0];
+    ASSERT_EQ(smsStateBeforeUpdate, SmsState::NotViewed);
+
+    objectUnderTest.updateSmsState(0);
+
+    const auto& messagesAfterUpdate = objectUnderTest.getSmsMessages();
+    auto [sms2, smsStateAfterUpdate] = messagesAfterUpdate[0];
+    ASSERT_EQ(smsStateAfterUpdate, SmsState::Viewed);
+}
 
 }  // namespace ue

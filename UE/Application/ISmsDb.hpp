@@ -19,9 +19,9 @@ public:
     virtual ~ISmsDb() = default;
 
     virtual void addReceivedSms(const Sms& sms) = 0;
-    [[nodiscard]] const virtual SmsMessages& getSmsMessages() = 0;
+    [[nodiscard]] virtual const SmsMessages& getSmsMessages() = 0;
     virtual void updateSmsState(const int) = 0;
-    [[nodiscard]] const virtual Sms& getSms(int) = 0;
+    [[nodiscard]] virtual const Sms& getSms(int) = 0;
 };
 
 }  // namespace ue
