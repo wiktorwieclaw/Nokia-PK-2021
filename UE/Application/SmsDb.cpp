@@ -14,11 +14,11 @@ const SmsDb::SmsMessages &SmsDb::getSmsMessages() {
     return smsMessages;
 }
 
-void SmsDb::updateSmsState(const int indexOfSms){
+void SmsDb::updateSmsState(const unsigned indexOfSms){
     smsMessages.at(indexOfSms).second = SmsState::Viewed;
 }
 
-const Sms &SmsDb::getSms(int indexOfSms) {
+const Sms &SmsDb::getSms(const unsigned indexOfSms) {
     return smsMessages.at(indexOfSms).first;
 }
 

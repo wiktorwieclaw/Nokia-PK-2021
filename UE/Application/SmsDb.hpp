@@ -14,8 +14,8 @@ public:
 
     void addReceivedSms(const Sms& sms) override;
     [[nodiscard]] const SmsMessages& getSmsMessages() override;
-    void updateSmsState(const int) override;
-    [[nodiscard]] const Sms& getSms(int) override;
+    void updateSmsState(const unsigned int) override;
+    [[nodiscard]] const Sms &getSms(const unsigned) override;
 
 private:
     SmsMessages smsMessages;

@@ -23,21 +23,14 @@ void ConnectedState::handleSms(const Sms& sms)
 
 void ConnectedState::handleShowSmsList()
 {
-    //Todo delete this test adding sms
-    common::PhoneNumber phoneNumber;
-    phoneNumber.value = 122;
-    Sms sms1{phoneNumber,"test122"};
-    phoneNumber.value = 125;
-    Sms sms2{phoneNumber,"test125"};
-    context.smsDb.addReceivedSms(sms1);
-    context.smsDb.addReceivedSms(sms2);
-
-    context.user.viewSmsList(context.smsDb.getSmsMessages());
+     auto& smsMessages = context.smsDb.getSmsMessages();
+     context.user.viewSmsList(smsMessages);
 }
 
 void ConnectedState::handleShowSms(const unsigned indexOfSms) {
     context.smsDb.updateSmsState(indexOfSms);
-    context.user.viewSms(context.smsDb.getSms(indexOfSms));
+    auto& retrivedSms = context.smsDb.getSms(indexOfSms);
+    context.user.viewSms(retrivedSms);
 }
 
 }  // namespace ue
