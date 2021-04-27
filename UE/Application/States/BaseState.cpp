@@ -44,4 +44,14 @@ void BaseState::handleSms(const Sms& sms)
     logger.logError("Unexpected: handleSms");
 }
 
+void BaseState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logError("Unexpected: handleCallRequest");
+}
+
+void BaseState::handleCallAccept(common::PhoneNumber to)
+{
+    logger.logError("Unexpected: handleCallAccept");
+}
+
 }  // namespace ue
