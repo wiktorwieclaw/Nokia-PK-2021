@@ -78,7 +78,7 @@ TEST_F(UserPortTestSuite, shallViewSms)
     const Sms sms{common::PhoneNumber{112},"example"};
 
     EXPECT_CALL(guiMock, setViewTextMode()).WillOnce(ReturnRef(textModeMock));
-    EXPECT_CALL(textModeMock, setText(_));
+    EXPECT_CALL(textModeMock, setText(sms.text));
     EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.viewSms(sms);
 }

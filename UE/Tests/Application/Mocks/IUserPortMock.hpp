@@ -13,7 +13,7 @@ public:
     ~IUserEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleShowSmsList, (), (final));
-    MOCK_METHOD(void, handleShowSms, (const unsigned), (final));
+    MOCK_METHOD(void, handleShowSms, (IUeGui::IListViewMode::Selection), (final));
 };
 
 class IUserPortMock : public IUserPort
