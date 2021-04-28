@@ -1,5 +1,6 @@
 #include "UserPort.hpp"
 
+#include "UeGui/ICallMode.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
 
@@ -61,6 +62,26 @@ void UserPort::showConnected()
 void UserPort::showNewSmsNotification()
 {
     gui.showNewSms();
+}
+
+void UserPort::showCallRequest(common::PhoneNumber from)
+{
+    auto& mode = gui.setAlertMode();
+    mode.setText("Incoming call from: " + std::to_string(from.value));
+
+    gui.setAcceptCallback([this, from] {
+        handler->handleCallAccept(from);
+    });
+
+    gui.setRejectCallback([this] {
+        // todo
+    });
+}
+
+void UserPort::showTalking()
+{
+    auto& callMode = gui.setCallMode();
+    // todo
 }
 
 std::string makeSmsLabel(common::PhoneNumber number, SmsState smsState)

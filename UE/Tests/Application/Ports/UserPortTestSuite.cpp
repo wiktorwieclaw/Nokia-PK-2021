@@ -97,4 +97,13 @@ TEST_F(UserPortTestSuite, shallViewSms)
     objectUnderTest.viewSms(sms);
 }
 
+TEST_F(UserPortTestSuite, shallShowCallRequest)
+{
+    EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock, setText(_));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showCallRequest(common::PhoneNumber{});
+}
+
 }  // namespace ue

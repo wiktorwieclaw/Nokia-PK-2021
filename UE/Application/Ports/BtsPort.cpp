@@ -65,6 +65,12 @@ void BtsPort::handleMessage(BinaryMessage msg)
         {
             const auto sms = Sms{from, reader.readRemainingText()};
             handler->handleSms(sms);
+            break;
+        }
+        case common::MessageId::CallRequest:
+        {
+            handler->handleCallRequest(from);
+            break;
         }
         default:
             logger.logError("unknown message: ", msgId, ", from: ", from);
@@ -83,6 +89,15 @@ void BtsPort::sendAttachRequest(common::BtsId btsId)
                                 phoneNumber,
                                 common::PhoneNumber{}};
     msg.writeBtsId(btsId);
+    transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendCallAccepted(common::PhoneNumber to)
+{
+    logger.logDebug("sendCallAccepted to: ", to);
+    common::OutgoingMessage msg{common::MessageId::CallAccepted,
+                                phoneNumber,
+                                to};
     transport.sendMessage(msg.getMessage());
 }
 

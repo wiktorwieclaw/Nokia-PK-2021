@@ -1,6 +1,7 @@
 #include "ConnectedState.hpp"
 
 #include "NotConnectedState.hpp"
+#include "TalkingState.hpp"
 #include "Sms.hpp"
 
 namespace ue
@@ -28,10 +29,26 @@ void ConnectedState::handleShowSmsList()
      context.user.viewSmsList(smsMessages);
 }
 
-void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms) {
+void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
+{
     context.smsDb.updateSmsState(indexOfSms);
     const auto& retrievedSms = context.smsDb.getSms(indexOfSms);
     context.user.viewSms(retrievedSms);
+}
+
+void ConnectedState::handleCallRequest(common::PhoneNumber from)
+{
+    using namespace std::chrono_literals;
+    context.user.showCallRequest(from);
+    context.timer.startTimer(30s);
+}
+
+void ConnectedState::handleCallAccept(common::PhoneNumber to)
+{
+    context.bts.sendCallAccepted(to);
+    context.user.showTalking();
+    context.timer.stopTimer();
+    context.setState<TalkingState>();
 }
 
 }  // namespace ue

@@ -53,4 +53,14 @@ void BaseState::handleShowSms(IUeGui::IListViewMode::Selection) {
     logger.logError("Unexpected: handleShowSms");
 }
 
+void BaseState::handleCallRequest(common::PhoneNumber from)
+{
+    logger.logError("Unexpected: handleCallRequest");
+}
+
+void BaseState::handleCallAccept(common::PhoneNumber to)
+{
+    logger.logError("Unexpected: handleCallAccept");
+}
+
 }  // namespace ue
