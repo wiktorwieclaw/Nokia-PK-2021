@@ -16,7 +16,7 @@ public:
 
     // IUserEventsHandler interface
     void handleShowSmsList() override;
-    void handleShowSms(const unsigned) override;
+    void handleShowSms(IUeGui::IListViewMode::Selection) override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;

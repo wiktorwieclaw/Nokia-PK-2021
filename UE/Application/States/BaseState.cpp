@@ -49,7 +49,7 @@ void BaseState::handleShowSmsList()
     logger.logError("Unexpected: handleShowSmsList");
 }
 
-void BaseState::handleShowSms(const unsigned) {
+void BaseState::handleShowSms(IUeGui::IListViewMode::Selection) {
     logger.logError("Unexpected: handleShowSms");
 }
 

@@ -22,7 +22,7 @@ TEST_F(SmsDbTestSuite, shallAddReceivedSms)
     objectUnderTest.addReceivedSms(sms);
 
     const auto& messages = objectUnderTest.getSmsMessages();
-    auto [_, smsState] = messages[0];
+    auto& [_, smsState] = messages[0];
     ASSERT_EQ(smsState, SmsState::NotViewed);
 }
 
@@ -41,13 +41,13 @@ TEST_F(SmsDbTestSuite, shallUpdateSmsState)
     objectUnderTest.addReceivedSms(sms);
 
     const auto& messagesBeforeUpdate = objectUnderTest.getSmsMessages();
-    auto [sms1, smsStateBeforeUpdate] = messagesBeforeUpdate[0];
+    auto&[sms1, smsStateBeforeUpdate] = messagesBeforeUpdate[0];
     ASSERT_EQ(smsStateBeforeUpdate, SmsState::NotViewed);
 
     objectUnderTest.updateSmsState(0);
 
     const auto& messagesAfterUpdate = objectUnderTest.getSmsMessages();
-    auto [sms2, smsStateAfterUpdate] = messagesAfterUpdate[0];
+    auto& [sms2, smsStateAfterUpdate] = messagesAfterUpdate[0];
     ASSERT_EQ(smsStateAfterUpdate, SmsState::Viewed);
 }
 

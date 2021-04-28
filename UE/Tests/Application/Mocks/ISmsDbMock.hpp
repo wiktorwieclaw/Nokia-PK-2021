@@ -17,8 +17,8 @@ public:
 
     MOCK_METHOD(void, addReceivedSms, (const Sms&), (final));
     MOCK_METHOD(const SmsMessages&, getSmsMessages, (), (final));
-    MOCK_METHOD(void, updateSmsState, (const unsigned), (final));
-    MOCK_METHOD(const Sms&, getSms, (const unsigned), (final));
+    MOCK_METHOD(void, updateSmsState, (SmsMessages::size_type), (final));
+    MOCK_METHOD(const Sms&, getSms, (SmsMessages::size_type), (final));
 };
 
 }  // namespace ue

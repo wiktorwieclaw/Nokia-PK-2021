@@ -127,11 +127,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 {
-    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
-    SmsMessages messages;
-    Sms sms{PHONE_NUMBER, "example sms message"};
-    std::pair<Sms, SmsState> pair{sms,SmsState::NotViewed};
-    messages.push_back(pair);
+    ISmsDb::SmsMessages messages;
 
     EXPECT_CALL(smsDbMock, getSmsMessages()).WillOnce(ReturnRef(messages));
     EXPECT_CALL(userPortMock, viewSmsList(messages));
@@ -144,8 +140,8 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
     const unsigned indexOfSms = 0;
     Sms sms{PHONE_NUMBER, "example sms message"};
 
-    EXPECT_CALL(smsDbMock, updateSmsState(indexOfSms));
-    EXPECT_CALL(smsDbMock, getSms(indexOfSms)).WillOnce(ReturnRef(sms));
+    EXPECT_CALL(smsDbMock, updateSmsState(_));
+    EXPECT_CALL(smsDbMock, getSms(_)).WillOnce(ReturnRef(sms));
     EXPECT_CALL(userPortMock, viewSms(sms));
 
     objectUnderTest.handleShowSms(indexOfSms);

@@ -23,14 +23,14 @@ void ConnectedState::handleSms(const Sms& sms)
 
 void ConnectedState::handleShowSmsList()
 {
-     auto& smsMessages = context.smsDb.getSmsMessages();
+     const auto& smsMessages = context.smsDb.getSmsMessages();
      context.user.viewSmsList(smsMessages);
 }
 
-void ConnectedState::handleShowSms(const unsigned indexOfSms) {
+void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms) {
     context.smsDb.updateSmsState(indexOfSms);
-    auto& retrivedSms = context.smsDb.getSms(indexOfSms);
-    context.user.viewSms(retrivedSms);
+    const auto& retrievedSms = context.smsDb.getSms(0);
+    context.user.viewSms(retrievedSms);
 }
 
 }  // namespace ue

@@ -1,6 +1,5 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <Mocks/ISmsDbMock.hpp>
 
 #include "Messages/PhoneNumber.hpp"
 #include "Mocks/ILoggerMock.hpp"

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <SmsDb.hpp>
+#include "SmsDb.hpp"
+#include "UeGui/IListViewMode.hpp"
 
 namespace ue
 {
@@ -11,7 +12,7 @@ public:
     virtual ~IUserEventsHandler() = default;
 
     virtual void handleShowSmsList() = 0;
-    virtual void handleShowSms(const unsigned) = 0;
+    virtual void handleShowSms(IUeGui::IListViewMode::Selection) = 0;
 };
 
 class IUserPort

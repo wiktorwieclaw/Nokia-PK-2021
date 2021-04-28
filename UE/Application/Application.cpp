@@ -57,7 +57,7 @@ void Application::handleShowSmsList()
     context.state->handleShowSmsList();
 }
 
-void Application::handleShowSms(const unsigned indexOfSms) {
+void Application::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms) {
     context.state->handleShowSms(indexOfSms);
 }
 
