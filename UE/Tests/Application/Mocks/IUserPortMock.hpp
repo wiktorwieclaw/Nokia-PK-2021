@@ -26,7 +26,7 @@ public:
     MOCK_METHOD(void, showConnecting, (), (final));
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showNewSmsNotification, (), (final));
-    MOCK_METHOD(void, viewSmsList, (const SmsMessages&), (final));
+    MOCK_METHOD(void, viewSmsList, (const ISmsDb::SmsMessages&), (final));
     MOCK_METHOD(void, viewSms, (const Sms&), (final));
 };
 

@@ -1,6 +1,7 @@
 #include "ConnectedState.hpp"
 
 #include "NotConnectedState.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -29,7 +30,7 @@ void ConnectedState::handleShowSmsList()
 
 void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms) {
     context.smsDb.updateSmsState(indexOfSms);
-    const auto& retrievedSms = context.smsDb.getSms(0);
+    const auto& retrievedSms = context.smsDb.getSms(indexOfSms);
     context.user.viewSms(retrievedSms);
 }
 

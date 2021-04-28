@@ -14,7 +14,6 @@ using namespace ::testing;
 class UserPortTestSuite : public Test
 {
 protected:
-
     const common::PhoneNumber PHONE_NUMBER{112};
     NiceMock<common::ILoggerMock> loggerMock;
     StrictMock<IUserEventsHandlerMock> handlerMock;
@@ -62,12 +61,26 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
 
 TEST_F(UserPortTestSuite, shallViewSmsList)
 {
-    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
-    const SmsMessages smsMessages;
+    const auto sms = Sms{PHONE_NUMBER, "text1"};
+
+    const ISmsDb::SmsMessages smsMessages{
+        {sms, SmsState::NotViewed},
+        {sms, SmsState::NotViewed}};
 
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
     EXPECT_CALL(listViewModeMock, clearSelectionList());
-    EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(0));
+    EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(2));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.viewSmsList(smsMessages);
+}
+
+TEST_F(UserPortTestSuite, shallViewEmptySmsList)
+{
+    const ISmsDb::SmsMessages smsMessages;
+
+    EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
+    EXPECT_CALL(listViewModeMock, clearSelectionList());
     EXPECT_CALL(guiMock, setAcceptCallback(_));
     EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.viewSmsList(smsMessages);
@@ -75,14 +88,13 @@ TEST_F(UserPortTestSuite, shallViewSmsList)
 
 TEST_F(UserPortTestSuite, shallViewSms)
 {
-    const Sms sms{common::PhoneNumber{112},"example"};
+    const Sms sms{PHONE_NUMBER, "example"};
 
     EXPECT_CALL(guiMock, setViewTextMode()).WillOnce(ReturnRef(textModeMock));
     EXPECT_CALL(textModeMock, setText(sms.text));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
     EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.viewSms(sms);
 }
-
-
 
 }  // namespace ue

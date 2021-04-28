@@ -2,7 +2,6 @@
 
 #include <gmock/gmock.h>
 
-#include "Sms.hpp"
 #include "ISmsDb.hpp"
 
 namespace ue

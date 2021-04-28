@@ -137,7 +137,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
 {
-    const unsigned indexOfSms = 0;
+    const IUeGui::IListViewMode::Selection indexOfSms = 0;
     Sms sms{PHONE_NUMBER, "example sms message"};
 
     EXPECT_CALL(smsDbMock, updateSmsState(_));

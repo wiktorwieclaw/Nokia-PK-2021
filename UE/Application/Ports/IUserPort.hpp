@@ -18,15 +18,13 @@ public:
 class IUserPort
 {
 public:
-    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
-
     virtual ~IUserPort() = default;
 
     virtual void showNotConnected() = 0;
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
     virtual void showNewSmsNotification() = 0;
-    virtual void viewSmsList(const SmsMessages&) = 0;
+    virtual void viewSmsList(const ISmsDb::SmsMessages&) = 0;
     virtual void viewSms(const Sms&) = 0;
 };
 

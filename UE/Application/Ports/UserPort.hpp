@@ -18,8 +18,8 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSmsNotification() override;
-    void viewSmsList(const SmsMessages&) override;
-    void viewSms(const Sms &) override;
+    void viewSmsList(const ISmsDb::SmsMessages&) override;
+    void viewSms(const Sms&) override;
 
 private:
     common::PrefixedLogger logger;

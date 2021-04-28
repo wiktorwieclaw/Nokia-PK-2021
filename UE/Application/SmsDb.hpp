@@ -5,26 +5,27 @@
 #include "ISmsDb.hpp"
 #include "Sms.hpp"
 
-namespace ue {
-    enum class SmsState {
-        NotViewed,
-        Viewed
-    };
+namespace ue
+{
+enum class SmsState
+{
+    NotViewed,
+    Viewed
+};
 
-    class SmsDb : public ISmsDb {
-    public:
-        using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
+class SmsDb : public ISmsDb
+{
+public:
+    void addReceivedSms(const Sms& sms) override;
 
-        void addReceivedSms(const Sms &sms) override;
+    [[nodiscard]] const SmsMessages& getSmsMessages() override;
 
-        [[nodiscard]] const SmsMessages &getSmsMessages() override;
+    void updateSmsState(SmsMessages::size_type index) override;
 
-        void updateSmsState(SmsMessages::size_type) override;
+    [[nodiscard]] const Sms& getSms(SmsMessages::size_type index) override;
 
-        [[nodiscard]] const Sms &getSms(SmsMessages::size_type) override;
-
-    private:
-        SmsMessages smsMessages;
-    };
+private:
+    SmsMessages smsMessages;
+};
 
 }  // namespace ue
