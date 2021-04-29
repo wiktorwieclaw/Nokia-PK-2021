@@ -7,22 +7,16 @@
 
 namespace ue
 {
-enum class SmsState
-{
-    NotViewed,
-    Viewed
-};
-
 class SmsDb : public ISmsDb
 {
 public:
-    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
-
-    void addReceivedSms(const Sms& sms) override;
-    [[nodiscard]] const SmsMessages& getSmsMessages() { return smsMessages; }
+    void addMessage(const Sms& sms) override;
+    void setMessageState(gsl::index i, SmsState state) override;
+    [[nodiscard]] gsl::span<const Sms> getAllMessages() override;
+    [[nodiscard]] const Sms& getMessage(gsl::index i) override;
 
 private:
-    SmsMessages smsMessages;
+    std::vector<Sms> messages;
 };
 
 }  // namespace ue

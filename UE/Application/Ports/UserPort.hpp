@@ -18,6 +18,8 @@ public:
     void showConnecting() override;
     void showConnected() override;
     void showNewSmsNotification() override;
+    void viewSmsList(gsl::span<const Sms>) override;
+    void viewSms(const Sms&) override;
     void showCallRequest(common::PhoneNumber from) override;
     void showTalking() override;
 

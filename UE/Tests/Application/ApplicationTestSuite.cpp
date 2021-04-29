@@ -118,11 +118,33 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
 {
-    Sms sms{PHONE_NUMBER, "example sms message"};
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
 
     EXPECT_CALL(userPortMock, showNewSmsNotification());
-    EXPECT_CALL(smsDbMock, addReceivedSms(sms));
+    EXPECT_CALL(smsDbMock, addMessage(sms));
     objectUnderTest.handleSms(sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
+{
+    gsl::span<const Sms> messages;
+
+    EXPECT_CALL(smsDbMock, getAllMessages()).WillOnce(Return(messages));
+    EXPECT_CALL(userPortMock, viewSmsList(messages));
+
+    objectUnderTest.handleShowSmsList();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
+{
+    const IUeGui::IListViewMode::Selection index = 0;
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
+
+    EXPECT_CALL(smsDbMock, setMessageState(index, SmsState::Viewed));
+    EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
+    EXPECT_CALL(userPortMock, viewSms(sms));
+
+    objectUnderTest.handleShowSms(index);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)

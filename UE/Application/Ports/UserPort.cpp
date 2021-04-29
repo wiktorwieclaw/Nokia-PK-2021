@@ -35,10 +35,28 @@ void UserPort::showConnecting()
 
 void UserPort::showConnected()
 {
-    IUeGui::IListViewMode& menu = gui.setListViewMode();
+    auto& menu = gui.setListViewMode();
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+
+    gui.setAcceptCallback([this, &menu] {
+        const auto [isSelected, index] = menu.getCurrentItemIndex();
+
+        if (isSelected)
+        {
+            switch (index)
+            {
+            case 0:
+                break;
+            case 1:
+                handler->handleShowSmsList();
+                break;
+            default:
+                break;
+            }
+        }
+    });
 }
 
 void UserPort::showNewSmsNotification()
@@ -64,6 +82,54 @@ void UserPort::showTalking()
 {
     auto& callMode = gui.setCallMode();
     // todo
+}
+
+std::string makeSmsLabel(const Sms& sms)
+{
+    std::stringstream ss;
+
+    if (sms.state == SmsState::NotViewed)
+    {
+        ss << "[New] ";
+    }
+
+    ss << static_cast<int>(sms.correspondent.value);
+    return ss.str();
+}
+
+void UserPort::viewSmsList(gsl::span<const Sms> smsList)
+{
+    auto& menu = gui.setListViewMode();
+    menu.clearSelectionList();
+
+    for (const auto& sms : smsList)
+    {
+        menu.addSelectionListItem(makeSmsLabel(sms), "");
+    }
+
+    gui.setAcceptCallback([this, &menu] {
+        const auto [isSelected, index] = menu.getCurrentItemIndex();
+
+        if (isSelected)
+        {
+            handler->handleShowSms(index);
+        }
+    });
+
+    gui.setRejectCallback([this] {
+        showConnected();
+    });
+}
+
+void UserPort::viewSms(const Sms& sms)
+{
+    gui.setViewTextMode().setText(sms.text);
+
+    gui.setAcceptCallback([] {});
+
+    gui.setRejectCallback([this] {
+        handler->handleShowSmsList();
+    });
 }
 
 }  // namespace ue

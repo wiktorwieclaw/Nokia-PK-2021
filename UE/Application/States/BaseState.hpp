@@ -14,6 +14,10 @@ public:
     BaseState(Context& context, const std::string& name);
     ~BaseState() override;
 
+    // IUserEventsHandler interface
+    void handleShowSmsList() override;
+    void handleShowSms(IUeGui::IListViewMode::Selection) override;
+
     // ITimerEventsHandler interface
     void handleTimeout() override;
 

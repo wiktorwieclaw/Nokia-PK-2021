@@ -44,6 +44,15 @@ void BaseState::handleSms(const Sms& sms)
     logger.logError("Unexpected: handleSms");
 }
 
+void BaseState::handleShowSmsList()
+{
+    logger.logError("Unexpected: handleShowSmsList");
+}
+
+void BaseState::handleShowSms(IUeGui::IListViewMode::Selection) {
+    logger.logError("Unexpected: handleShowSms");
+}
+
 void BaseState::handleCallRequest(common::PhoneNumber from)
 {
     logger.logError("Unexpected: handleCallRequest");
