@@ -16,6 +16,7 @@ public:
     virtual void handleShowSmsList() = 0;
     virtual void handleShowSms(IUeGui::IListViewMode::Selection) = 0;
     virtual void handleCallAccept(common::PhoneNumber to) = 0;
+    virtual void handleCallDrop(common::PhoneNumber to) = 0;
 };
 
 class IUserPort

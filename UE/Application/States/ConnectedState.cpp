@@ -51,4 +51,11 @@ void ConnectedState::handleCallAccept(common::PhoneNumber to)
     context.setState<TalkingState>();
 }
 
+void ConnectedState::handleCallDrop(common::PhoneNumber to)
+{
+    context.timer.stopTimer();
+    context.bts.sendCallDropped(to);
+    context.user.showConnected();
+}
+
 }  // namespace ue

@@ -73,8 +73,8 @@ void UserPort::showCallRequest(common::PhoneNumber from)
         handler->handleCallAccept(from);
     });
 
-    gui.setRejectCallback([this] {
-        // todo
+    gui.setRejectCallback([this, from] {
+        handler->handleCallDrop(from);
     });
 }
 

@@ -63,4 +63,9 @@ void BaseState::handleCallAccept(common::PhoneNumber to)
     logger.logError("Unexpected: handleCallAccept");
 }
 
+void BaseState::handleCallDrop(common::PhoneNumber to)
+{
+    logger.logError("Unexpected: handleCallDrop");
+}
+
 }  // namespace ue

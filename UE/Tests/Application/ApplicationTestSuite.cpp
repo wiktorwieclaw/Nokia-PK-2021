@@ -156,10 +156,20 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
 {
-    EXPECT_CALL(btsPortMock, sendCallAccepted(_));
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(common::PhoneNumber{});
+    objectUnderTest.handleCallAccept(to);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
+{
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(btsPortMock, sendCallDropped(to));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleCallDrop(to);
 }
 
 }  // namespace ue
