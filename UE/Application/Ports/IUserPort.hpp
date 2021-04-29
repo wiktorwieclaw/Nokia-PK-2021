@@ -27,7 +27,7 @@ public:
     virtual void showConnecting() = 0;
     virtual void showConnected() = 0;
     virtual void showNewSmsNotification() = 0;
-    virtual void viewSmsList(const ISmsDb::SmsMessages&) = 0;
+    virtual void viewSmsList(gsl::span<Sms const>) = 0;
     virtual void viewSms(const Sms&) = 0;
     virtual void showCallRequest(common::PhoneNumber from) = 0;
     virtual void showTalking() = 0;

@@ -7,25 +7,27 @@
 
 namespace ue
 {
+enum class SmsState
+{
+    NotViewed,
+    Viewed
+};
+
 struct Sms
 {
-    common::PhoneNumber from;
+    common::PhoneNumber correspondent{};
     std::string text;
-
-    Sms(common::PhoneNumber from, std::string text)
-        : from{from},
-          text{std::move(text)}
-    {}
-
-    [[nodiscard]] auto tie() const
-    {
-        return std::tie(from, text);
-    }
+    SmsState state{};
 };
+
+[[nodiscard]] inline auto tie(const Sms& sms)
+{
+    return std::tie(sms.correspondent, sms.text, sms.state);
+}
 
 inline bool operator==(const Sms& lhs, const Sms& rhs)
 {
-    return lhs.tie() == rhs.tie();
+    return tie(lhs) == tie(rhs);
 }
 
 }  // namespace ue

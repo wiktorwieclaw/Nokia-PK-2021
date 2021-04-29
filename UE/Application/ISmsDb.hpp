@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+#include <gsl/span>
+#include <gsl/util>
 
 namespace ue
 {
@@ -10,17 +12,11 @@ enum class SmsState;
 class ISmsDb
 {
 public:
-    using SmsMessages = std::vector<std::pair<Sms, SmsState>>;
-
     virtual ~ISmsDb() = default;
-
-    virtual void addReceivedSms(const Sms& sms) = 0;
-
-    [[nodiscard]] virtual const SmsMessages& getSmsMessages() = 0;
-
-    virtual void updateSmsState(SmsMessages::size_type index) = 0;
-
-    [[nodiscard]] virtual const Sms& getSms(SmsMessages::size_type index) = 0;
+    virtual void addMessage(const Sms& sms) = 0;
+    virtual void setMessageState(gsl::index i, SmsState state) = 0;
+    [[nodiscard]] virtual gsl::span<const Sms> getAllMessages() = 0;
+    [[nodiscard]] virtual const Sms& getMessage(gsl::index i) = 0;
 };
 
 }  // namespace ue

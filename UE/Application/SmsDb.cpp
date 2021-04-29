@@ -4,26 +4,24 @@
 
 namespace ue
 {
-void SmsDb::addReceivedSms(const Sms& sms)
+void SmsDb::addMessage(const Sms& sms)
 {
-    smsMessages.emplace_back(sms, SmsState::NotViewed);
+    messages.push_back(sms);
 }
 
-const SmsDb::SmsMessages& SmsDb::getSmsMessages()
+gsl::span<const Sms> SmsDb::getAllMessages()
 {
-    return smsMessages;
+    return messages;
 }
 
-void SmsDb::updateSmsState(SmsMessages::size_type indexOfSms)
+void SmsDb::setMessageState(gsl::index i, SmsState state)
 {
-    auto& [_, state] = smsMessages[indexOfSms];
-    state = SmsState::Viewed;
+    messages.at(i).state = state;
 }
 
-const Sms& SmsDb::getSms(SmsMessages::size_type indexOfSms)
+const Sms& SmsDb::getMessage(gsl::index i)
 {
-    auto& [sms, _] = smsMessages[indexOfSms];
-    return sms;
+    return messages.at(i);
 }
 
 }  // namespace ue

@@ -84,27 +84,27 @@ void UserPort::showTalking()
     // todo
 }
 
-std::string makeSmsLabel(common::PhoneNumber number, SmsState smsState)
+std::string makeSmsLabel(const Sms& sms)
 {
     std::stringstream ss;
 
-    if (smsState == SmsState::NotViewed)
+    if (sms.state == SmsState::NotViewed)
     {
         ss << "[New] ";
     }
 
-    ss << static_cast<int>(number.value);
+    ss << static_cast<int>(sms.correspondent.value);
     return ss.str();
 }
 
-void UserPort::viewSmsList(const ISmsDb::SmsMessages& smsList)
+void UserPort::viewSmsList(gsl::span<const Sms> smsList)
 {
     auto& menu = gui.setListViewMode();
     menu.clearSelectionList();
-    for (const auto& [sms, state] : smsList)
+
+    for (const auto& sms : smsList)
     {
-        const auto label = makeSmsLabel(sms.from, state);
-        menu.addSelectionListItem(label, "");
+        menu.addSelectionListItem(makeSmsLabel(sms), "");
     }
 
     gui.setAcceptCallback([this, &menu] {

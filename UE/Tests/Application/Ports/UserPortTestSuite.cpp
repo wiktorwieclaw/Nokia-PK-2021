@@ -61,11 +61,9 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
 
 TEST_F(UserPortTestSuite, shallViewSmsList)
 {
-    const auto sms = Sms{PHONE_NUMBER, "text1"};
+    const auto sms = Sms{PHONE_NUMBER, "text1", SmsState::NotViewed};
 
-    const ISmsDb::SmsMessages smsMessages{
-        {sms, SmsState::NotViewed},
-        {sms, SmsState::NotViewed}};
+    const std::vector<Sms> smsMessages{sms, sms};
 
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
     EXPECT_CALL(listViewModeMock, clearSelectionList());
@@ -77,7 +75,7 @@ TEST_F(UserPortTestSuite, shallViewSmsList)
 
 TEST_F(UserPortTestSuite, shallViewEmptySmsList)
 {
-    const ISmsDb::SmsMessages smsMessages;
+    const std::vector<Sms> smsMessages;
 
     EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
     EXPECT_CALL(listViewModeMock, clearSelectionList());

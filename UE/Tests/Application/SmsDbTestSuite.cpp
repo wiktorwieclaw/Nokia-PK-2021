@@ -18,31 +18,29 @@ protected:
 
 TEST_F(SmsDbTestSuite, shallAddReceivedSms)
 {
-    objectUnderTest.addReceivedSms(Sms{phoneNumber, "example text"});
+    objectUnderTest.addMessage(Sms{phoneNumber, "example text"});
 
-    const auto& messages = objectUnderTest.getSmsMessages();
-    const auto& [_, smsState] = messages[0];
-    ASSERT_EQ(smsState, SmsState::NotViewed);
+    const auto& sms = objectUnderTest.getMessage(0);
+    ASSERT_EQ(sms.state, SmsState::NotViewed);
 }
 
 TEST_F(SmsDbTestSuite, shallgetSms)
 {
     const Sms sms{phoneNumber, "example text"};
-    objectUnderTest.addReceivedSms(sms);
+    objectUnderTest.addMessage(sms);
 
-    const auto& smsFromDb = objectUnderTest.getSms(0);
+    const auto& smsFromDb = objectUnderTest.getMessage(0);
     ASSERT_EQ(smsFromDb, sms);
 }
 
 TEST_F(SmsDbTestSuite, shallUpdateSmsState)
 {
-    objectUnderTest.addReceivedSms(Sms{phoneNumber, "example text"});
+    objectUnderTest.addMessage(Sms{phoneNumber, "example text"});
 
-    objectUnderTest.updateSmsState(0);
-    const auto& messages = objectUnderTest.getSmsMessages();
-    const auto& [_, smsState] = messages[0];
+    objectUnderTest.setMessageState(0, SmsState::Viewed);
+    const auto& sms = objectUnderTest.getMessage(0);
 
-    ASSERT_EQ(smsState, SmsState::Viewed);
+    ASSERT_EQ(sms.state, SmsState::Viewed);
 }
 
 
