@@ -52,6 +52,31 @@ void Application::handleSms(const Sms& sms)
     context.state->handleSms(sms);
 }
 
+void Application::handleShowSmsList()
+{
+    context.state->handleShowSmsList();
+}
+
+void Application::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
+{
+    context.state->handleShowSms(indexOfSms);
+}
+
+void Application::handleCallRequest(common::PhoneNumber from)
+{
+    context.state->handleCallRequest(from);
+}
+
+void Application::handleCallAccept(common::PhoneNumber to)
+{
+    context.state->handleCallAccept(to);
+}
+
+void Application::handleCallDrop(common::PhoneNumber to)
+{
+    context.state->handleCallDrop(to);
+}
+
 void Application::handleComposeSms()
 {
     context.state->handleComposeSms();

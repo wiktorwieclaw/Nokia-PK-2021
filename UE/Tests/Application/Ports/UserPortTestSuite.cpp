@@ -19,6 +19,7 @@ protected:
     StrictMock<IUserEventsHandlerMock> handlerMock;
     StrictMock<IUeGuiMock> guiMock;
     StrictMock<IListViewModeMock> listViewModeMock;
+    StrictMock<ITextModeMock> textModeMock;
     StrictMock<ISmsComposeModeMock> smsComposeModeMock;
 
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
@@ -57,6 +58,51 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
     EXPECT_CALL(guiMock, setAcceptCallback(_));
     objectUnderTest.showConnected();
+}
+
+TEST_F(UserPortTestSuite, shallViewSmsList)
+{
+    const auto sms = Sms{PHONE_NUMBER, "text1", SmsState::NotViewed};
+
+    const std::vector<Sms> smsMessages{sms, sms};
+
+    EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
+    EXPECT_CALL(listViewModeMock, clearSelectionList());
+    EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(2));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.viewSmsList(smsMessages);
+}
+
+TEST_F(UserPortTestSuite, shallViewEmptySmsList)
+{
+    const std::vector<Sms> smsMessages;
+
+    EXPECT_CALL(guiMock, setListViewMode()).WillOnce(ReturnRef(listViewModeMock));
+    EXPECT_CALL(listViewModeMock, clearSelectionList());
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.viewSmsList(smsMessages);
+}
+
+TEST_F(UserPortTestSuite, shallViewSms)
+{
+    const Sms sms{PHONE_NUMBER, "example"};
+
+    EXPECT_CALL(guiMock, setViewTextMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock, setText(sms.text));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.viewSms(sms);
+}
+
+TEST_F(UserPortTestSuite, shallShowCallRequest)
+{
+    EXPECT_CALL(guiMock, setAlertMode()).WillOnce(ReturnRef(textModeMock));
+    EXPECT_CALL(textModeMock, setText(_));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showCallRequest(common::PhoneNumber{});
 }
 
 TEST_F(UserPortTestSuite, shallShowSmsEditMode)

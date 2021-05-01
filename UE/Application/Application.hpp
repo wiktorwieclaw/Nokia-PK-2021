@@ -21,6 +21,11 @@ public:
                 ISmsDb& smsDB);
     ~Application() override;
 
+    // IUserEventsHandler interface
+    void handleShowSmsList() override;
+    void handleShowSms(IUeGui::IListViewMode::Selection) override;
+
+
     // ITimerEventsHandler interface
     void handleTimeout() override;
 
@@ -30,6 +35,11 @@ public:
     void handleAttachAccept() override;
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
+    void handleCallRequest(common::PhoneNumber from) override;
+
+    // IUserEventsHandler interface
+    void handleCallAccept(common::PhoneNumber to) override;
+    void handleCallDrop(common::PhoneNumber to) override;
 
     //IUserEventsHandler interface
     void handleComposeSms() override;

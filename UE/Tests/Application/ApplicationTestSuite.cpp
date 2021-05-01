@@ -118,10 +118,10 @@ TEST_F(ApplicationConnectedTestSuite, shallReattach)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
 {
-    Sms sms{PHONE_NUMBER, "example sms message"};
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
 
     EXPECT_CALL(userPortMock, showNewSmsNotification());
-    EXPECT_CALL(smsDbMock, addReceivedSms(sms));
+    EXPECT_CALL(smsDbMock, addMessage(sms));
     objectUnderTest.handleSms(sms);
 }
 
@@ -138,6 +138,53 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
     EXPECT_CALL(smsDbMock, addSentSms(_));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendSms(sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
+{
+    gsl::span<const Sms> messages;
+
+    EXPECT_CALL(smsDbMock, getAllMessages()).WillOnce(Return(messages));
+    EXPECT_CALL(userPortMock, viewSmsList(messages));
+
+    objectUnderTest.handleShowSmsList();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
+{
+    const IUeGui::IListViewMode::Selection index = 0;
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
+
+    EXPECT_CALL(smsDbMock, setMessageState(index, SmsState::Viewed));
+    EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
+    EXPECT_CALL(userPortMock, viewSms(sms));
+
+    objectUnderTest.handleShowSms(index);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    EXPECT_CALL(userPortMock, showCallRequest(_));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+{
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleCallAccept(to);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
+{
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(btsPortMock, sendCallDropped(to));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleCallDrop(to);
 }
 
 }  // namespace ue
