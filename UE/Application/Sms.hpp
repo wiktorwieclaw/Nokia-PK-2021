@@ -10,7 +10,8 @@ namespace ue
 enum class SmsState
 {
     NotViewed,
-    Viewed
+    Viewed,
+    Sent
 };
 
 struct Sms

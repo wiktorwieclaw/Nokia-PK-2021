@@ -65,7 +65,7 @@ void ConnectedState::handleComposeSms()
 
 void ConnectedState::handleSendSms(const Sms& sms)
 {
-    context.smsDb.addSentSms(sms);
+    context.smsDb.addMessage(sms);
     context.bts.sendSms(sms);
     context.user.showConnected();
 }

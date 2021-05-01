@@ -3,6 +3,7 @@
 #include <gmock/gmock.h>
 
 #include "Ports/IUserPort.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {

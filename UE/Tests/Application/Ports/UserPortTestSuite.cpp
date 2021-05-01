@@ -6,6 +6,7 @@
 #include "Mocks/IUeGuiMock.hpp"
 #include "Mocks/IUserPortMock.hpp"
 #include "Ports/UserPort.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {

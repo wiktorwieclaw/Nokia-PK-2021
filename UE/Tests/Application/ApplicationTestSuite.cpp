@@ -135,7 +135,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
 {
     const Sms& sms{common::PhoneNumber{113},"example"};
     EXPECT_CALL(btsPortMock, sendSms(_));
-    EXPECT_CALL(smsDbMock, addSentSms(_));
+    EXPECT_CALL(smsDbMock, addMessage(_));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendSms(sms);
 }

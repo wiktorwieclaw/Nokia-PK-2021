@@ -46,12 +46,11 @@ TEST_F(SmsDbTestSuite, shallUpdateSmsState)
 TEST_F(SmsDbTestSuite, shallAddSentSms)
 {
     const auto receiverPhoneNumber = common::PhoneNumber{113};
-    objectUnderTest.addSentSms(Sms{receiverPhoneNumber, "example"});
+    objectUnderTest.addMessage(Sms{receiverPhoneNumber, "example", SmsState::Sent});
 
-    const auto& messages = objectUnderTest.getSmsMessages();
-    auto [sms, smsState] = messages[0];
+    const auto& sms = objectUnderTest.getMessage(0);
     ASSERT_EQ(sms.text, "example");
-    ASSERT_EQ(smsState, SmsState::Sent);
+    ASSERT_EQ(sms.state, SmsState::Sent);
 }
 
 }  // namespace ue

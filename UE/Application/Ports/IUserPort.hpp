@@ -1,5 +1,7 @@
 #pragma once
 
+#include <gsl/span>
+
 #include "Messages/PhoneNumber.hpp"
 #include "UeGui/IListViewMode.hpp"
 

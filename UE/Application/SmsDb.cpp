@@ -24,9 +24,4 @@ const Sms& SmsDb::getMessage(gsl::index i)
     return messages.at(i);
 }
 
-void SmsDb::addSentSms(const Sms& sms)
-{
-    smsMessages.emplace_back(sms, SmsState::Sent);
-}
-
 }  // namespace ue
