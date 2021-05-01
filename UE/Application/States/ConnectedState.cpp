@@ -58,4 +58,16 @@ void ConnectedState::handleCallDrop(common::PhoneNumber to)
     context.user.showConnected();
 }
 
+void ConnectedState::handleComposeSms()
+{
+    context.user.showNewSmsToEdit();
+}
+
+void ConnectedState::handleSendSms(const Sms& sms)
+{
+    context.smsDb.addMessage(sms);
+    context.bts.sendSms(sms);
+    context.user.showConnected();
+}
+
 }  // namespace ue

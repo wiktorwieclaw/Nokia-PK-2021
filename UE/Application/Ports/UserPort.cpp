@@ -3,6 +3,8 @@
 #include "UeGui/ICallMode.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
+#include "UeGui/ISmsComposeMode.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -48,6 +50,7 @@ void UserPort::showConnected()
             switch (index)
             {
             case 0:
+                handler->handleComposeSms();
                 break;
             case 1:
                 handler->handleShowSmsList();
@@ -62,6 +65,17 @@ void UserPort::showConnected()
 void UserPort::showNewSmsNotification()
 {
     gui.showNewSms();
+}
+
+void UserPort::showNewSmsToEdit()
+{
+    auto& mode = gui.setSmsComposeMode();
+    gui.setAcceptCallback([this, &mode] {
+        auto phoneNum = mode.getPhoneNumber();
+        auto smsText = mode.getSmsText();
+        mode.clearSmsText();
+        handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+    });
 }
 
 void UserPort::showCallRequest(common::PhoneNumber from)

@@ -44,6 +44,16 @@ void BaseState::handleSms(const Sms& sms)
     logger.logError("Unexpected: handleSms");
 }
 
+void BaseState::handleComposeSms()
+{
+    logger.logError("Unexpected: handleComposeSms");
+}
+
+void BaseState::handleSendSms(const Sms& sms)
+{
+    logger.logError("Unexpected: handleSendSms");
+}
+
 void BaseState::handleShowSmsList()
 {
     logger.logError("Unexpected: handleShowSmsList");

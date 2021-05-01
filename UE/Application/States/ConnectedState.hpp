@@ -20,6 +20,10 @@ public:
     // IUserEventsHandler interface
     void handleCallAccept(common::PhoneNumber to) final;
     void handleCallDrop(common::PhoneNumber to) final;
+
+    // IUserEventsHandler interface
+    void handleComposeSms() final;
+    void handleSendSms(const Sms& sms) final;
 };
 
 }  // namespace ue

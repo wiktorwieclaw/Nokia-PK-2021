@@ -51,7 +51,7 @@ bool Transport::sendMessageSlot(const QByteArray &message)
         logger.logError("Could not send message, connection not established");
         return false;
     }
-    logger.logDebug("Send message of size: ", message.size());
+    logger.logDebug("Sent message of size: ", message.size());
     socket->write(message);
     socket->flush();
     return true;

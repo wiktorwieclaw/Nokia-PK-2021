@@ -77,4 +77,14 @@ void Application::handleCallDrop(common::PhoneNumber to)
     context.state->handleCallDrop(to);
 }
 
+void Application::handleComposeSms()
+{
+    context.state->handleComposeSms();
+}
+
+void Application::handleSendSms(const Sms& sms)
+{
+    context.state->handleSendSms(sms);
+}
+
 }  // namespace ue

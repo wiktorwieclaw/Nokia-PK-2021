@@ -6,6 +6,7 @@
 #include "Mocks/IUeGuiMock.hpp"
 #include "Mocks/IUserPortMock.hpp"
 #include "Ports/UserPort.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -20,6 +21,7 @@ protected:
     StrictMock<IUeGuiMock> guiMock;
     StrictMock<IListViewModeMock> listViewModeMock;
     StrictMock<ITextModeMock> textModeMock;
+    StrictMock<ISmsComposeModeMock> smsComposeModeMock;
 
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
@@ -102,6 +104,13 @@ TEST_F(UserPortTestSuite, shallShowCallRequest)
     EXPECT_CALL(guiMock, setAcceptCallback(_));
     EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.showCallRequest(common::PhoneNumber{});
+}
+
+TEST_F(UserPortTestSuite, shallShowSmsEditMode)
+{
+    EXPECT_CALL(guiMock, setSmsComposeMode()).WillOnce(ReturnRef(smsComposeModeMock));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    objectUnderTest.showNewSmsToEdit();
 }
 
 }  // namespace ue
