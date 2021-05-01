@@ -2,6 +2,7 @@
 
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -38,15 +39,20 @@ void UserPort::showConnected()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
-    gui.setAcceptCallback([this,&menu]{
-        switch (menu.getCurrentItemIndex().second)
+    gui.setAcceptCallback([this, &menu] {
+        const auto [isSelected, index] = menu.getCurrentItemIndex();
+        switch (index)
         {
         case 0:
         {
             handler->handleComposeSms();
             break;
         }
-        };
+        case 1:
+            break;
+        default:
+            break;
+        }
     });
 }
 
@@ -57,21 +63,14 @@ void UserPort::showNewSmsNotification()
 
 void UserPort::showNewSmsToEdit()
 {
-    mode = &gui.setSmsComposeMode();
-    gui.setAcceptCallback([this]{
-        handler->handleSendSms();
+    auto& mode = gui.setSmsComposeMode();
+    gui.setAcceptCallback([this, &mode] {
+        auto phoneNum = mode.getPhoneNumber();
+        auto smsText = mode.getSmsText();
+        mode.clearSmsText();
+        handler->handleSendSms(Sms{phoneNum,smsText});
     });
 }
 
-std::pair<common::PhoneNumber, IUserPort::SmsText> UserPort::getSmsData()
-{
-    auto phoneNum = mode->getPhoneNumber();
-    auto smsText = mode->getSmsText();
-    mode->clearSmsText();
-    return std::make_pair(
-        phoneNum,
-        smsText
-    );
-}
 
 }  // namespace ue

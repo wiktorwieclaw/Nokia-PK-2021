@@ -47,7 +47,7 @@ bool QtTransport::sendMessage(BinaryMessage message)
 
 bool QtTransport::sendMessageSlot(QByteArray message)
 {
-    logger.logDebug("Send message to: ", addressToString());
+    logger.logDebug("Sent message to: ", addressToString());
     socket->write(std::move(message));
     socket->flush();
     return true;

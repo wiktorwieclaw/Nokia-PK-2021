@@ -13,7 +13,7 @@ public:
     ~IUserEventsHandlerMock() override;
 
     MOCK_METHOD(void, handleComposeSms, (), (final));
-    MOCK_METHOD(void, handleSendSms, (), (final));
+    MOCK_METHOD(void, handleSendSms, (const Sms&), (final));
 };
 
 class IUserPortMock : public IUserPort
@@ -27,7 +27,6 @@ public:
     MOCK_METHOD(void, showConnected, (), (final));
     MOCK_METHOD(void, showNewSmsNotification, (), (final));
     MOCK_METHOD(void, showNewSmsToEdit, (), (final));
-    MOCK_METHOD((std::pair<common::PhoneNumber,IUserPort::SmsText>), getSmsData, (), (final));
 };
 
 }  // namespace ue

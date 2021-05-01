@@ -133,12 +133,11 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
 {
-    std::pair<common::PhoneNumber,IUserPort::SmsText> smsData;
-    EXPECT_CALL(userPortMock, getSmsData()).WillOnce(Return(smsData));
-    EXPECT_CALL(btsPortMock, sendSms(common::PhoneNumber{}, ""));
-    EXPECT_CALL(smsDbMock, addSms(common::PhoneNumber{}, ""));
+    const Sms& sms{common::PhoneNumber{113},"example"};
+    EXPECT_CALL(btsPortMock, sendSms(_));
+    EXPECT_CALL(smsDbMock, addSentSms(_));
     EXPECT_CALL(userPortMock, showConnected());
-    objectUnderTest.handleSendSms();
+    objectUnderTest.handleSendSms(sms);
 }
 
 }  // namespace ue

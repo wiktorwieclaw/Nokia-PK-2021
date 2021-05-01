@@ -19,14 +19,12 @@ public:
     void showConnected() override;
     void showNewSmsNotification() override;
     void showNewSmsToEdit() override;
-    std::pair<common::PhoneNumber, SmsText> getSmsData() override;
 
 private:
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;
     IUserEventsHandler* handler = nullptr;
-    IUeGui::ISmsComposeMode* mode = nullptr;
 };
 
 }  // namespace ue

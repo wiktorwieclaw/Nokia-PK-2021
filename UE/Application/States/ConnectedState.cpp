@@ -26,12 +26,10 @@ void ConnectedState::handleComposeSms()
     context.user.showNewSmsToEdit();
 }
 
-void ConnectedState::handleSendSms()
+void ConnectedState::handleSendSms(const Sms& sms)
 {
-    auto [phoneNumber,smsText] = context.user.getSmsData();
-
-    context.smsDb.addSms(phoneNumber,smsText);
-    context.bts.sendSms(phoneNumber,smsText);
+    context.smsDb.addSentSms(sms);
+    context.bts.sendSms(sms);
     context.user.showConnected();
 }
 

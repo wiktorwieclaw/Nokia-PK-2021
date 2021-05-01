@@ -49,7 +49,7 @@ void BaseState::handleComposeSms()
     logger.logError("Unexpected: handleComposeSms");
 }
 
-void BaseState::handleSendSms()
+void BaseState::handleSendSms(const Sms& sms)
 {
     logger.logError("Unexpected: handleSendSms");
 }

@@ -9,9 +9,9 @@ void SmsDb::addReceivedSms(const Sms& sms)
     smsMessages.emplace_back(sms, SmsState::NotViewed);
 }
 
-void SmsDb::addSms(const common::PhoneNumber& receiverPhoneNumber, const std::string& text)
+void SmsDb::addSentSms(const Sms& sms)
 {
-    smsMessages.emplace_back(Sms{receiverPhoneNumber, text}, SmsState::Send);
+    smsMessages.emplace_back(sms, SmsState::Sent);
 }
 
 }  // namespace ue

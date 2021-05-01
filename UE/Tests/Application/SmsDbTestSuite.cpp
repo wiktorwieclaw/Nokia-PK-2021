@@ -26,15 +26,15 @@ TEST_F(SmsDbTestSuite, shallAddReceivedSms)
     ASSERT_EQ(smsState, SmsState::NotViewed);
 }
 
-TEST_F(SmsDbTestSuite, shallAddSms)
+TEST_F(SmsDbTestSuite, shallAddSentSms)
 {
-    const common::PhoneNumber receiverPhoneNumber = common::PhoneNumber{113};
-    objectUnderTest.addSms(receiverPhoneNumber,"example");
+    const auto receiverPhoneNumber = common::PhoneNumber{113};
+    objectUnderTest.addSentSms(Sms{receiverPhoneNumber, "example"});
 
     const auto& messages = objectUnderTest.getSmsMessages();
     auto [sms,smsState] = messages[0];
     ASSERT_EQ(sms.text,"example");
-    ASSERT_EQ(smsState,SmsState::Send);
+    ASSERT_EQ(smsState,SmsState::Sent);
 }
 
 }  // namespace ue

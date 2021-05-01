@@ -8,6 +8,7 @@
 #include "Mocks/ILoggerMock.hpp"
 #include "Mocks/ITransportMock.hpp"
 #include "Ports/BtsPort.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -105,9 +106,9 @@ TEST_F(BtsPortTestSuite, shallSendAttachRequest)
 TEST_F(BtsPortTestSuite, shallSendSms)
 {
     common::BinaryMessage msg;
-    const common::PhoneNumber receiverPhoneNumber = common::PhoneNumber{113};
+    const auto receiverPhoneNumber = common::PhoneNumber{113};
     EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
-    objectUnderTest.sendSms(receiverPhoneNumber,"example");
+    objectUnderTest.sendSms(Sms{receiverPhoneNumber,"example"});
     common::IncomingMessage reader(msg);
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()));
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
