@@ -72,4 +72,9 @@ void Application::handleCallAccept(common::PhoneNumber to)
     context.state->handleCallAccept(to);
 }
 
+void Application::handleCallDrop(common::PhoneNumber to)
+{
+    context.state->handleCallDrop(to);
+}
+
 }  // namespace ue

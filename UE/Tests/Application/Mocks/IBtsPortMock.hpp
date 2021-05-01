@@ -30,6 +30,7 @@ public:
 
     MOCK_METHOD(void, sendAttachRequest, (common::BtsId), (final));
     MOCK_METHOD(void, sendCallAccepted, (common::PhoneNumber to), (final));
+    MOCK_METHOD(void, sendCallDropped, (common::PhoneNumber to), (final));
 };
 
 }  // namespace ue

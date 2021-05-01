@@ -39,6 +39,7 @@ public:
 
     // IUserEventsHandler interface
     void handleCallAccept(common::PhoneNumber to) override;
+    void handleCallDrop(common::PhoneNumber to) override;
 
 private:
     Context context;

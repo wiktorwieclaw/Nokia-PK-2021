@@ -19,6 +19,7 @@ public:
 
     // IUserEventsHandler interface
     void handleCallAccept(common::PhoneNumber to) final;
+    void handleCallDrop(common::PhoneNumber to) final;
 };
 
 }  // namespace ue
