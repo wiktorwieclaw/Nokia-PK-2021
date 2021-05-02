@@ -145,5 +145,13 @@ void UserPort::viewSms(const Sms& sms)
         handler->handleShowSmsList();
     });
 }
+void UserPort::showEnterPhoneNumber()
+{
+    //todo
+}
+void UserPort::showDialing()
+{
+    //todo
+}
 
 }  // namespace ue

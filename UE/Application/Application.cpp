@@ -86,5 +86,17 @@ void Application::handleSendSms(const Sms& sms)
 {
     context.state->handleSendSms(sms);
 }
+void Application::handleStartDial()
+{
+    //todo
+}
+void Application::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
+void Application::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
 
 }  // namespace ue

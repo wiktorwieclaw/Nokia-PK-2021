@@ -22,6 +22,8 @@ protected:
     StrictMock<IListViewModeMock> listViewModeMock;
     StrictMock<ITextModeMock> textModeMock;
     StrictMock<ISmsComposeModeMock> smsComposeModeMock;
+    StrictMock<IDialModeMock> dialModeMock;
+    StrictMock<ICallModeMock> callModeMock;
 
     UserPort objectUnderTest{loggerMock, guiMock, PHONE_NUMBER};
 
@@ -113,10 +115,28 @@ TEST_F(UserPortTestSuite, shallShowSmsEditMode)
     objectUnderTest.showNewSmsToEdit();
 }
 
-//TODO write test shallShowEnterPhoneNumber
+TEST_F(UserPortTestSuite, shallShowEnterPhoneNumber)
+{
+    EXPECT_CALL(guiMock, setDialMode()).WillOnce(ReturnRef(dialModeMock));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showEnterPhoneNumber();
+}
 
-//TODO write test shallShowDialing
+TEST_F(UserPortTestSuite, shallShowDialing)
+{
+    EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showDialing();
+}
 
-//TODO write test shallShowTalking
+TEST_F(UserPortTestSuite, shallShowTalking)
+{
+    EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showTalking();
+}
 
 }  // namespace ue

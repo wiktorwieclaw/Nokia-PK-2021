@@ -18,6 +18,7 @@ public:
     virtual void handleAttachReject() = 0;
     virtual void handleSms(const Sms& sms) = 0;
     virtual void handleReceiveCallRequest(common::PhoneNumber from) = 0;
+    virtual void handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to) = 0;
 };
 
 class IBtsPort
@@ -29,6 +30,7 @@ public:
     virtual void sendSms(const Sms &sms) = 0;
     virtual void sendCallAccepted(common::PhoneNumber to) = 0;
     virtual void sendCallDropped(common::PhoneNumber to) = 0;
+    virtual void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) = 0;
 };
 
 }  // namespace ue

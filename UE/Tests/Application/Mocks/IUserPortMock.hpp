@@ -19,6 +19,9 @@ public:
     MOCK_METHOD(void, handleSendCallDrop, (common::PhoneNumber to), (final));
     MOCK_METHOD(void, handleComposeSms, (), (final));
     MOCK_METHOD(void, handleSendSms, (const Sms&), (final));
+    MOCK_METHOD(void, handleStartDial, (), (final));
+    MOCK_METHOD(void, handleSendCallRequest, (common::PhoneNumber from, common::PhoneNumber to), (final));
+
 };
 
 class IUserPortMock : public IUserPort
@@ -36,6 +39,8 @@ public:
     MOCK_METHOD(void, viewSms, (const Sms&), (final));
     MOCK_METHOD(void, showCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, showTalking, (), (final));
+    MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
+    MOCK_METHOD(void, showDialing, (), (final));
 };
 
 }  // namespace ue

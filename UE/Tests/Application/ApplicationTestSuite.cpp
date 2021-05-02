@@ -187,10 +187,29 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallDropped)
     objectUnderTest.handleSendCallDrop(to);
 }
 
-//TODO write test shallHandleStartDial
+TEST_F(ApplicationConnectedTestSuite, shallHandleStartDial)
+{
+    EXPECT_CALL(userPortMock, showEnterPhoneNumber());
+    objectUnderTest.handleStartDial();
+}
 
-//TODO write test shallHandleSendCallRequest
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
+{
+    common::PhoneNumber myPhoneNumber = PHONE_NUMBER;
+    constexpr common::PhoneNumber enteredPhoneNumber{200};
+    EXPECT_CALL(btsPortMock, sendCallRequest(myPhoneNumber,enteredPhoneNumber));
+    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    EXPECT_CALL(userPortMock, showDialing());
+    objectUnderTest.handleSendCallRequest(myPhoneNumber, enteredPhoneNumber);
+}
 
-//TODO write test shallHandleReceiveCallAccepted
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
+{
+    constexpr common::PhoneNumber enteredPhoneNumber{200};
+    common::PhoneNumber myPhoneNumber = PHONE_NUMBER;
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleReceiveCallAccept(enteredPhoneNumber,myPhoneNumber);
+}
 
 }  // namespace ue

@@ -20,6 +20,8 @@ public:
     MOCK_METHOD(void, handleAttachReject, (), (final));
     MOCK_METHOD(void, handleSms, (const Sms& sms), (final));
     MOCK_METHOD(void, handleReceiveCallRequest, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleReceiveCallAccept, (common::PhoneNumber from, common::PhoneNumber to), (final));
+
 };
 
 class IBtsPortMock : public IBtsPort
@@ -32,6 +34,7 @@ public:
     MOCK_METHOD(void, sendCallAccepted, (common::PhoneNumber to), (final));
     MOCK_METHOD(void, sendCallDropped, (common::PhoneNumber to), (final));
     MOCK_METHOD(void, sendSms, (const Sms&), (final));
+    MOCK_METHOD(void, sendCallRequest, (common::PhoneNumber from, common::PhoneNumber to), (final));
 };
 
 }  // namespace ue

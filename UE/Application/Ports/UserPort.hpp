@@ -23,6 +23,9 @@ public:
     void showCallRequest(common::PhoneNumber from) override;
     void showTalking() override;
     void showNewSmsToEdit() override;
+    void showEnterPhoneNumber() override;
+    void showDialing() override;
+
 
 private:
     common::PrefixedLogger logger;
