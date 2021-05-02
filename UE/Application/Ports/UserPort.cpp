@@ -102,9 +102,17 @@ std::string makeSmsLabel(const Sms& sms)
 {
     std::stringstream ss;
 
-    if (sms.state == SmsState::NotViewed)
+    switch (sms.state)
     {
-        ss << "[New] ";
+    case SmsState::NotViewed:
+        ss << "[New] [From]: ";
+        break;
+    case SmsState::Viewed:
+        ss << "[From]: ";
+        break;
+    case SmsState::Sent:
+        ss << "[To]: ";
+        break;
     }
 
     ss << static_cast<int>(sms.correspondent.value);
@@ -137,11 +145,13 @@ void UserPort::viewSmsList(gsl::span<const Sms> smsList)
 
 void UserPort::viewSms(const Sms& sms)
 {
-    gui.setViewTextMode().setText(sms.text);
+    auto& mode = gui.setViewTextMode();
+    mode.setText(sms.text);
 
     gui.setAcceptCallback([] {});
 
-    gui.setRejectCallback([this] {
+    gui.setRejectCallback([this, &mode] {
+        mode.setText("");
         handler->handleShowSmsList();
     });
 }
