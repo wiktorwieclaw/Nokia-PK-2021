@@ -162,29 +162,35 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
     objectUnderTest.handleShowSms(index);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallRequest)
 {
     EXPECT_CALL(userPortMock, showCallRequest(_));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
-    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+    objectUnderTest.handleReceiveCallRequest(PHONE_NUMBER);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallAccepted)
 {
     constexpr common::PhoneNumber to{200};
     EXPECT_CALL(btsPortMock, sendCallAccepted(to));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(to);
+    objectUnderTest.handleSendCallAccept(to);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallDropped)
 {
     constexpr common::PhoneNumber to{200};
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(btsPortMock, sendCallDropped(to));
     EXPECT_CALL(userPortMock, showConnected());
-    objectUnderTest.handleCallDrop(to);
+    objectUnderTest.handleSendCallDrop(to);
 }
+
+//TODO write test shallHandleStartDial
+
+//TODO write test shallHandleSendCallRequest
+
+//TODO write test shallHandleReceiveCallAccepted
 
 }  // namespace ue

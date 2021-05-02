@@ -63,17 +63,17 @@ void BaseState::handleShowSms(IUeGui::IListViewMode::Selection) {
     logger.logError("Unexpected: handleShowSms");
 }
 
-void BaseState::handleCallRequest(common::PhoneNumber from)
+void BaseState::handleReceiveCallRequest(common::PhoneNumber from)
 {
     logger.logError("Unexpected: handleCallRequest");
 }
 
-void BaseState::handleCallAccept(common::PhoneNumber to)
+void BaseState::handleSendCallAccept(common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleCallAccept");
 }
 
-void BaseState::handleCallDrop(common::PhoneNumber to)
+void BaseState::handleSendCallDrop(common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleCallDrop");
 }

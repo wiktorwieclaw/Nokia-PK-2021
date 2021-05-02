@@ -113,4 +113,10 @@ TEST_F(UserPortTestSuite, shallShowSmsEditMode)
     objectUnderTest.showNewSmsToEdit();
 }
 
+//TODO write test shallShowEnterPhoneNumber
+
+//TODO write test shallShowDialing
+
+//TODO write test shallShowTalking
+
 }  // namespace ue

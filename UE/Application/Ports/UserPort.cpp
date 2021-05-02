@@ -84,11 +84,11 @@ void UserPort::showCallRequest(common::PhoneNumber from)
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
     gui.setAcceptCallback([this, from] {
-        handler->handleCallAccept(from);
+        handler->handleSendCallAccept(from);
     });
 
     gui.setRejectCallback([this, from] {
-        handler->handleCallDrop(from);
+        handler->handleSendCallDrop(from);
     });
 }
 

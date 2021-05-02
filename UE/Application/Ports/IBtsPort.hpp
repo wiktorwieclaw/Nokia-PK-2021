@@ -17,7 +17,7 @@ public:
     virtual void handleAttachAccept() = 0;
     virtual void handleAttachReject() = 0;
     virtual void handleSms(const Sms& sms) = 0;
-    virtual void handleCallRequest(common::PhoneNumber from) = 0;
+    virtual void handleReceiveCallRequest(common::PhoneNumber from) = 0;
 };
 
 class IBtsPort

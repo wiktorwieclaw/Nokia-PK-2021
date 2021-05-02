@@ -36,14 +36,14 @@ void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
     context.user.viewSms(retrievedSms);
 }
 
-void ConnectedState::handleCallRequest(common::PhoneNumber from)
+void ConnectedState::handleReceiveCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
     context.user.showCallRequest(from);
     context.timer.startTimer(30s);
 }
 
-void ConnectedState::handleCallAccept(common::PhoneNumber to)
+void ConnectedState::handleSendCallAccept(common::PhoneNumber to)
 {
     context.bts.sendCallAccepted(to);
     context.user.showTalking();
@@ -51,7 +51,7 @@ void ConnectedState::handleCallAccept(common::PhoneNumber to)
     context.setState<TalkingState>();
 }
 
-void ConnectedState::handleCallDrop(common::PhoneNumber to)
+void ConnectedState::handleSendCallDrop(common::PhoneNumber to)
 {
     context.timer.stopTimer();
     context.bts.sendCallDropped(to);

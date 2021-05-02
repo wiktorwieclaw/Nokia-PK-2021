@@ -69,7 +69,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallRequest:
         {
-            handler->handleCallRequest(from);
+            handler->handleReceiveCallRequest(from);
             break;
         }
         default:

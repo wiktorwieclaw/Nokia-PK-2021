@@ -62,19 +62,19 @@ void Application::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
     context.state->handleShowSms(indexOfSms);
 }
 
-void Application::handleCallRequest(common::PhoneNumber from)
+void Application::handleReceiveCallRequest(common::PhoneNumber from)
 {
-    context.state->handleCallRequest(from);
+    context.state->handleReceiveCallRequest(from);
 }
 
-void Application::handleCallAccept(common::PhoneNumber to)
+void Application::handleSendCallAccept(common::PhoneNumber to)
 {
-    context.state->handleCallAccept(to);
+    context.state->handleSendCallAccept(to);
 }
 
-void Application::handleCallDrop(common::PhoneNumber to)
+void Application::handleSendCallDrop(common::PhoneNumber to)
 {
-    context.state->handleCallDrop(to);
+    context.state->handleSendCallDrop(to);
 }
 
 void Application::handleComposeSms()
