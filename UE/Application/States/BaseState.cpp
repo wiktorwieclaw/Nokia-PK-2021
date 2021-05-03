@@ -83,4 +83,9 @@ void BaseState::handleSmsDrop()
     logger.logError("Unexpected: handleSmsDrop");
 }
 
+void BaseState::handleUnknownRecipient()
+{
+    logger.logError("Unexpected: handleUnknownRecipient");
+}
+
 }  // namespace ue

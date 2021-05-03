@@ -146,6 +146,12 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
     objectUnderTest.handleSmsDrop();
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
+{
+    EXPECT_CALL(smsDbMock, markedLastSmsAsFailed());
+    objectUnderTest.handleUnknownRecipient();
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 {
     gsl::span<const Sms> messages;

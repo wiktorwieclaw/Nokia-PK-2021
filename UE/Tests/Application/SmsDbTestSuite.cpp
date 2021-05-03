@@ -53,4 +53,14 @@ TEST_F(SmsDbTestSuite, shallAddSentSms)
     ASSERT_EQ(sms.state, SmsState::Sent);
 }
 
+TEST_F(SmsDbTestSuite, shallMarkedLastSmsAsFailed)
+{
+    objectUnderTest.addMessage(Sms{phoneNumber, "example text",SmsState::Sent});
+
+    objectUnderTest.markedLastSmsAsFailed();
+    const auto& sms = objectUnderTest.getMessage(0);
+
+    ASSERT_EQ(sms.state, SmsState::Failed);
+}
+
 }  // namespace ue

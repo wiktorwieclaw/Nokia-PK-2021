@@ -14,6 +14,7 @@ public:
     void setMessageState(gsl::index i, SmsState state) override;
     [[nodiscard]] gsl::span<const Sms> getAllMessages() override;
     [[nodiscard]] const Sms& getMessage(gsl::index i) override;
+    void markedLastSmsAsFailed() override;
 
 private:
     std::vector<Sms> messages;

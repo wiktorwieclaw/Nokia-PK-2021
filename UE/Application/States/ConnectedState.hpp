@@ -25,6 +25,7 @@ public:
     void handleComposeSms() final;
     void handleSendSms(const Sms& sms) final;
     void handleSmsDrop() final;
+    void handleUnknownRecipient() final;
 };
 
 }  // namespace ue

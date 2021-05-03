@@ -24,4 +24,9 @@ const Sms& SmsDb::getMessage(gsl::index i)
     return messages.at(i);
 }
 
+void SmsDb::markedLastSmsAsFailed()
+{
+    messages.at(messages.size() - 1).state = SmsState::Failed;
+}
+
 }  // namespace ue
