@@ -87,4 +87,9 @@ void Application::handleSendSms(const Sms& sms)
     context.state->handleSendSms(sms);
 }
 
+void Application::handleSmsDrop()
+{
+    context.state->handleSmsDrop();
+}
+
 }  // namespace ue

@@ -24,6 +24,7 @@ public:
     // IUserEventsHandler interface
     void handleComposeSms() final;
     void handleSendSms(const Sms& sms) final;
+    void handleSmsDrop() final;
 };
 
 }  // namespace ue

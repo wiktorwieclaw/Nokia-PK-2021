@@ -76,6 +76,11 @@ void UserPort::showNewSmsToEdit()
         mode.clearSmsText();
         handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
     });
+
+    gui.setRejectCallback([this, &mode] {
+        mode.clearSmsText();
+        handler->handleSmsDrop();
+    });
 }
 
 void UserPort::showCallRequest(common::PhoneNumber from)

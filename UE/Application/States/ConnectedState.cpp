@@ -70,4 +70,9 @@ void ConnectedState::handleSendSms(const Sms& sms)
     context.user.showConnected();
 }
 
+void ConnectedState::handleSmsDrop()
+{
+    context.user.showConnected();
+}
+
 }  // namespace ue

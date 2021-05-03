@@ -24,6 +24,7 @@ public:
     // IUserEventsHandler interface
     void handleShowSmsList() override;
     void handleShowSms(IUeGui::IListViewMode::Selection) override;
+    void handleSmsDrop() override;
 
 
     // ITimerEventsHandler interface

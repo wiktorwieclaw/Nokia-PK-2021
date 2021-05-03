@@ -140,6 +140,12 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
     objectUnderTest.handleSendSms(sms);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
+{
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleSmsDrop();
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 {
     gsl::span<const Sms> messages;
