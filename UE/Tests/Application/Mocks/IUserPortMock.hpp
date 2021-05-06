@@ -14,8 +14,8 @@ public:
 
     MOCK_METHOD(void, handleShowSmsList, (), (final));
     MOCK_METHOD(void, handleShowSms, (IUeGui::IListViewMode::Selection), (final));
-    MOCK_METHOD(void, handleCallAccept, (common::PhoneNumber to), (final));
-    MOCK_METHOD(void, handleCallDrop, (common::PhoneNumber to), (final));
+    MOCK_METHOD(void, handleCallAccept, (), (final));
+    MOCK_METHOD(void, handleCallDrop, (), (final));
 };
 
 class IUserPortMock : public IUserPort

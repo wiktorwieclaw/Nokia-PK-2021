@@ -69,12 +69,12 @@ void UserPort::showCallRequest(common::PhoneNumber from)
     auto& mode = gui.setAlertMode();
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
-    gui.setAcceptCallback([this, from] {
-        handler->handleCallAccept(from);
+    gui.setAcceptCallback([this] {
+        handler->handleCallAccept();
     });
 
-    gui.setRejectCallback([this, from] {
-        handler->handleCallDrop(from);
+    gui.setRejectCallback([this] {
+        handler->handleCallDrop();
     });
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <optional>
+
 #include "BaseState.hpp"
 
 namespace ue
@@ -18,8 +20,14 @@ public:
     void handleCallRequest(common::PhoneNumber from) final;
 
     // IUserEventsHandler interface
-    void handleCallAccept(common::PhoneNumber to) final;
-    void handleCallDrop(common::PhoneNumber to) final;
+    void handleCallAccept() final;
+    void handleCallDrop() final;
+
+    // ITimerEventsHandler
+    void handleTimeout() override;
+
+private:
+    std::optional<common::PhoneNumber> callingNumber;
 };
 
 }  // namespace ue

@@ -40,21 +40,30 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
     context.user.showCallRequest(from);
+    callingNumber = from;
     context.timer.startTimer(30s);
 }
 
-void ConnectedState::handleCallAccept(common::PhoneNumber to)
+void ConnectedState::handleCallAccept()
 {
-    context.bts.sendCallAccepted(to);
+    context.bts.sendCallAccepted(callingNumber.value());
     context.user.showTalking();
     context.timer.stopTimer();
     context.setState<TalkingState>();
 }
 
-void ConnectedState::handleCallDrop(common::PhoneNumber to)
+void ConnectedState::handleCallDrop()
 {
     context.timer.stopTimer();
-    context.bts.sendCallDropped(to);
+    context.bts.sendCallDropped(callingNumber.value());
+    callingNumber.reset();
+    context.user.showConnected();
+}
+
+void ConnectedState::handleTimeout()
+{
+    context.bts.sendCallDropped(callingNumber.value());
+    callingNumber.reset();
     context.user.showConnected();
 }
 
