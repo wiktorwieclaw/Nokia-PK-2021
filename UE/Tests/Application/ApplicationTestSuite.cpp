@@ -43,8 +43,6 @@ struct ApplicationNotConnectedTestSuite : ApplicationTestSuite
 
 struct ApplicationConnectingTestSuite : ApplicationNotConnectedTestSuite
 {
-    static constexpr auto callingNumber = common::PhoneNumber{200};
-
     ApplicationConnectingTestSuite();
     void doConnecting();
 };
@@ -82,6 +80,8 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
 
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
+    static constexpr auto callingNumber = common::PhoneNumber{200};
+
     ApplicationConnectedTestSuite();
     void doConnected();
     void doHandleCallRequest(common::PhoneNumber from);
