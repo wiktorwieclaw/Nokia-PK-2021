@@ -128,6 +128,21 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
     objectUnderTest.handleSms(sms);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
+{
+    EXPECT_CALL(userPortMock, showNewSmsToEdit());
+    objectUnderTest.handleComposeSms();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
+{
+    const Sms& sms{common::PhoneNumber{113},"example"};
+    EXPECT_CALL(btsPortMock, sendSms(_));
+    EXPECT_CALL(smsDbMock, addMessage(_));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleSendSms(sms);
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 {
     gsl::span<const Sms> messages;

@@ -41,6 +41,10 @@ public:
     void handleCallAccept() override;
     void handleCallDrop() override;
 
+    //IUserEventsHandler interface
+    void handleComposeSms() override;
+    void handleSendSms(const Sms& sms) override;
+
 private:
     Context context;
     common::PrefixedLogger logger;

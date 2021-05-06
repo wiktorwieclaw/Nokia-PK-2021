@@ -20,6 +20,8 @@ public:
     void handleCallRequest(common::PhoneNumber from) final;
 
     // IUserEventsHandler interface
+    void handleComposeSms() final;
+    void handleSendSms(const Sms& sms) final;
     void handleCallAccept() final;
     void handleCallDrop() final;
 

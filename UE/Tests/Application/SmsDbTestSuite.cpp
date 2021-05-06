@@ -43,5 +43,14 @@ TEST_F(SmsDbTestSuite, shallUpdateSmsState)
     ASSERT_EQ(sms.state, SmsState::Viewed);
 }
 
+TEST_F(SmsDbTestSuite, shallAddSentSms)
+{
+    const auto receiverPhoneNumber = common::PhoneNumber{113};
+    objectUnderTest.addMessage(Sms{receiverPhoneNumber, "example", SmsState::Sent});
+
+    const auto& sms = objectUnderTest.getMessage(0);
+    ASSERT_EQ(sms.text, "example");
+    ASSERT_EQ(sms.state, SmsState::Sent);
+}
 
 }  // namespace ue

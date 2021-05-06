@@ -33,6 +33,10 @@ public:
     void handleCallAccept() override;
     void handleCallDrop() override;
 
+    // IUserEventsHandler interface
+    void handleComposeSms() override;
+    void handleSendSms(const Sms& sms) override;
+
 protected:
     Context& context;
     common::PrefixedLogger logger;

@@ -1086,7 +1086,7 @@ class StreamingListener : public EmptyTestEventListener {
     // Sends a string to the socket.
     void Send(const std::string& message) override {
       GTEST_CHECK_(sockfd_ != -1)
-          << "Send() can be called only when there is a connection.";
+          << "Sent() can be called only when there is a connection.";
 
       const auto len = static_cast<size_t>(message.length());
       if (write(sockfd_, message.c_str(), len) != static_cast<ssize_t>(len)) {
