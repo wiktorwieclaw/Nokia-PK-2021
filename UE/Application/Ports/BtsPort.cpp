@@ -116,5 +116,9 @@ void BtsPort::sendSms(const Sms& sms)
     msg.writeText(sms.text);
     transport.sendMessage(msg.getMessage());
 }
+void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
 
 }  // namespace ue

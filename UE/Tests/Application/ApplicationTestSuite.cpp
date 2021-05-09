@@ -195,21 +195,19 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleStartDial)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
 {
-    common::PhoneNumber myPhoneNumber = PHONE_NUMBER;
     constexpr common::PhoneNumber enteredPhoneNumber{200};
-    EXPECT_CALL(btsPortMock, sendCallRequest(myPhoneNumber,enteredPhoneNumber));
-    EXPECT_CALL(timerPortMock, startTimer(30000ms));
+    EXPECT_CALL(btsPortMock, sendCallRequest(PHONE_NUMBER,enteredPhoneNumber));
+    EXPECT_CALL(timerPortMock, startTimer(60000ms));
     EXPECT_CALL(userPortMock, showDialing());
-    objectUnderTest.handleSendCallRequest(myPhoneNumber, enteredPhoneNumber);
+    objectUnderTest.handleSendCallRequest(PHONE_NUMBER, enteredPhoneNumber);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
 {
     constexpr common::PhoneNumber enteredPhoneNumber{200};
-    common::PhoneNumber myPhoneNumber = PHONE_NUMBER;
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleReceiveCallAccept(enteredPhoneNumber,myPhoneNumber);
+    objectUnderTest.handleReceiveCallAccept(enteredPhoneNumber,PHONE_NUMBER);
 }
 
 }  // namespace ue

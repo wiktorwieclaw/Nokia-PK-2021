@@ -9,21 +9,22 @@ class ConnectedState : public BaseState
 public:
     explicit ConnectedState(Context& context);
 
-    // IBtsEventsHandler interface
 public:
-    void handleDisconnected() final;
-    void handleSms(const Sms& sms) final;
+    // IUserEventsHandler interface
     void handleShowSmsList() final;
     void handleShowSms(IUeGui::IListViewMode::Selection) final;
-    void handleReceiveCallRequest(common::PhoneNumber from) final;
-
-    // IUserEventsHandler interface
     void handleSendCallAccept(common::PhoneNumber to) final;
     void handleSendCallDrop(common::PhoneNumber to) final;
-
-    // IUserEventsHandler interface
     void handleComposeSms() final;
     void handleSendSms(const Sms& sms) final;
+    void handleStartDial() override;
+    void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+
+    // IBtsEventsHandler interface
+    void handleDisconnected() final;
+    void handleSms(const Sms& sms) final;
+    void handleReceiveCallRequest(common::PhoneNumber from) final;
+    void handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to) override;
 };
 
 }  // namespace ue

@@ -69,5 +69,17 @@ void ConnectedState::handleSendSms(const Sms& sms)
     context.bts.sendSms(sms);
     context.user.showConnected();
 }
+void ConnectedState::handleStartDial()
+{
+    //todo
+}
+void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
+void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
 
 }  // namespace ue

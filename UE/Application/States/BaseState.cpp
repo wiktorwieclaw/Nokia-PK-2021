@@ -65,17 +65,29 @@ void BaseState::handleShowSms(IUeGui::IListViewMode::Selection) {
 
 void BaseState::handleReceiveCallRequest(common::PhoneNumber from)
 {
-    logger.logError("Unexpected: handleCallRequest");
+    logger.logError("Unexpected: handleReceiveCallRequest");
 }
 
 void BaseState::handleSendCallAccept(common::PhoneNumber to)
 {
-    logger.logError("Unexpected: handleCallAccept");
+    logger.logError("Unexpected: handleSendCallAccept");
 }
 
 void BaseState::handleSendCallDrop(common::PhoneNumber to)
 {
-    logger.logError("Unexpected: handleCallDrop");
+    logger.logError("Unexpected: handleSendCallDrop");
+}
+void BaseState::handleStartDial()
+{
+    //todo
+}
+void BaseState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
+}
+void BaseState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
+{
+    //todo
 }
 
 }  // namespace ue
