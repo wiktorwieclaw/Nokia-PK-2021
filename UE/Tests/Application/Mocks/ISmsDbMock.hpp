@@ -18,7 +18,7 @@ public:
     MOCK_METHOD(gsl::span<const Sms>, getAllMessages, (), (final));
     MOCK_METHOD(void, setMessageState, (gsl::index i, SmsState state), (final));
     MOCK_METHOD(const Sms&, getMessage, (gsl::index i), (final));
-    MOCK_METHOD(void, markedLastSmsAsFailed, (), (final));
+    MOCK_METHOD(std::size_t, getNumberOfMessages, (), (final));
 };
 
 inline bool operator==(gsl::span<const Sms> lhs, gsl::span<const Sms> rhs)

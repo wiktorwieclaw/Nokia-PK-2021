@@ -148,7 +148,8 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
 {
-    EXPECT_CALL(smsDbMock, markedLastSmsAsFailed());
+    EXPECT_CALL(smsDbMock, getNumberOfMessages());
+    EXPECT_CALL(smsDbMock, setMessageState(_,_));
     objectUnderTest.handleUnknownRecipient();
 }
 
