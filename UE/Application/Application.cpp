@@ -67,14 +67,14 @@ void Application::handleCallRequest(common::PhoneNumber from)
     context.state->handleCallRequest(from);
 }
 
-void Application::handleCallAccept(common::PhoneNumber to)
+void Application::handleCallAccept()
 {
-    context.state->handleCallAccept(to);
+    context.state->handleCallAccept();
 }
 
-void Application::handleCallDrop(common::PhoneNumber to)
+void Application::handleCallDrop()
 {
-    context.state->handleCallDrop(to);
+    context.state->handleCallDrop();
 }
 
 void Application::handleComposeSms()

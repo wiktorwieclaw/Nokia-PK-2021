@@ -30,8 +30,8 @@ public:
     void handleCallRequest(common::PhoneNumber from) override;
 
     // IUserEventsHandler interface
-    void handleCallAccept(common::PhoneNumber to) override;
-    void handleCallDrop(common::PhoneNumber to) override;
+    void handleCallAccept() override;
+    void handleCallDrop() override;
 
     // IUserEventsHandler interface
     void handleComposeSms() override;
