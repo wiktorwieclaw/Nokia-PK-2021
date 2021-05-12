@@ -77,5 +77,9 @@ void BaseState::handleCallDrop(common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleCallDrop");
 }
+void BaseState::handleCallDropWhenTalking(common::PhoneNumber to)
+{
+    logger.logError("Unexpected: handleCallDropWhenTalking");
+}
 
 }  // namespace ue

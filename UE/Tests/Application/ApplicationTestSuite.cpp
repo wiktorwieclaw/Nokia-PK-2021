@@ -187,4 +187,32 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
     objectUnderTest.handleCallDrop(to);
 }
 
+struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
+{
+    ApplicationTalkingTestSuite();
+    void doTalking();
+};
+
+ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
+{
+    doTalking();
+}
+
+void ApplicationTalkingTestSuite::doTalking()
+{
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    objectUnderTest.handleCallAccept(to);
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallDropCallWhenTalking)
+{
+    constexpr common::PhoneNumber to{200};
+    EXPECT_CALL(btsPortMock,sendCallDropped(to));
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleCallDropWhenTalking(to);
+}
+
 }  // namespace ue

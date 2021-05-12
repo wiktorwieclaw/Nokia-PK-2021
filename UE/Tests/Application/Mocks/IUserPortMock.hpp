@@ -19,6 +19,7 @@ public:
     MOCK_METHOD(void, handleCallDrop, (common::PhoneNumber to), (final));
     MOCK_METHOD(void, handleComposeSms, (), (final));
     MOCK_METHOD(void, handleSendSms, (const Sms&), (final));
+    MOCK_METHOD(void, handleCallDropWhenTalking, (common::PhoneNumber), (final));
 };
 
 class IUserPortMock : public IUserPort
