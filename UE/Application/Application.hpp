@@ -36,6 +36,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
+    void handleUnknownRecipient() override;
 
     // IUserEventsHandler interface
     void handleCallAccept() override;

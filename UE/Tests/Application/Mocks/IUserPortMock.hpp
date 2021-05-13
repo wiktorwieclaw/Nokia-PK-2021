@@ -36,6 +36,7 @@ public:
     MOCK_METHOD(void, viewSms, (const Sms&), (final));
     MOCK_METHOD(void, showCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, showTalking, (), (final));
+    MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
 };
 
 }  // namespace ue

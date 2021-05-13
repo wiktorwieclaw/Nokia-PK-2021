@@ -78,4 +78,9 @@ void BaseState::handleCallDrop()
     logger.logError("Unexpected: handleCallDrop");
 }
 
+void BaseState::handleUnknownRecipient()
+{
+    logger.logError("Unexpected: handleUnknownRecipient");
+}
+
 }  // namespace ue

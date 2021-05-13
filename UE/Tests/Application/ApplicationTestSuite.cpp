@@ -84,6 +84,7 @@ struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 
     ApplicationConnectedTestSuite();
     void doConnected();
+    void doTalking();
     void doHandleCallRequest(common::PhoneNumber from);
 };
 
@@ -177,13 +178,19 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
     doHandleCallRequest(callingNumber);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+void ApplicationConnectedTestSuite::doTalking()
 {
     doHandleCallRequest(callingNumber);
     EXPECT_CALL(btsPortMock, sendCallAccepted(callingNumber));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(timerPortMock, startTimer(_)); // todo specify time
     objectUnderTest.handleCallAccept();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+{
+    doTalking();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
@@ -201,6 +208,23 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
     EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleTimeout();
+}
+
+struct TalkingStateTestSuite : ApplicationConnectedTestSuite
+{
+    TalkingStateTestSuite();
+};
+
+TalkingStateTestSuite::TalkingStateTestSuite()
+{
+    doTalking();
+}
+
+TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient) {
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable);
+    EXPECT_CALL(userPortMock, showConnected);
+    objectUnderTest.handleUnknownRecipient();
 }
 
 }  // namespace ue

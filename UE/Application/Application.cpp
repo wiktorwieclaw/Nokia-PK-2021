@@ -87,4 +87,9 @@ void Application::handleSendSms(const Sms& sms)
     context.state->handleSendSms(sms);
 }
 
+void Application::handleUnknownRecipient()
+{
+    context.state->handleUnknownRecipient();
+}
+
 }  // namespace ue
