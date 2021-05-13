@@ -11,6 +11,9 @@ public:
 
     // IUserEventsHandler interface
     void handleCallDropWhenTalking(common::PhoneNumber to) override;
+
+    // IBtsEventsHandler interface
+    void handleCallDropped(common::PhoneNumber from) override;
 };
 
 }  // namespace ue

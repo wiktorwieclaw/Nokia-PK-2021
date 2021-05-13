@@ -215,4 +215,11 @@ TEST_F(ApplicationTalkingTestSuite, shallDropCallWhenTalking)
     objectUnderTest.handleCallDropWhenTalking(to);
 }
 
+TEST_F(ApplicationTalkingTestSuite, shallCallDropped)
+{
+    constexpr common::PhoneNumber from{200};
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleCallDropped(from);
+}
+
 }  // namespace ue

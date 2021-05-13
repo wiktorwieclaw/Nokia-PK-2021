@@ -13,4 +13,9 @@ void TalkingState::handleCallDropWhenTalking(common::PhoneNumber to)
     context.setState<ConnectedState>();
 }
 
+void TalkingState::handleCallDropped(common::PhoneNumber from)
+{
+    context.setState<ConnectedState>();
+}
+
 }  // namespace ue

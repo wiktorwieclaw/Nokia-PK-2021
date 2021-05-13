@@ -92,4 +92,9 @@ void Application::handleCallDropWhenTalking(common::PhoneNumber to)
     context.state->handleCallDropWhenTalking(to);
 }
 
+void Application::handleCallDropped(common::PhoneNumber from)
+{
+    context.state->handleCallDropped(from);
+}
+
 }  // namespace ue

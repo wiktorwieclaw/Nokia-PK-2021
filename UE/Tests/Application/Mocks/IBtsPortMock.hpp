@@ -20,6 +20,7 @@ public:
     MOCK_METHOD(void, handleAttachReject, (), (final));
     MOCK_METHOD(void, handleSms, (const Sms& sms), (final));
     MOCK_METHOD(void, handleCallRequest, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleCallDropped, (common::PhoneNumber), (final));
 };
 
 class IBtsPortMock : public IBtsPort
