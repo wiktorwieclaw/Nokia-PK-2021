@@ -31,8 +31,13 @@ void ConnectedState::handleShowSmsList()
 
 void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
 {
-    context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
     const auto& retrievedSms = context.smsDb.getMessage(indexOfSms);
+
+    if (retrievedSms.state == SmsState::NotViewed)
+    {
+        context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
+    }
+
     context.user.viewSms(retrievedSms);
 }
 
