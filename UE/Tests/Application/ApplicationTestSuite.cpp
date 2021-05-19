@@ -80,8 +80,11 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
 
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
+    static constexpr auto callingNumber = common::PhoneNumber{200};
+
     ApplicationConnectedTestSuite();
     void doConnected();
+    void doHandleCallRequest(common::PhoneNumber from);
 };
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
@@ -175,29 +178,42 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
     objectUnderTest.handleShowSms(index);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+void ApplicationConnectedTestSuite::doHandleCallRequest(common::PhoneNumber from)
 {
     EXPECT_CALL(userPortMock, showCallRequest(_));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
-    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+    objectUnderTest.handleCallRequest(from);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    doHandleCallRequest(callingNumber);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
 {
-    constexpr common::PhoneNumber to{200};
-    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallAccepted(callingNumber));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(to);
+    objectUnderTest.handleCallAccept();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
 {
-    constexpr common::PhoneNumber to{200};
+    doHandleCallRequest(callingNumber);
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(btsPortMock, sendCallDropped(to));
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
     EXPECT_CALL(userPortMock, showConnected());
-    objectUnderTest.handleCallDrop(to);
+    objectUnderTest.handleCallDrop();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
+{
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleTimeout();
 }
 
 }  // namespace ue

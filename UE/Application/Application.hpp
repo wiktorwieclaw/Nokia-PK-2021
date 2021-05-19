@@ -30,7 +30,8 @@ public:
     void handleCallDrop(common::PhoneNumber to) override;
     void handleComposeSms() override;
     void handleSendSms(const Sms& sms) override;
-
+    void handleCallAccept() override;
+    void handleCallDrop() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;

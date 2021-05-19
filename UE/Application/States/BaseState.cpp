@@ -68,12 +68,12 @@ void BaseState::handleCallRequest(common::PhoneNumber from)
     logger.logError("Unexpected: handleCallRequest");
 }
 
-void BaseState::handleCallAccept(common::PhoneNumber to)
+void BaseState::handleCallAccept()
 {
     logger.logError("Unexpected: handleCallAccept");
 }
 
-void BaseState::handleCallDrop(common::PhoneNumber to)
+void BaseState::handleCallDrop()
 {
     logger.logError("Unexpected: handleCallDrop");
 }
