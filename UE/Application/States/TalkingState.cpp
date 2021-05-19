@@ -9,8 +9,8 @@ using namespace std::chrono_literals;
 
 namespace ue
 {
-TalkingState::TalkingState(Context& context)
-    : BaseState(context, "TalkingState")
+TalkingState::TalkingState(Context& context, PhoneNumber callingNumber)
+    : BaseState(context, "TalkingState"), callingNumber{callingNumber}
 {
     // time not given in specification
     context.timer.startTimer(30s);
@@ -24,13 +24,13 @@ void TalkingState::handleUnknownRecipient()
     context.setState<ConnectedState>();
 }
 
-void TalkingState::handleCallDrop(common::PhoneNumber to)
+void TalkingState::handleCallDrop()
 {
-    context.bts.sendCallDropped(to);
+    context.bts.sendCallDropped(callingNumber);
     context.setState<ConnectedState>();
 }
 
-void TalkingState::handleReceiveCallDrop(common::PhoneNumber from)
+void TalkingState::handleReceiveCallDrop()
 {
     context.setState<ConnectedState>();
 }

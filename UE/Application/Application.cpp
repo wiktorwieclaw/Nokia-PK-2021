@@ -97,9 +97,9 @@ void Application::handleUnknownRecipient()
     context.state->handleUnknownRecipient();
 }
 
-void Application::handleReceiveCallDrop(common::PhoneNumber from)
+void Application::handleReceiveCallDrop()
 {
-    context.state->handleReceiveCallDrop(from);
+    context.state->handleReceiveCallDrop();
 }
 
 }  // namespace ue

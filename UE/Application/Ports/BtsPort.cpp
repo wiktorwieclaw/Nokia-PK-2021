@@ -79,7 +79,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallDropped:
         {
-            handler->handleReceiveCallDrop(from);
+            handler->handleReceiveCallDrop();
             break;
         }
         default:

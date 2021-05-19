@@ -33,7 +33,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
-    void handleReceiveCallDrop(common::PhoneNumber from) override;
+    void handleReceiveCallDrop() override;
     void handleUnknownRecipient() override;
 
 protected:

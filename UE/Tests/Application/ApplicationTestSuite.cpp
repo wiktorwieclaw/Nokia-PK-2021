@@ -254,36 +254,24 @@ TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient) {
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 {
     ApplicationTalkingTestSuite();
-    void doTalking();
 };
 
 ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
 {
-    doTalking();
-}
-
-void ApplicationTalkingTestSuite::doTalking()
-{
-    constexpr common::PhoneNumber to{200};
-    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
-    EXPECT_CALL(userPortMock, showTalking());
-    EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(to);
+    ApplicationConnectedTestSuite::doTalking();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
 {
-    constexpr common::PhoneNumber to{200};
-    EXPECT_CALL(btsPortMock,sendCallDropped(to));
+    EXPECT_CALL(btsPortMock,sendCallDropped(_));
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleCallDrop(to);
+    objectUnderTest.handleCallDrop();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
 {
-    constexpr common::PhoneNumber from{200};
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleReceiveCallDrop(from);
+    objectUnderTest.handleReceiveCallDrop();
 }
 
 }  // namespace ue
