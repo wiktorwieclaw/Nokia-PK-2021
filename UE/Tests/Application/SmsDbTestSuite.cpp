@@ -53,4 +53,12 @@ TEST_F(SmsDbTestSuite, shallAddSentSms)
     ASSERT_EQ(sms.state, SmsState::Sent);
 }
 
+TEST_F(SmsDbTestSuite, shallGetNumberOfMessages)
+{
+    objectUnderTest.addMessage(Sms{phoneNumber, "example text",SmsState::Sent});
+    objectUnderTest.addMessage(Sms{phoneNumber, "example text",SmsState::Sent});
+
+    ASSERT_EQ(objectUnderTest.getNumberOfMessages(),2);
+}
+
 }  // namespace ue

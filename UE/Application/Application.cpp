@@ -87,6 +87,11 @@ void Application::handleSendSms(const Sms& sms)
     context.state->handleSendSms(sms);
 }
 
+void Application::handleSmsDrop()
+{
+    context.state->handleSmsDrop();
+}
+
 void Application::handleUnknownRecipient()
 {
     context.state->handleUnknownRecipient();
