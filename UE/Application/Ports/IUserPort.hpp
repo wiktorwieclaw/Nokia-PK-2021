@@ -16,10 +16,11 @@ public:
 
     virtual void handleShowSmsList() = 0;
     virtual void handleShowSms(IUeGui::IListViewMode::Selection) = 0;
-    virtual void handleCallAccept(common::PhoneNumber to) = 0;
-    virtual void handleCallDrop(common::PhoneNumber to) = 0;
+    virtual void handleCallAccept() = 0;
+    virtual void handleCallDrop() = 0;
     virtual void handleComposeSms() = 0;
     virtual void handleSendSms(const Sms& sms) = 0;
+    virtual void handleSmsDrop() = 0;
 };
 
 class IUserPort
@@ -36,6 +37,7 @@ public:
     virtual void showCallRequest(common::PhoneNumber from) = 0;
     virtual void showTalking() = 0;
     virtual void showNewSmsToEdit() = 0;
+    virtual void showPartnerNotAvailable() = 0;
 };
 
 }  // namespace ue

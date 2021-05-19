@@ -15,10 +15,11 @@ public:
 
     MOCK_METHOD(void, handleShowSmsList, (), (final));
     MOCK_METHOD(void, handleShowSms, (IUeGui::IListViewMode::Selection), (final));
-    MOCK_METHOD(void, handleCallAccept, (common::PhoneNumber to), (final));
-    MOCK_METHOD(void, handleCallDrop, (common::PhoneNumber to), (final));
+    MOCK_METHOD(void, handleCallAccept, (), (final));
+    MOCK_METHOD(void, handleCallDrop, (), (final));
     MOCK_METHOD(void, handleComposeSms, (), (final));
     MOCK_METHOD(void, handleSendSms, (const Sms&), (final));
+    MOCK_METHOD(void, handleSmsDrop, (), (final));
 };
 
 class IUserPortMock : public IUserPort
@@ -36,6 +37,7 @@ public:
     MOCK_METHOD(void, viewSms, (const Sms&), (final));
     MOCK_METHOD(void, showCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, showTalking, (), (final));
+    MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
 };
 
 }  // namespace ue

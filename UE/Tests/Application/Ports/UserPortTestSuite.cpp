@@ -110,6 +110,7 @@ TEST_F(UserPortTestSuite, shallShowSmsEditMode)
 {
     EXPECT_CALL(guiMock, setSmsComposeMode()).WillOnce(ReturnRef(smsComposeModeMock));
     EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock,setRejectCallback(_));
     objectUnderTest.showNewSmsToEdit();
 }
 

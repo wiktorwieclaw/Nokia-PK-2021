@@ -76,6 +76,11 @@ void UserPort::showNewSmsToEdit()
         mode.clearSmsText();
         handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
     });
+
+    gui.setRejectCallback([this, &mode] {
+        mode.clearSmsText();
+        handler->handleSmsDrop();
+    });
 }
 
 void UserPort::showCallRequest(common::PhoneNumber from)
@@ -83,12 +88,12 @@ void UserPort::showCallRequest(common::PhoneNumber from)
     auto& mode = gui.setAlertMode();
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
-    gui.setAcceptCallback([this, from] {
-        handler->handleCallAccept(from);
+    gui.setAcceptCallback([this] {
+        handler->handleCallAccept();
     });
 
-    gui.setRejectCallback([this, from] {
-        handler->handleCallDrop(from);
+    gui.setRejectCallback([this] {
+        handler->handleCallDrop();
     });
 }
 
@@ -154,6 +159,12 @@ void UserPort::viewSms(const Sms& sms)
         mode.setText("");
         handler->handleShowSmsList();
     });
+}
+
+void UserPort::showPartnerNotAvailable()
+{
+    auto& alertMode = gui.setAlertMode();
+    alertMode.setText("Partner not available");
 }
 
 }  // namespace ue

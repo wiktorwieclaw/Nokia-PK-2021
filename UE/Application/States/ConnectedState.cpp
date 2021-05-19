@@ -1,8 +1,8 @@
 #include "ConnectedState.hpp"
 
 #include "NotConnectedState.hpp"
-#include "TalkingState.hpp"
 #include "Sms.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -25,14 +25,19 @@ void ConnectedState::handleSms(const Sms& sms)
 
 void ConnectedState::handleShowSmsList()
 {
-     const auto& smsMessages = context.smsDb.getAllMessages();
-     context.user.viewSmsList(smsMessages);
+    const auto& smsMessages = context.smsDb.getAllMessages();
+    context.user.viewSmsList(smsMessages);
 }
 
 void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
 {
-    context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
     const auto& retrievedSms = context.smsDb.getMessage(indexOfSms);
+
+    if (retrievedSms.state == SmsState::NotViewed)
+    {
+        context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
+    }
+
     context.user.viewSms(retrievedSms);
 }
 
@@ -40,21 +45,30 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
     context.user.showCallRequest(from);
+    callingNumber = from;
     context.timer.startTimer(30s);
 }
 
-void ConnectedState::handleCallAccept(common::PhoneNumber to)
+void ConnectedState::handleCallAccept()
 {
-    context.bts.sendCallAccepted(to);
+    context.bts.sendCallAccepted(callingNumber.value());
     context.user.showTalking();
     context.timer.stopTimer();
     context.setState<TalkingState>();
 }
 
-void ConnectedState::handleCallDrop(common::PhoneNumber to)
+void ConnectedState::handleCallDrop()
 {
     context.timer.stopTimer();
-    context.bts.sendCallDropped(to);
+    context.bts.sendCallDropped(callingNumber.value());
+    callingNumber.reset();
+    context.user.showConnected();
+}
+
+void ConnectedState::handleTimeout()
+{
+    context.bts.sendCallDropped(callingNumber.value());
+    callingNumber.reset();
     context.user.showConnected();
 }
 
@@ -68,6 +82,18 @@ void ConnectedState::handleSendSms(const Sms& sms)
     context.smsDb.addMessage(sms);
     context.bts.sendSms(sms);
     context.user.showConnected();
+}
+
+void ConnectedState::handleSmsDrop()
+{
+    context.user.showConnected();
+}
+
+void ConnectedState::handleUnknownRecipient()
+{
+    const auto numberOfMessages = context.smsDb.getNumberOfMessages();
+    const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
+    context.smsDb.setMessageState(index, SmsState::Failed);
 }
 
 }  // namespace ue

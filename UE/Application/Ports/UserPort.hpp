@@ -23,6 +23,7 @@ public:
     void showCallRequest(common::PhoneNumber from) override;
     void showTalking() override;
     void showNewSmsToEdit() override;
+    void showPartnerNotAvailable() override;
 
 private:
     common::PrefixedLogger logger;

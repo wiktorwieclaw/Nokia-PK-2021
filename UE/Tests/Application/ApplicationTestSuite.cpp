@@ -80,8 +80,12 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
 
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
+    static constexpr auto callingNumber = common::PhoneNumber{200};
+
     ApplicationConnectedTestSuite();
     void doConnected();
+    void doTalking();
+    void doHandleCallRequest(common::PhoneNumber from);
 };
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
@@ -134,10 +138,23 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
 TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
 {
     const Sms& sms{common::PhoneNumber{113},"example"};
-    EXPECT_CALL(btsPortMock, sendSms(_));
-    EXPECT_CALL(smsDbMock, addMessage(_));
+    EXPECT_CALL(btsPortMock, sendSms(sms));
+    EXPECT_CALL(smsDbMock, addMessage(sms));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendSms(sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
+{
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleSmsDrop();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
+{
+    EXPECT_CALL(smsDbMock, getNumberOfMessages());
+    EXPECT_CALL(smsDbMock, setMessageState(_, SmsState::Failed));
+    objectUnderTest.handleUnknownRecipient();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
@@ -150,41 +167,88 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
     objectUnderTest.handleShowSmsList();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowIncomingSms)
 {
-    const IUeGui::IListViewMode::Selection index = 0;
+    const auto index = IUeGui::IListViewMode::Selection{0};
     Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
 
+    EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
     EXPECT_CALL(smsDbMock, setMessageState(index, SmsState::Viewed));
+    EXPECT_CALL(userPortMock, viewSms(sms));
+
+    objectUnderTest.handleShowSms(index);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowOutgoingSms)
+{
+    const auto index = IUeGui::IListViewMode::Selection{0};
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::Sent};
+
     EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
     EXPECT_CALL(userPortMock, viewSms(sms));
 
     objectUnderTest.handleShowSms(index);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+void ApplicationConnectedTestSuite::doHandleCallRequest(common::PhoneNumber from)
 {
     EXPECT_CALL(userPortMock, showCallRequest(_));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
-    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+    objectUnderTest.handleCallRequest(from);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    doHandleCallRequest(callingNumber);
+}
+
+void ApplicationConnectedTestSuite::doTalking()
+{
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallAccepted(callingNumber));
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(timerPortMock, startTimer(30000ms)); // time not given in specification
+    objectUnderTest.handleCallAccept();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
 {
-    constexpr common::PhoneNumber to{200};
-    EXPECT_CALL(btsPortMock, sendCallAccepted(to));
-    EXPECT_CALL(userPortMock, showTalking());
-    EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(to);
+    doTalking();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
 {
-    constexpr common::PhoneNumber to{200};
+    doHandleCallRequest(callingNumber);
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(btsPortMock, sendCallDropped(to));
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
     EXPECT_CALL(userPortMock, showConnected());
-    objectUnderTest.handleCallDrop(to);
+    objectUnderTest.handleCallDrop();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
+{
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleTimeout();
+}
+
+struct TalkingStateTestSuite : ApplicationConnectedTestSuite
+{
+    TalkingStateTestSuite();
+};
+
+TalkingStateTestSuite::TalkingStateTestSuite()
+{
+    doTalking();
+}
+
+TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient) {
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable);
+    EXPECT_CALL(userPortMock, showConnected);
+    objectUnderTest.handleUnknownRecipient();
 }
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
