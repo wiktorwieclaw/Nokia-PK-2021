@@ -16,13 +16,13 @@ public:
 
     virtual void handleShowSmsList() = 0;
     virtual void handleShowSms(IUeGui::IListViewMode::Selection) = 0;
-    virtual void handleSendCallAccept(common::PhoneNumber to) = 0;
-    virtual void handleSendCallDrop(common::PhoneNumber to) = 0;
+    virtual void handleSendCallAccept() = 0;
+    virtual void handleSendCallDrop() = 0;
     virtual void handleComposeSms() = 0;
     virtual void handleSendSms(const Sms& sms) = 0;
     virtual void handleStartDial() = 0;
     virtual void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) = 0;
-
+    virtual void handleSmsDrop() = 0;
 };
 
 class IUserPort
@@ -39,6 +39,7 @@ public:
     virtual void showCallRequest(common::PhoneNumber from) = 0;
     virtual void showTalking() = 0;
     virtual void showNewSmsToEdit() = 0;
+    virtual void showPartnerNotAvailable() = 0;
     virtual void showEnterPhoneNumber() = 0;
     virtual void showDialing() = 0;
 };

@@ -67,14 +67,14 @@ void Application::handleReceiveCallRequest(common::PhoneNumber from)
     context.state->handleReceiveCallRequest(from);
 }
 
-void Application::handleSendCallAccept(common::PhoneNumber to)
+void Application::handleSendCallAccept()
 {
-    context.state->handleSendCallAccept(to);
+    context.state->handleSendCallAccept();
 }
 
-void Application::handleSendCallDrop(common::PhoneNumber to)
+void Application::handleSendCallDrop()
 {
-    context.state->handleSendCallDrop(to);
+    context.state->handleSendCallDrop();
 }
 
 void Application::handleComposeSms()
@@ -97,6 +97,16 @@ void Application::handleSendCallRequest(common::PhoneNumber from, common::PhoneN
 void Application::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
 {
     context.state->handleReceiveCallAccept(from,to);
+}
+
+void Application::handleSmsDrop()
+{
+    context.state->handleSmsDrop();
+}
+
+void Application::handleUnknownRecipient()
+{
+    context.state->handleUnknownRecipient();
 }
 
 }  // namespace ue

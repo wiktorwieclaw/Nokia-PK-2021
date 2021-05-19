@@ -19,7 +19,8 @@ public:
     MOCK_METHOD(void, handleAttachAccept, (), (final));
     MOCK_METHOD(void, handleAttachReject, (), (final));
     MOCK_METHOD(void, handleSms, (const Sms& sms), (final));
-    MOCK_METHOD(void, handleReceiveCallRequest, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleUnknownRecipient, (), (final));
+    MOCK_METHOD(void, handleReceiveCallRequest, (), (final));
     MOCK_METHOD(void, handleReceiveCallAccept, (common::PhoneNumber from, common::PhoneNumber to), (final));
 
 };

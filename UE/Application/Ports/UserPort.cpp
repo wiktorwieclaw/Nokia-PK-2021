@@ -1,7 +1,5 @@
 #include "UserPort.hpp"
 
-
-
 #include "Sms.hpp"
 #include "UeGui/ICallMode.hpp"
 #include "UeGui/IListViewMode.hpp"
@@ -83,6 +81,11 @@ void UserPort::showNewSmsToEdit()
         mode.clearSmsText();
         handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
     });
+
+    gui.setRejectCallback([this, &mode] {
+        mode.clearSmsText();
+        handler->handleSmsDrop();
+    });
 }
 
 void UserPort::showCallRequest(common::PhoneNumber from)
@@ -90,12 +93,12 @@ void UserPort::showCallRequest(common::PhoneNumber from)
     auto& mode = gui.setAlertMode();
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
-    gui.setAcceptCallback([this, from] {
-        handler->handleSendCallAccept(from);
+    gui.setAcceptCallback([this] {
+        handler->handleSendCallAccept();
     });
 
-    gui.setRejectCallback([this, from] {
-        handler->handleSendCallDrop(from);
+    gui.setRejectCallback([this] {
+        handler->handleSendCallDrop();
     });
 }
 
@@ -109,9 +112,17 @@ std::string makeSmsLabel(const Sms& sms)
 {
     std::stringstream ss;
 
-    if (sms.state == SmsState::NotViewed)
+    switch (sms.state)
     {
-        ss << "[New] ";
+    case SmsState::NotViewed:
+        ss << "[New] [From]: ";
+        break;
+    case SmsState::Viewed:
+        ss << "[From]: ";
+        break;
+    case SmsState::Sent:
+        ss << "[To]: ";
+        break;
     }
 
     ss << static_cast<int>(sms.correspondent.value);
@@ -144,14 +155,17 @@ void UserPort::viewSmsList(gsl::span<const Sms> smsList)
 
 void UserPort::viewSms(const Sms& sms)
 {
-    gui.setViewTextMode().setText(sms.text);
+    auto& mode = gui.setViewTextMode();
+    mode.setText(sms.text);
 
     gui.setAcceptCallback([] {});
 
-    gui.setRejectCallback([this] {
+    gui.setRejectCallback([this, &mode] {
+        mode.setText("");
         handler->handleShowSmsList();
     });
 }
+
 void UserPort::showEnterPhoneNumber()
 {
     auto& dialView = gui.setDialMode();
@@ -164,9 +178,16 @@ void UserPort::showEnterPhoneNumber()
       showConnected();
     });
 }
+
 void UserPort::showDialing()
 {
     gui.setViewTextMode().setText("Dialling...");
+}
+
+void UserPort::showPartnerNotAvailable()
+{
+    auto& alertMode = gui.setAlertMode();
+    alertMode.setText("Partner not available");
 }
 
 }  // namespace ue

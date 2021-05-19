@@ -24,4 +24,9 @@ const Sms& SmsDb::getMessage(gsl::index i)
     return messages.at(i);
 }
 
+std::size_t SmsDb::getNumberOfMessages()
+{
+    return messages.size();
+}
+
 }  // namespace ue

@@ -25,7 +25,7 @@ public:
     void showNewSmsToEdit() override;
     void showEnterPhoneNumber() override;
     void showDialing() override;
-
+    void showPartnerNotAvailable() override;
 
 private:
     common::PrefixedLogger logger;

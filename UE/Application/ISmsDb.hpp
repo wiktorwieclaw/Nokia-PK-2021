@@ -16,6 +16,7 @@ public:
     virtual void setMessageState(gsl::index i, SmsState state) = 0;
     [[nodiscard]] virtual gsl::span<const Sms> getAllMessages() = 0;
     [[nodiscard]] virtual const Sms& getMessage(gsl::index i) = 0;
+    [[nodiscard]] virtual std::size_t getNumberOfMessages() = 0;
 };
 
 }  // namespace ue

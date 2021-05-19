@@ -20,6 +20,7 @@ public:
 private:
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
+    bool running = false;
 };
 
 }  // namespace ue

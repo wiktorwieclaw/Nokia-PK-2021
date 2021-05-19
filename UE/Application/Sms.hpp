@@ -11,7 +11,8 @@ enum class SmsState
 {
     NotViewed,
     Viewed,
-    Sent
+    Sent,
+    Failed
 };
 
 struct Sms

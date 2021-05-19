@@ -17,12 +17,13 @@ public:
     // IUserEventsHandler interface
     void handleShowSmsList() override;
     void handleShowSms(IUeGui::IListViewMode::Selection) override;
-    void handleSendCallAccept(common::PhoneNumber to) override;
-    void handleSendCallDrop(common::PhoneNumber to) override;
+    void handleSendCallAccept() override;
+    void handleSendCallDrop() override;
     void handleComposeSms() override;
     void handleSendSms(const Sms& sms) override;
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleSmsDrop() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
@@ -35,6 +36,8 @@ public:
     void handleSms(const Sms& sms) override;
     void handleReceiveCallRequest(common::PhoneNumber from) override;
     void handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleCallRequest(common::PhoneNumber from) override;
+    void handleUnknownRecipient() override;
 
 protected:
     Context& context;

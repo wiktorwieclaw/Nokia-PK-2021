@@ -68,26 +68,39 @@ void BaseState::handleReceiveCallRequest(common::PhoneNumber from)
     logger.logError("Unexpected: handleReceiveCallRequest");
 }
 
-void BaseState::handleSendCallAccept(common::PhoneNumber to)
+void BaseState::handleSendCallAccept()
 {
     logger.logError("Unexpected: handleSendCallAccept");
 }
 
-void BaseState::handleSendCallDrop(common::PhoneNumber to)
+void BaseState::handleSendCallDrop()
 {
     logger.logError("Unexpected: handleSendCallDrop");
 }
+
 void BaseState::handleStartDial()
 {
     logger.logError("Unexpected: handleStartDial");
 }
+
 void BaseState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleSendCallRequest");
 }
+
 void BaseState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleReceiveCallAccept");
+}
+
+void BaseState::handleSmsDrop()
+{
+    logger.logError("Unexpected: handleSmsDrop");
+}
+
+void BaseState::handleUnknownRecipient()
+{
+    logger.logError("Unexpected: handleUnknownRecipient");
 }
 
 }  // namespace ue
