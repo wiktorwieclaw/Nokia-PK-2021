@@ -20,7 +20,6 @@ public:
     virtual void handleCallDrop(common::PhoneNumber to) = 0;
     virtual void handleComposeSms() = 0;
     virtual void handleSendSms(const Sms& sms) = 0;
-    virtual void handleCallDropWhenTalking(common::PhoneNumber to) = 0;
 };
 
 class IUserPort

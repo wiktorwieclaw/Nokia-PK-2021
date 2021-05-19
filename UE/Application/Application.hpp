@@ -36,12 +36,11 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
-    void handleCallDropped(common::PhoneNumber from) override;
+    void handleReceiveCallDrop(common::PhoneNumber from) override;
 
     // IUserEventsHandler interface
     void handleCallAccept(common::PhoneNumber to) override;
     void handleCallDrop(common::PhoneNumber to) override;
-    void handleCallDropWhenTalking(common::PhoneNumber to) override;
 
     //IUserEventsHandler interface
     void handleComposeSms() override;

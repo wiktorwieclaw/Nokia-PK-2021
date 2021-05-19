@@ -77,12 +77,8 @@ void BaseState::handleCallDrop(common::PhoneNumber to)
 {
     logger.logError("Unexpected: handleCallDrop");
 }
-void BaseState::handleCallDropWhenTalking(common::PhoneNumber to)
-{
-    logger.logError("Unexpected: handleCallDropWhenTalking");
-}
 
-void BaseState::handleCallDropped(common::PhoneNumber from)
+void BaseState::handleReceiveCallDrop(common::PhoneNumber from)
 {
     logger.logError("Unexpected: handleCallDropped");
 }

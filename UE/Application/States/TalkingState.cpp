@@ -7,13 +7,13 @@ TalkingState::TalkingState(Context& context)
     : BaseState(context, "TalkingState")
 {}
 
-void TalkingState::handleCallDropWhenTalking(common::PhoneNumber to)
+void TalkingState::handleCallDrop(common::PhoneNumber to)
 {
     context.bts.sendCallDropped(to);
     context.setState<ConnectedState>();
 }
 
-void TalkingState::handleCallDropped(common::PhoneNumber from)
+void TalkingState::handleReceiveCallDrop(common::PhoneNumber from)
 {
     context.setState<ConnectedState>();
 }

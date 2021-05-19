@@ -207,19 +207,19 @@ void ApplicationTalkingTestSuite::doTalking()
     objectUnderTest.handleCallAccept(to);
 }
 
-TEST_F(ApplicationTalkingTestSuite, shallDropCallWhenTalking)
+TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
 {
     constexpr common::PhoneNumber to{200};
     EXPECT_CALL(btsPortMock,sendCallDropped(to));
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleCallDropWhenTalking(to);
+    objectUnderTest.handleCallDrop(to);
 }
 
-TEST_F(ApplicationTalkingTestSuite, shallCallDropped)
+TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
 {
     constexpr common::PhoneNumber from{200};
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleCallDropped(from);
+    objectUnderTest.handleReceiveCallDrop(from);
 }
 
 }  // namespace ue

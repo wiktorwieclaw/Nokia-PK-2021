@@ -10,10 +10,10 @@ public:
     explicit TalkingState(Context& context);
 
     // IUserEventsHandler interface
-    void handleCallDropWhenTalking(common::PhoneNumber to) override;
+    void handleCallDrop(common::PhoneNumber to) override;
 
     // IBtsEventsHandler interface
-    void handleCallDropped(common::PhoneNumber from) override;
+    void handleReceiveCallDrop(common::PhoneNumber from) override;
 };
 
 }  // namespace ue

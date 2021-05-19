@@ -21,7 +21,6 @@ public:
     void handleCallDrop(common::PhoneNumber to) override;
     void handleComposeSms() override;
     void handleSendSms(const Sms& sms) override;
-    void handleCallDropWhenTalking(common::PhoneNumber to) override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
@@ -33,7 +32,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
-    void handleCallDropped(common::PhoneNumber from) override;
+    void handleReceiveCallDrop(common::PhoneNumber from) override;
 
 protected:
     Context& context;
