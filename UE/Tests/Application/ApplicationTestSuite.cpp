@@ -257,22 +257,6 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
     objectUnderTest.handleReceiveCallAccept(callingNumber);
 }
 
-struct TalkingStateTestSuite : ApplicationConnectedTestSuite
-{
-    TalkingStateTestSuite();
-};
-
-TalkingStateTestSuite::TalkingStateTestSuite()
-{
-    doTalking();
-}
-
-TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient) {
-    EXPECT_CALL(timerPortMock, stopTimer);
-    EXPECT_CALL(userPortMock, showPartnerNotAvailable);
-    EXPECT_CALL(userPortMock, showConnected);
-    objectUnderTest.handleUnknownRecipient();
-}
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 {
@@ -282,6 +266,13 @@ struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
 ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
 {
     ApplicationConnectedTestSuite::doTalking();
+}
+
+TEST_F(ApplicationTalkingTestSuite, ShallHandleUnknownRecipient) {
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, alertUser(std::string_view{"Partner not available"}));
+    EXPECT_CALL(userPortMock, showConnected);
+    objectUnderTest.handleUnknownRecipient();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
@@ -294,6 +285,7 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
 {
     EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(userPortMock, alertUser(std::string_view{"Call ended by partner"}));
     objectUnderTest.handleReceiveCallDrop();
 }
 
