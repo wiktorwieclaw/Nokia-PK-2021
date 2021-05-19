@@ -25,7 +25,7 @@ public:
     void showNewSmsToEdit() override;
     void showEnterPhoneNumber() override;
     void showDialing() override;
-    void showPartnerNotAvailable() override;
+    void alertUser(std::string_view message) override;
 
 private:
     common::PrefixedLogger logger;
