@@ -3,6 +3,8 @@
 #include "UeGui/ICallMode.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ITextMode.hpp"
+#include "UeGui/ISmsComposeMode.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -48,6 +50,7 @@ void UserPort::showConnected()
             switch (index)
             {
             case 0:
+                handler->handleComposeSms();
                 break;
             case 1:
                 handler->handleShowSmsList();
@@ -64,17 +67,28 @@ void UserPort::showNewSmsNotification()
     gui.showNewSms();
 }
 
+void UserPort::showNewSmsToEdit()
+{
+    auto& mode = gui.setSmsComposeMode();
+    gui.setAcceptCallback([this, &mode] {
+        auto phoneNum = mode.getPhoneNumber();
+        auto smsText = mode.getSmsText();
+        mode.clearSmsText();
+        handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+    });
+}
+
 void UserPort::showCallRequest(common::PhoneNumber from)
 {
     auto& mode = gui.setAlertMode();
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
-    gui.setAcceptCallback([this, from] {
-        handler->handleCallAccept(from);
+    gui.setAcceptCallback([this] {
+        handler->handleCallAccept();
     });
 
     gui.setRejectCallback([this] {
-        // todo
+        handler->handleCallDrop();
     });
 }
 
@@ -88,9 +102,17 @@ std::string makeSmsLabel(const Sms& sms)
 {
     std::stringstream ss;
 
-    if (sms.state == SmsState::NotViewed)
+    switch (sms.state)
     {
-        ss << "[New] ";
+    case SmsState::NotViewed:
+        ss << "[New] [From]: ";
+        break;
+    case SmsState::Viewed:
+        ss << "[From]: ";
+        break;
+    case SmsState::Sent:
+        ss << "[To]: ";
+        break;
     }
 
     ss << static_cast<int>(sms.correspondent.value);
@@ -123,11 +145,13 @@ void UserPort::viewSmsList(gsl::span<const Sms> smsList)
 
 void UserPort::viewSms(const Sms& sms)
 {
-    gui.setViewTextMode().setText(sms.text);
+    auto& mode = gui.setViewTextMode();
+    mode.setText(sms.text);
 
     gui.setAcceptCallback([] {});
 
-    gui.setRejectCallback([this] {
+    gui.setRejectCallback([this, &mode] {
+        mode.setText("");
         handler->handleShowSmsList();
     });
 }

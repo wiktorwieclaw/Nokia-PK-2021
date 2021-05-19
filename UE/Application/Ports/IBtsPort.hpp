@@ -26,7 +26,9 @@ public:
     virtual ~IBtsPort() = default;
 
     virtual void sendAttachRequest(common::BtsId) = 0;
+    virtual void sendSms(const Sms &sms) = 0;
     virtual void sendCallAccepted(common::PhoneNumber to) = 0;
+    virtual void sendCallDropped(common::PhoneNumber to) = 0;
 };
 
 }  // namespace ue

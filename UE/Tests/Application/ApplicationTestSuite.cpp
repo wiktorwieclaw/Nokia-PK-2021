@@ -80,8 +80,11 @@ TEST_F(ApplicationConnectingTestSuite, shallShowNotConnectedOnAttachTimeout)
 
 struct ApplicationConnectedTestSuite : ApplicationConnectingTestSuite
 {
+    static constexpr auto callingNumber = common::PhoneNumber{200};
+
     ApplicationConnectedTestSuite();
     void doConnected();
+    void doHandleCallRequest(common::PhoneNumber from);
 };
 
 ApplicationConnectedTestSuite::ApplicationConnectedTestSuite()
@@ -125,6 +128,21 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSms)
     objectUnderTest.handleSms(sms);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
+{
+    EXPECT_CALL(userPortMock, showNewSmsToEdit());
+    objectUnderTest.handleComposeSms();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
+{
+    const Sms& sms{common::PhoneNumber{113},"example"};
+    EXPECT_CALL(btsPortMock, sendSms(_));
+    EXPECT_CALL(smsDbMock, addMessage(_));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleSendSms(sms);
+}
+
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
 {
     gsl::span<const Sms> messages;
@@ -147,19 +165,42 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
     objectUnderTest.handleShowSms(index);
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+void ApplicationConnectedTestSuite::doHandleCallRequest(common::PhoneNumber from)
 {
     EXPECT_CALL(userPortMock, showCallRequest(_));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
-    objectUnderTest.handleCallRequest(PHONE_NUMBER);
+    objectUnderTest.handleCallRequest(from);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
+{
+    doHandleCallRequest(callingNumber);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
 {
-    EXPECT_CALL(btsPortMock, sendCallAccepted(_));
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallAccepted(callingNumber));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleCallAccept(common::PhoneNumber{});
+    objectUnderTest.handleCallAccept();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
+{
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleCallDrop();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
+{
+    doHandleCallRequest(callingNumber);
+    EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleTimeout();
 }
 
 }  // namespace ue

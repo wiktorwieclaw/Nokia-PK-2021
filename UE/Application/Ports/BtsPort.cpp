@@ -101,4 +101,21 @@ void BtsPort::sendCallAccepted(common::PhoneNumber to)
     transport.sendMessage(msg.getMessage());
 }
 
+void BtsPort::sendCallDropped(common::PhoneNumber to)
+{
+    logger.logDebug("sendCallDropped to: ", to);
+    common::OutgoingMessage msg{common::MessageId::CallDropped,
+                                phoneNumber,
+                                to};
+    transport.sendMessage(msg.getMessage());
+}
+
+void BtsPort::sendSms(const Sms& sms)
+{
+    logger.logDebug("send sms to: ", sms.text);
+    common::OutgoingMessage msg{common::MessageId::Sms, phoneNumber, sms.correspondent};
+    msg.writeText(sms.text);
+    transport.sendMessage(msg.getMessage());
+}
+
 }  // namespace ue

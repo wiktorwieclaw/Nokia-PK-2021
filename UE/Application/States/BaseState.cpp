@@ -44,6 +44,16 @@ void BaseState::handleSms(const Sms& sms)
     logger.logError("Unexpected: handleSms");
 }
 
+void BaseState::handleComposeSms()
+{
+    logger.logError("Unexpected: handleComposeSms");
+}
+
+void BaseState::handleSendSms(const Sms& sms)
+{
+    logger.logError("Unexpected: handleSendSms");
+}
+
 void BaseState::handleShowSmsList()
 {
     logger.logError("Unexpected: handleShowSmsList");
@@ -58,9 +68,14 @@ void BaseState::handleCallRequest(common::PhoneNumber from)
     logger.logError("Unexpected: handleCallRequest");
 }
 
-void BaseState::handleCallAccept(common::PhoneNumber to)
+void BaseState::handleCallAccept()
 {
     logger.logError("Unexpected: handleCallAccept");
+}
+
+void BaseState::handleCallDrop()
+{
+    logger.logError("Unexpected: handleCallDrop");
 }
 
 }  // namespace ue

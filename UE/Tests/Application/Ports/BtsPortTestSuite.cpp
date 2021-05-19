@@ -8,6 +8,7 @@
 #include "Mocks/ILoggerMock.hpp"
 #include "Mocks/ITransportMock.hpp"
 #include "Ports/BtsPort.hpp"
+#include "Sms.hpp"
 
 namespace ue
 {
@@ -102,16 +103,43 @@ TEST_F(BtsPortTestSuite, shallSendAttachRequest)
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 
+TEST_F(BtsPortTestSuite, shallSendSms)
+{
+    common::BinaryMessage msg;
+    const auto receiverPhoneNumber = common::PhoneNumber{113};
+    EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
+    objectUnderTest.sendSms(Sms{receiverPhoneNumber,"example"});
+    common::IncomingMessage reader(msg);
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::Sms, reader.readMessageId()));
+    ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(receiverPhoneNumber, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ("example", reader.readRemainingText()));
+    ASSERT_NO_THROW(reader.checkEndOfMessage());
+}
+
 TEST_F(BtsPortTestSuite, shallSendCallAccepted)
 {
-    constexpr common::PhoneNumber to_phone_number{113};
+    constexpr common::PhoneNumber toPhoneNumber{113};
     common::BinaryMessage msg;
     EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
-    objectUnderTest.sendCallAccepted(to_phone_number);
+    objectUnderTest.sendCallAccepted(toPhoneNumber);
     common::IncomingMessage reader(msg);
     ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallAccepted, reader.readMessageId()));
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
-    ASSERT_NO_THROW(EXPECT_EQ(to_phone_number, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(toPhoneNumber, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(reader.checkEndOfMessage());
+}
+
+TEST_F(BtsPortTestSuite, shallSendCallDropped)
+{
+    constexpr common::PhoneNumber toPhoneNumber{113};
+    common::BinaryMessage msg;
+    EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
+    objectUnderTest.sendCallDropped(toPhoneNumber);
+    common::IncomingMessage reader(msg);
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallDropped, reader.readMessageId()));
+    ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(toPhoneNumber, reader.readPhoneNumber()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 

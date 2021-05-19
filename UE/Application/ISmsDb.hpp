@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <gsl/span>
 #include <gsl/util>
 
