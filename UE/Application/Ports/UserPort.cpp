@@ -110,13 +110,16 @@ std::string makeSmsLabel(const Sms& sms)
     switch (sms.state)
     {
     case SmsState::NotViewed:
-        ss << "[New] [From]: ";
+        ss << "[New][From]: ";
         break;
     case SmsState::Viewed:
         ss << "[From]: ";
         break;
     case SmsState::Sent:
         ss << "[To]: ";
+        break;
+    case SmsState::Failed:
+        ss << "[Failed][To]: ";
         break;
     }
 
