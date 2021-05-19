@@ -1,8 +1,8 @@
 #include "ConnectedState.hpp"
 
 #include "NotConnectedState.hpp"
-#include "TalkingState.hpp"
 #include "Sms.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -25,13 +25,17 @@ void ConnectedState::handleSms(const Sms& sms)
 
 void ConnectedState::handleShowSmsList()
 {
-     const auto& smsMessages = context.smsDb.getAllMessages();
-     context.user.viewSmsList(smsMessages);
+    const auto& smsMessages = context.smsDb.getAllMessages();
+    context.user.viewSmsList(smsMessages);
 }
 
 void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
 {
-    context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
+    if (const auto state = context.smsDb.getMessage(indexOfSms).state;
+        state == SmsState::NotViewed)
+    {
+        context.smsDb.setMessageState(indexOfSms, SmsState::Viewed);
+    }
     const auto& retrievedSms = context.smsDb.getMessage(indexOfSms);
     context.user.viewSms(retrievedSms);
 }
