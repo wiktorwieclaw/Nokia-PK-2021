@@ -194,7 +194,7 @@ void ApplicationConnectedTestSuite::doHandleCallRequest(common::PhoneNumber from
 {
     EXPECT_CALL(userPortMock, showCallRequest(_));
     EXPECT_CALL(timerPortMock, startTimer(30000ms));
-    objectUnderTest.handleCallRequest(from);
+    objectUnderTest.handleReceiveCallRequest(from);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallRequest)
@@ -209,21 +209,21 @@ void ApplicationConnectedTestSuite::doTalking()
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(timerPortMock, startTimer(30000ms)); // time not given in specification
-    objectUnderTest.handleCallAccept();
+    objectUnderTest.handleSendCallAccept();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallAccepted)
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallAccepted)
 {
     doTalking();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleCallDropped)
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallDropped)
 {
     doHandleCallRequest(callingNumber);
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
     EXPECT_CALL(userPortMock, showConnected());
-    objectUnderTest.handleCallDrop();
+    objectUnderTest.handleSendCallDrop();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
@@ -232,6 +232,29 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleCallTimeout)
     EXPECT_CALL(btsPortMock, sendCallDropped(callingNumber));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleTimeout();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleStartDial)
+{
+    EXPECT_CALL(userPortMock, showEnterPhoneNumber());
+    objectUnderTest.handleStartDial();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
+{
+    constexpr common::PhoneNumber enteredPhoneNumber{200};
+    EXPECT_CALL(btsPortMock, sendCallRequest(PHONE_NUMBER,enteredPhoneNumber));
+    EXPECT_CALL(timerPortMock, startTimer(60000ms));
+    EXPECT_CALL(userPortMock, showDialing());
+    objectUnderTest.handleSendCallRequest(PHONE_NUMBER, enteredPhoneNumber);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
+{
+    EXPECT_CALL(userPortMock, showTalking());
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(timerPortMock, startTimer(_)); // from talking state constructor
+    objectUnderTest.handleReceiveCallAccept(callingNumber);
 }
 
 struct TalkingStateTestSuite : ApplicationConnectedTestSuite
@@ -261,11 +284,11 @@ ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
     ApplicationConnectedTestSuite::doTalking();
 }
 
-TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
+TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 {
     EXPECT_CALL(btsPortMock,sendCallDropped(_));
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleCallDrop();
+    objectUnderTest.handleSendCallDrop();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
