@@ -10,7 +10,7 @@ public:
     explicit TalkingState(Context& context, PhoneNumber callingNumber);
 
     // IUserEventsHandler interface
-    void handleCallDrop() override;
+    void handleSendCallDrop() override;
 
     // IBtsEventsHandler interface
     void handleReceiveCallDrop() override;

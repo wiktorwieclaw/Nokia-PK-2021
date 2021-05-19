@@ -251,10 +251,10 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
 {
-    constexpr common::PhoneNumber enteredPhoneNumber{200};
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    objectUnderTest.handleReceiveCallAccept(enteredPhoneNumber,PHONE_NUMBER);
+    EXPECT_CALL(timerPortMock, startTimer(_)); // from talking state constructor
+    objectUnderTest.handleReceiveCallAccept(callingNumber);
 }
 
 struct TalkingStateTestSuite : ApplicationConnectedTestSuite
@@ -284,11 +284,11 @@ ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
     ApplicationConnectedTestSuite::doTalking();
 }
 
-TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
+TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 {
     EXPECT_CALL(btsPortMock,sendCallDropped(_));
     EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleCallDrop();
+    objectUnderTest.handleSendCallDrop();
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)

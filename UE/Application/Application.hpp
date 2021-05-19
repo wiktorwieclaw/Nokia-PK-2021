@@ -42,7 +42,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleReceiveCallRequest(common::PhoneNumber from) override;
-    void handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleReceiveCallAccept(common::PhoneNumber from) override;
     void handleUnknownRecipient() override;
     void handleReceiveCallDrop() override;
 

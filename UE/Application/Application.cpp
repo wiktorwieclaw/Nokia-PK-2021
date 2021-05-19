@@ -92,11 +92,11 @@ void Application::handleStartDial()
 }
 void Application::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    context.state->handleSendCallRequest(from,to);
+    context.state->handleSendCallRequest(from, to);
 }
-void Application::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
+void Application::handleReceiveCallAccept(common::PhoneNumber from)
 {
-    context.state->handleReceiveCallAccept(from,to);
+    context.state->handleReceiveCallAccept(from);
 }
 
 void Application::handleSmsDrop()

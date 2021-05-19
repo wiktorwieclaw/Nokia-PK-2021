@@ -94,11 +94,12 @@ void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::Pho
     using namespace std::chrono_literals;
     context.timer.startTimer(60s);
 }
-void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
+void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from)
 {
+    callingNumber = from;
     context.user.showTalking();
     context.timer.stopTimer();
-    context.setState<TalkingState>();
+    context.setState<TalkingState>(callingNumber.value());
 }
 
 void ConnectedState::handleSmsDrop()

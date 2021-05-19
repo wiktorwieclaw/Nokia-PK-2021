@@ -17,9 +17,10 @@ public:
     void handleSms(const Sms& sms) final;
     void handleShowSmsList() final;
     void handleShowSms(IUeGui::IListViewMode::Selection) final;
-    void handleCallRequest(common::PhoneNumber from) final;
     void handleSmsDrop() final;
     void handleUnknownRecipient() final;
+    void handleReceiveCallRequest(common::PhoneNumber from) final;
+    void handleReceiveCallAccept(common::PhoneNumber from) final;
 
     // IUserEventsHandler interface
     void handleComposeSms() final;

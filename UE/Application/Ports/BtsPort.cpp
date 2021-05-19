@@ -74,7 +74,7 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallAccepted:
         {
-            handler->handleReceiveCallAccept(from,to);
+            handler->handleReceiveCallAccept(from);
             break;
         }
         case common::MessageId::UnknownRecipient:

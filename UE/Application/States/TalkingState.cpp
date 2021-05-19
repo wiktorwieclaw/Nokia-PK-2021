@@ -24,7 +24,7 @@ void TalkingState::handleUnknownRecipient()
     context.setState<ConnectedState>();
 }
 
-void TalkingState::handleCallDrop()
+void TalkingState::handleSendCallDrop()
 {
     context.bts.sendCallDropped(callingNumber);
     context.setState<ConnectedState>();
