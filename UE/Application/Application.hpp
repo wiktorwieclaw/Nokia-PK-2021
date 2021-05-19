@@ -41,6 +41,7 @@ public:
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
     void handleUnknownRecipient() override;
+    void handleReceiveCallDrop() override;
 
 private:
     Context context;

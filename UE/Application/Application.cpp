@@ -97,4 +97,9 @@ void Application::handleUnknownRecipient()
     context.state->handleUnknownRecipient();
 }
 
+void Application::handleReceiveCallDrop()
+{
+    context.state->handleReceiveCallDrop();
+}
+
 }  // namespace ue

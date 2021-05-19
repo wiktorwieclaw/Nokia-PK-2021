@@ -251,4 +251,27 @@ TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient) {
     objectUnderTest.handleUnknownRecipient();
 }
 
+struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
+{
+    ApplicationTalkingTestSuite();
+};
+
+ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
+{
+    ApplicationConnectedTestSuite::doTalking();
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleCallDrop)
+{
+    EXPECT_CALL(btsPortMock,sendCallDropped(_));
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleCallDrop();
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
+{
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleReceiveCallDrop();
+}
+
 }  // namespace ue
