@@ -77,8 +77,9 @@ void ConnectedState::handleSmsDrop()
 
 void ConnectedState::handleUnknownRecipient()
 {
-    const auto numberOfMessages = gsl::narrow_cast<gsl::index>(context.smsDb.getNumberOfMessages());
-    context.smsDb.setMessageState(numberOfMessages - 1, SmsState::Failed);
+    const auto numberOfMessages = context.smsDb.getNumberOfMessages();
+    const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
+    context.smsDb.setMessageState(index, SmsState::Failed);
 }
 
 }  // namespace ue
