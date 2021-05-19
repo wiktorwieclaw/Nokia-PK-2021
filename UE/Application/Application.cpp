@@ -91,6 +91,7 @@ void Application::handleSmsDrop()
 {
     context.state->handleSmsDrop();
 }
+
 void Application::handleUnknownRecipient()
 {
     context.state->handleUnknownRecipient();

@@ -161,4 +161,10 @@ void UserPort::viewSms(const Sms& sms)
     });
 }
 
+void UserPort::showPartnerNotAvailable()
+{
+    auto& alertMode = gui.setAlertMode();
+    alertMode.setText("Partner not available");
+}
+
 }  // namespace ue

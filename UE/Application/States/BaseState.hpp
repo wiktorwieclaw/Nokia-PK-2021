@@ -22,7 +22,6 @@ public:
     void handleComposeSms() override;
     void handleSendSms(const Sms& sms) override;
     void handleSmsDrop() override;
-    void handleUnknownRecipient() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
@@ -34,6 +33,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
+    void handleUnknownRecipient() override;
 
 protected:
     Context& context;

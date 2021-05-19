@@ -37,6 +37,7 @@ public:
     virtual void showCallRequest(common::PhoneNumber from) = 0;
     virtual void showTalking() = 0;
     virtual void showNewSmsToEdit() = 0;
+    virtual void showPartnerNotAvailable() = 0;
 };
 
 }  // namespace ue

@@ -25,7 +25,6 @@ public:
     void handleShowSmsList() override;
     void handleShowSms(IUeGui::IListViewMode::Selection) override;
     void handleSmsDrop() override;
-    void handleUnknownRecipient() override;
     void handleCallAccept() override;
     void handleCallDrop() override;
     void handleComposeSms() override;
@@ -41,6 +40,7 @@ public:
     void handleAttachReject() override;
     void handleSms(const Sms& sms) override;
     void handleCallRequest(common::PhoneNumber from) override;
+    void handleUnknownRecipient() override;
 
 private:
     Context context;
