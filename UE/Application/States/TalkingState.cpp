@@ -11,7 +11,7 @@ namespace ue
 TalkingState::TalkingState(Context& context)
     : BaseState(context, "TalkingState")
 {
-    // todo search for duration in specification
+    // time not given in specification
     context.timer.startTimer(30s);
 }
 

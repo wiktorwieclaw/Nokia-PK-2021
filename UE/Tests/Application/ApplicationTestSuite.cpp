@@ -184,7 +184,7 @@ void ApplicationConnectedTestSuite::doTalking()
     EXPECT_CALL(btsPortMock, sendCallAccepted(callingNumber));
     EXPECT_CALL(userPortMock, showTalking());
     EXPECT_CALL(timerPortMock, stopTimer());
-    EXPECT_CALL(timerPortMock, startTimer(_)); // todo specify time
+    EXPECT_CALL(timerPortMock, startTimer(30000ms)); // time not given in specification
     objectUnderTest.handleCallAccept();
 }
 
