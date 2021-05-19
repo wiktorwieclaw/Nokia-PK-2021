@@ -54,7 +54,7 @@ void ConnectedState::handleSendCallAccept()
     context.bts.sendCallAccepted(callingNumber.value());
     context.user.showTalking();
     context.timer.stopTimer();
-    context.setState<TalkingState>();
+    context.setState<TalkingState>(callingNumber.value());
 }
 
 void ConnectedState::handleSendCallDrop()
