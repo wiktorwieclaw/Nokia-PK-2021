@@ -25,7 +25,6 @@ public:
     void handleShowSmsList() override;
     void handleShowSms(IUeGui::IListViewMode::Selection) override;
     void handleSmsDrop() override;
-    void handleUnknownRecipient() override;
     void handleCallAccept() override;
     void handleCallDrop() override;
     void handleComposeSms() override;

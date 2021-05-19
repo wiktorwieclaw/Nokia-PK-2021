@@ -22,7 +22,6 @@ public:
     void handleComposeSms() override;
     void handleSendSms(const Sms& sms) override;
     void handleSmsDrop() override;
-    void handleUnknownRecipient() override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
