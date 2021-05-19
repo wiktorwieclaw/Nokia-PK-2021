@@ -18,6 +18,8 @@ public:
     void sendSms(const Sms& sms) override;
     void sendCallAccepted(common::PhoneNumber to) override;
     void sendCallDropped(common::PhoneNumber to) override;
+    void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+
 
 private:
     void handleDisconnected();

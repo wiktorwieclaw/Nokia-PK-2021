@@ -69,7 +69,12 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::CallRequest:
         {
-            handler->handleCallRequest(from);
+            handler->handleReceiveCallRequest(from);
+            break;
+        }
+        case common::MessageId::CallAccepted:
+        {
+            handler->handleReceiveCallAccept(from);
             break;
         }
         case common::MessageId::UnknownRecipient:
@@ -125,6 +130,14 @@ void BtsPort::sendSms(const Sms& sms)
     logger.logDebug("send sms to: ", sms.text);
     common::OutgoingMessage msg{common::MessageId::Sms, phoneNumber, sms.correspondent};
     msg.writeText(sms.text);
+    transport.sendMessage(msg.getMessage());
+}
+void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    logger.logDebug("sendCallRequest from, to: ", from, to);
+    common::OutgoingMessage msg{common::MessageId::CallRequest,
+                                from,
+                                to};
     transport.sendMessage(msg.getMessage());
 }
 

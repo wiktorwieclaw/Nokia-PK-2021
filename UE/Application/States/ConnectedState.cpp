@@ -41,7 +41,7 @@ void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
     context.user.viewSms(retrievedSms);
 }
 
-void ConnectedState::handleCallRequest(common::PhoneNumber from)
+void ConnectedState::handleReceiveCallRequest(common::PhoneNumber from)
 {
     using namespace std::chrono_literals;
     context.user.showCallRequest(from);
@@ -49,7 +49,7 @@ void ConnectedState::handleCallRequest(common::PhoneNumber from)
     context.timer.startTimer(30s);
 }
 
-void ConnectedState::handleCallAccept()
+void ConnectedState::handleSendCallAccept()
 {
     context.bts.sendCallAccepted(callingNumber.value());
     context.user.showTalking();
@@ -57,7 +57,7 @@ void ConnectedState::handleCallAccept()
     context.setState<TalkingState>(callingNumber.value());
 }
 
-void ConnectedState::handleCallDrop()
+void ConnectedState::handleSendCallDrop()
 {
     context.timer.stopTimer();
     context.bts.sendCallDropped(callingNumber.value());
@@ -82,6 +82,24 @@ void ConnectedState::handleSendSms(const Sms& sms)
     context.smsDb.addMessage(sms);
     context.bts.sendSms(sms);
     context.user.showConnected();
+}
+void ConnectedState::handleStartDial()
+{
+    context.user.showEnterPhoneNumber();
+}
+void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
+{
+    context.user.showDialing();
+    context.bts.sendCallRequest(from,to);
+    using namespace std::chrono_literals;
+    context.timer.startTimer(60s);
+}
+void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from)
+{
+    callingNumber = from;
+    context.user.showTalking();
+    context.timer.stopTimer();
+    context.setState<TalkingState>(callingNumber.value());
 }
 
 void ConnectedState::handleSmsDrop()

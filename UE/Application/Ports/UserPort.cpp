@@ -1,10 +1,11 @@
 #include "UserPort.hpp"
 
+#include "Sms.hpp"
 #include "UeGui/ICallMode.hpp"
 #include "UeGui/IListViewMode.hpp"
-#include "UeGui/ITextMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
-#include "Sms.hpp"
+#include "UeGui/ITextMode.hpp"
+#include "UeGui/IDialMode.hpp"
 
 namespace ue
 {
@@ -41,6 +42,7 @@ void UserPort::showConnected()
     menu.clearSelectionList();
     menu.addSelectionListItem("Compose SMS", "");
     menu.addSelectionListItem("View SMS", "");
+    menu.addSelectionListItem("Dial", "");
 
     gui.setAcceptCallback([this, &menu] {
         const auto [isSelected, index] = menu.getCurrentItemIndex();
@@ -54,6 +56,9 @@ void UserPort::showConnected()
                 break;
             case 1:
                 handler->handleShowSmsList();
+                break;
+            case 2:
+                handler->handleStartDial();
                 break;
             default:
                 break;
@@ -89,11 +94,11 @@ void UserPort::showCallRequest(common::PhoneNumber from)
     mode.setText("Incoming call from: " + std::to_string(from.value));
 
     gui.setAcceptCallback([this] {
-        handler->handleCallAccept();
+        handler->handleSendCallAccept();
     });
 
     gui.setRejectCallback([this] {
-        handler->handleCallDrop();
+        handler->handleSendCallDrop();
     });
 }
 
@@ -159,6 +164,24 @@ void UserPort::viewSms(const Sms& sms)
         mode.setText("");
         handler->handleShowSmsList();
     });
+}
+
+void UserPort::showEnterPhoneNumber()
+{
+    auto& dialView = gui.setDialMode();
+    gui.setAcceptCallback([this,&dialView] {
+      PhoneNumber enteredNumber{dialView.getPhoneNumber()};
+      handler->handleSendCallRequest(this->phoneNumber,enteredNumber);
+    });
+
+    gui.setRejectCallback([this] {
+      showConnected();
+    });
+}
+
+void UserPort::showDialing()
+{
+    gui.setViewTextMode().setText("Dialling...");
 }
 
 void UserPort::showPartnerNotAvailable()

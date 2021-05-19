@@ -143,4 +143,17 @@ TEST_F(BtsPortTestSuite, shallSendCallDropped)
     ASSERT_NO_THROW(reader.checkEndOfMessage());
 }
 
+TEST_F(BtsPortTestSuite, shallSendCallRequest)
+{
+    constexpr common::PhoneNumber toPhoneNumber{113};
+    common::BinaryMessage msg;
+    EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
+    objectUnderTest.sendCallRequest(PHONE_NUMBER,toPhoneNumber);
+    common::IncomingMessage reader(msg);
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallRequest, reader.readMessageId()));
+    ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(EXPECT_EQ(toPhoneNumber, reader.readPhoneNumber()));
+    ASSERT_NO_THROW(reader.checkEndOfMessage());
+}
+
 }  // namespace ue
