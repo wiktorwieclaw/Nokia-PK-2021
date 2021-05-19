@@ -150,7 +150,7 @@ TEST_F(BtsPortTestSuite, shallSendCallRequest)
     EXPECT_CALL(transportMock, sendMessage(_)).WillOnce([&msg](auto param) { msg = std::move(param); return true; });
     objectUnderTest.sendCallRequest(PHONE_NUMBER,toPhoneNumber);
     common::IncomingMessage reader(msg);
-    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallAccepted, reader.readMessageId()));
+    ASSERT_NO_THROW(EXPECT_EQ(common::MessageId::CallRequest, reader.readMessageId()));
     ASSERT_NO_THROW(EXPECT_EQ(PHONE_NUMBER, reader.readPhoneNumber()));
     ASSERT_NO_THROW(EXPECT_EQ(toPhoneNumber, reader.readPhoneNumber()));
     ASSERT_NO_THROW(reader.checkEndOfMessage());

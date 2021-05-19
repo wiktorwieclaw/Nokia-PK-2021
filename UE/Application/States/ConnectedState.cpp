@@ -71,15 +71,20 @@ void ConnectedState::handleSendSms(const Sms& sms)
 }
 void ConnectedState::handleStartDial()
 {
-    //todo
+    context.user.showEnterPhoneNumber();
 }
 void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    context.user.showDialing();
+    context.bts.sendCallRequest(from,to);
+    using namespace std::chrono_literals;
+    context.timer.startTimer(60s);
 }
 void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    context.user.showTalking();
+    context.timer.stopTimer();
+    context.setState<TalkingState>();
 }
 
 }  // namespace ue

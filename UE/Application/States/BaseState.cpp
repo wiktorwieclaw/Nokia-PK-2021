@@ -79,15 +79,15 @@ void BaseState::handleSendCallDrop(common::PhoneNumber to)
 }
 void BaseState::handleStartDial()
 {
-    //todo
+    logger.logError("Unexpected: handleStartDial");
 }
 void BaseState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    logger.logError("Unexpected: handleSendCallRequest");
 }
 void BaseState::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    logger.logError("Unexpected: handleReceiveCallAccept");
 }
 
 }  // namespace ue

@@ -72,6 +72,11 @@ void BtsPort::handleMessage(BinaryMessage msg)
             handler->handleReceiveCallRequest(from);
             break;
         }
+        case common::MessageId::CallAccepted:
+        {
+            handler->handleReceiveCallAccept(from,to);
+            break;
+        }
         default:
             logger.logError("unknown message: ", msgId, ", from: ", from);
         }
@@ -118,7 +123,11 @@ void BtsPort::sendSms(const Sms& sms)
 }
 void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    logger.logDebug("sendCallRequest from, to: ", from, to);
+    common::OutgoingMessage msg{common::MessageId::CallRequest,
+                                from,
+                                to};
+    transport.sendMessage(msg.getMessage());
 }
 
 }  // namespace ue

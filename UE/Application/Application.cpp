@@ -88,15 +88,15 @@ void Application::handleSendSms(const Sms& sms)
 }
 void Application::handleStartDial()
 {
-    //todo
+    context.state->handleStartDial();
 }
 void Application::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    context.state->handleSendCallRequest(from,to);
 }
 void Application::handleReceiveCallAccept(common::PhoneNumber from, common::PhoneNumber to)
 {
-    //todo
+    context.state->handleReceiveCallAccept(from,to);
 }
 
 }  // namespace ue
