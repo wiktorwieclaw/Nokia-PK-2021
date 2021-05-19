@@ -153,12 +153,23 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
     objectUnderTest.handleShowSmsList();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleShowSms)
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowIncomingSms)
 {
-    const IUeGui::IListViewMode::Selection index = 0;
+    const auto index = IUeGui::IListViewMode::Selection{0};
     Sms sms{PHONE_NUMBER, "example sms message", SmsState::NotViewed};
 
+    EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
     EXPECT_CALL(smsDbMock, setMessageState(index, SmsState::Viewed));
+    EXPECT_CALL(userPortMock, viewSms(sms));
+
+    objectUnderTest.handleShowSms(index);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleShowOutgoingSms)
+{
+    const auto index = IUeGui::IListViewMode::Selection{0};
+    Sms sms{PHONE_NUMBER, "example sms message", SmsState::Sent};
+
     EXPECT_CALL(smsDbMock, getMessage(index)).WillOnce(ReturnRef(sms));
     EXPECT_CALL(userPortMock, viewSms(sms));
 
