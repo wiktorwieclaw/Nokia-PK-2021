@@ -137,10 +137,23 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleComposeSms)
 TEST_F(ApplicationConnectedTestSuite, shallHandleSendSms)
 {
     const Sms& sms{common::PhoneNumber{113},"example"};
-    EXPECT_CALL(btsPortMock, sendSms(_));
-    EXPECT_CALL(smsDbMock, addMessage(_));
+    EXPECT_CALL(btsPortMock, sendSms(sms));
+    EXPECT_CALL(smsDbMock, addMessage(sms));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendSms(sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
+{
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleSmsDrop();
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
+{
+    EXPECT_CALL(smsDbMock, getNumberOfMessages());
+    EXPECT_CALL(smsDbMock, setMessageState(_, SmsState::Failed));
+    objectUnderTest.handleUnknownRecipient();
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)

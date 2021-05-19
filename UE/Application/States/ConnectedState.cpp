@@ -1,8 +1,8 @@
 #include "ConnectedState.hpp"
 
 #include "NotConnectedState.hpp"
-#include "TalkingState.hpp"
 #include "Sms.hpp"
+#include "TalkingState.hpp"
 
 namespace ue
 {
@@ -25,8 +25,8 @@ void ConnectedState::handleSms(const Sms& sms)
 
 void ConnectedState::handleShowSmsList()
 {
-     const auto& smsMessages = context.smsDb.getAllMessages();
-     context.user.viewSmsList(smsMessages);
+    const auto& smsMessages = context.smsDb.getAllMessages();
+    context.user.viewSmsList(smsMessages);
 }
 
 void ConnectedState::handleShowSms(IUeGui::IListViewMode::Selection indexOfSms)
@@ -77,6 +77,18 @@ void ConnectedState::handleSendSms(const Sms& sms)
     context.smsDb.addMessage(sms);
     context.bts.sendSms(sms);
     context.user.showConnected();
+}
+
+void ConnectedState::handleSmsDrop()
+{
+    context.user.showConnected();
+}
+
+void ConnectedState::handleUnknownRecipient()
+{
+    const auto numberOfMessages = context.smsDb.getNumberOfMessages();
+    const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
+    context.smsDb.setMessageState(index, SmsState::Failed);
 }
 
 }  // namespace ue
