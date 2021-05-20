@@ -22,6 +22,7 @@ public:
     MOCK_METHOD(void, handleStartDial, (), (final));
     MOCK_METHOD(void, handleSendCallRequest, (common::PhoneNumber from, common::PhoneNumber to), (final));
     MOCK_METHOD(void, handleSmsDrop, (), (final));
+    MOCK_METHOD(void, handleSendCallResignation, (common::PhoneNumber correspondent), (final));
 };
 
 class IUserPortMock : public IUserPort
@@ -40,9 +41,10 @@ public:
     MOCK_METHOD(void, showCallRequest, (common::PhoneNumber from), (final));
     MOCK_METHOD(void, showTalking, (), (final));
     MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
-    MOCK_METHOD(void, showDialing, (), (final));
     MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
     MOCK_METHOD(void, showCallEndedByPartner, (), (final));
+    MOCK_METHOD(void, showDialing, (common::PhoneNumber correspondent), (final));
+    MOCK_METHOD(void, alertUser, (std::string_view message), (final));
 };
 
 }  // namespace ue

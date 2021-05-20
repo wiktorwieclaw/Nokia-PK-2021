@@ -31,6 +31,7 @@ public:
     void handleSendSms(const Sms& sms) override;
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleSendCallResignation(common::PhoneNumber correspondent) override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;

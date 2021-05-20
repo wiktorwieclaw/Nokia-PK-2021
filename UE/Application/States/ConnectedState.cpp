@@ -92,7 +92,7 @@ void ConnectedState::handleStartDial()
 }
 void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    context.user.showDialing();
+    context.user.showDialing(to);
     context.bts.sendCallRequest(from, to);
     using namespace std::chrono_literals;
     context.timer.startTimer(60s);
@@ -141,6 +141,13 @@ void ConnectedState::handleUnknownRecipient(common::MessageId failingMessageId)
         logger.logError("Unhandled unknown recipient");
     }
     }
+}
+
+void ConnectedState::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    context.timer.stopTimer();
+    context.bts.sendCallDropped(correspondent);
+    context.user.showConnected();
 }
 
 }  // namespace ue

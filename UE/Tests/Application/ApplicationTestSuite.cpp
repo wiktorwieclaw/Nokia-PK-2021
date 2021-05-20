@@ -253,7 +253,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
     constexpr common::PhoneNumber enteredPhoneNumber{200};
     EXPECT_CALL(btsPortMock, sendCallRequest(PHONE_NUMBER,enteredPhoneNumber));
     EXPECT_CALL(timerPortMock, startTimer(60000ms));
-    EXPECT_CALL(userPortMock, showDialing());
+    EXPECT_CALL(userPortMock, showDialing(enteredPhoneNumber));
     objectUnderTest.handleSendCallRequest(PHONE_NUMBER, enteredPhoneNumber);
 }
 
@@ -263,6 +263,15 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
     EXPECT_CALL(timerPortMock, stopTimer());
     EXPECT_CALL(timerPortMock, startTimer(_)); // from talking state constructor
     objectUnderTest.handleReceiveCallAccept(callingNumber);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallResignation)
+{
+    constexpr common::PhoneNumber correspondent{200};
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(btsPortMock, sendCallDropped(correspondent));
+    EXPECT_CALL(userPortMock, showConnected);
+    objectUnderTest.handleSendCallResignation(correspondent);
 }
 
 
