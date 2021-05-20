@@ -113,5 +113,9 @@ void Application::handleReceiveCallDrop()
 {
     context.state->handleReceiveCallDrop();
 }
+void Application::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    context.state->handleSendCallResignation(correspondent);
+}
 
 }  // namespace ue
