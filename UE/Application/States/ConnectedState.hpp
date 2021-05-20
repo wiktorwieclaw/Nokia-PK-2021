@@ -29,6 +29,7 @@ public:
     void handleSendCallDrop() final;
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleSendCallResignation(common::PhoneNumber correspondent) override;
 
     // ITimerEventsHandler
     void handleTimeout() override;

@@ -89,7 +89,7 @@ void ConnectedState::handleStartDial()
 }
 void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
-    context.user.showDialing();
+    context.user.showDialing(to);
     context.bts.sendCallRequest(from,to);
     using namespace std::chrono_literals;
     context.timer.startTimer(60s);
@@ -112,6 +112,13 @@ void ConnectedState::handleUnknownRecipient()
     const auto numberOfMessages = context.smsDb.getNumberOfMessages();
     const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
     context.smsDb.setMessageState(index, SmsState::Failed);
+}
+
+void ConnectedState::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    context.timer.stopTimer();
+    context.bts.sendCallDropped(correspondent);
+    context.user.showConnected();
 }
 
 }  // namespace ue

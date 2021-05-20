@@ -108,4 +108,9 @@ void BaseState::handleReceiveCallDrop()
     logger.logError("Unexpected: handleCallDropped");
 }
 
+void BaseState::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    logger.logError("Unexpected: handleSendCallResignation");
+}
+
 }  // namespace ue

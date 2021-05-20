@@ -126,11 +126,12 @@ TEST_F(UserPortTestSuite, shallShowEnterPhoneNumber)
 
 TEST_F(UserPortTestSuite, shallShowDialing)
 {
+    constexpr common::PhoneNumber correspondent{200};
     EXPECT_CALL(guiMock, setViewTextMode()).WillOnce(ReturnRef(textModeMock));
-    EXPECT_CALL(textModeMock, setText("Dialling..."));
-    //todo #fail_scenario EXPECT_CALL(guiMock,setAcceptCallback(_));
-    //todo #fail_scenario EXPECT_CALL(guiMock, setRejectCallback(_));
-    objectUnderTest.showDialing();
+    EXPECT_CALL(textModeMock, setText("Dialling... 200"));
+    EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
+    objectUnderTest.showDialing(correspondent);
 }
 
 TEST_F(UserPortTestSuite, shallShowTalking)

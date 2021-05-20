@@ -181,9 +181,21 @@ void UserPort::showEnterPhoneNumber()
     });
 }
 
-void UserPort::showDialing()
+void UserPort::showDialing(common::PhoneNumber correspondent)
 {
-    gui.setViewTextMode().setText("Dialling...");
+    std::stringstream ss;
+    ss << "Dialling... " << std::to_string(correspondent.value);
+    auto& textMode = gui.setViewTextMode();
+    textMode.setText(ss.str());
+
+    gui.setAcceptCallback([]{
+        // in this mode acceptCallBack should have no action
+    });
+
+    gui.setRejectCallback([this,&textMode, &correspondent]{
+       handler->handleSendCallResignation(correspondent);
+       textMode.setText("");
+    });
 }
 
 void UserPort::alertUser(std::string_view message)

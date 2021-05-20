@@ -24,7 +24,7 @@ public:
     void showTalking() override;
     void showNewSmsToEdit() override;
     void showEnterPhoneNumber() override;
-    void showDialing() override;
+    void showDialing(common::PhoneNumber correspondent) override;
     void alertUser(std::string_view message) override;
 
 private:
