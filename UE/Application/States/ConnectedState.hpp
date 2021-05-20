@@ -21,6 +21,7 @@ public:
     void handleUnknownRecipient(common::MessageId failingMessageId) final;
     void handleReceiveCallRequest(common::PhoneNumber from) final;
     void handleReceiveCallAccept(common::PhoneNumber from) final;
+    void handleReceiveCallDrop() final;
 
     // IUserEventsHandler interface
     void handleComposeSms() final;

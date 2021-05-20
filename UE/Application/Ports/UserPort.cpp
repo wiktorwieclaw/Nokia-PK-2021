@@ -68,6 +68,10 @@ void UserPort::showConnected()
             }
         }
     });
+
+    gui.setRejectCallback([] {
+        //this should be empty
+    });
 }
 
 void UserPort::showNewSmsNotification()

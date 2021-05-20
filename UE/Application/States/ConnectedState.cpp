@@ -150,4 +150,10 @@ void ConnectedState::handleSendCallResignation(common::PhoneNumber correspondent
     context.user.showConnected();
 }
 
+void ConnectedState::handleReceiveCallDrop()
+{
+    context.user.showConnected();
+    context.timer.stopTimer();
+}
+
 }  // namespace ue
