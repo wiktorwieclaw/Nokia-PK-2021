@@ -113,5 +113,12 @@ void ConnectedState::handleUnknownRecipient()
     const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
     context.smsDb.setMessageState(index, SmsState::Failed);
 }
+void ConnectedState::handleReceiveCallDrop()
+{
+    //todo #check
+    context.user.showConnected();
+    context.timer.stopTimer();
+
+}
 
 }  // namespace ue

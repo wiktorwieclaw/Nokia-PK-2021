@@ -257,6 +257,14 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
     objectUnderTest.handleReceiveCallAccept(callingNumber);
 }
 
+TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallDrop)
+{
+    //todo #check
+    EXPECT_CALL(timerPortMock,stopTimer());
+    EXPECT_CALL(userPortMock,showConnected());
+    objectUnderTest.handleReceiveCallDrop();
+}
+
 struct TalkingStateTestSuite : ApplicationConnectedTestSuite
 {
     TalkingStateTestSuite();
@@ -291,10 +299,5 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
     objectUnderTest.handleSendCallDrop();
 }
 
-TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
-{
-    EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleReceiveCallDrop();
-}
 
 }  // namespace ue

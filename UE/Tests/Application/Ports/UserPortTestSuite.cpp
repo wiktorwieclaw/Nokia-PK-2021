@@ -60,6 +60,7 @@ TEST_F(UserPortTestSuite, shallShowMenuOnConnected)
     EXPECT_CALL(listViewModeMock, clearSelectionList());
     EXPECT_CALL(listViewModeMock, addSelectionListItem(_, _)).Times(AtLeast(1));
     EXPECT_CALL(guiMock, setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.showConnected();
 }
 
@@ -136,8 +137,8 @@ TEST_F(UserPortTestSuite, shallShowDialing)
 TEST_F(UserPortTestSuite, shallShowTalking)
 {
     EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
-    //todo EXPECT_CALL(guiMock,setAcceptCallback(_));
-    //todo EXPECT_CALL(guiMock, setRejectCallback(_));
+    //todo #drop call scenario EXPECT_CALL(guiMock,setAcceptCallback(_));
+    //todo #drop call scenario EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.showTalking();
 }
 
