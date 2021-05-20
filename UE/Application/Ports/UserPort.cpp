@@ -80,9 +80,11 @@ void UserPort::showNewSmsToEdit()
     auto& mode = gui.setSmsComposeMode();
     gui.setAcceptCallback([this, &mode] {
         auto phoneNum = mode.getPhoneNumber();
-        auto smsText = mode.getSmsText();
-        mode.clearSmsText();
-        handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+        if(phoneNum.isValid()){
+            auto smsText = mode.getSmsText();
+            mode.clearSmsText();
+            handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+        }
     });
 
     gui.setRejectCallback([this, &mode] {
@@ -177,7 +179,9 @@ void UserPort::showEnterPhoneNumber()
     auto& dialView = gui.setDialMode();
     gui.setAcceptCallback([this, &dialView] {
         PhoneNumber enteredNumber{dialView.getPhoneNumber()};
-        handler->handleSendCallRequest(this->phoneNumber, enteredNumber);
+        if(enteredNumber.isValid()){
+            handler->handleSendCallRequest(this->phoneNumber, enteredNumber);
+        }
     });
 
     gui.setRejectCallback([this] {
