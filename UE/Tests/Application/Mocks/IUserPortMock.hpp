@@ -44,7 +44,6 @@ public:
     MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
     MOCK_METHOD(void, showCallEndedByPartner, (), (final));
     MOCK_METHOD(void, showDialing, (common::PhoneNumber correspondent), (final));
-    MOCK_METHOD(void, alertUser, (std::string_view message), (final));
 };
 
 }  // namespace ue
