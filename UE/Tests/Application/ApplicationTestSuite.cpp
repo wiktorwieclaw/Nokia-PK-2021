@@ -259,9 +259,9 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallAccepted)
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallDrop)
 {
+    //todo #check
     EXPECT_CALL(timerPortMock,stopTimer());
     EXPECT_CALL(userPortMock,showConnected());
-    EXPECT_CALL(userPortMock,showPartnerDroppedCall());
     objectUnderTest.handleReceiveCallDrop();
 }
 
@@ -297,13 +297,6 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
     EXPECT_CALL(btsPortMock,sendCallDropped(_));
     EXPECT_CALL(userPortMock,showConnected());
     objectUnderTest.handleSendCallDrop();
-}
-
-TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
-{
-    EXPECT_CALL(userPortMock,showPartnerDroppedCall());
-    EXPECT_CALL(userPortMock,showConnected());
-    objectUnderTest.handleReceiveCallDrop();
 }
 
 

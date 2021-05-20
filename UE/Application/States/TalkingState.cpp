@@ -33,7 +33,6 @@ void TalkingState::handleSendCallDrop()
 void TalkingState::handleReceiveCallDrop()
 {
     context.setState<ConnectedState>();
-    context.user.showPartnerDroppedCall();
 }
 
 }  // namespace ue

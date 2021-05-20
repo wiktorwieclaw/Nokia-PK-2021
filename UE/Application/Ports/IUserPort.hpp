@@ -42,7 +42,6 @@ public:
     virtual void showPartnerNotAvailable() = 0;
     virtual void showEnterPhoneNumber() = 0;
     virtual void showDialing() = 0;
-    virtual void showPartnerDroppedCall() = 0;
 };
 
 }  // namespace ue

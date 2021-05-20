@@ -42,7 +42,6 @@ public:
     MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
     MOCK_METHOD(void, showDialing, (), (final));
     MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
-    MOCK_METHOD(void, showPartnerDroppedCall, (), (final));
 };
 
 }  // namespace ue

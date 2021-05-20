@@ -194,13 +194,4 @@ void UserPort::showPartnerNotAvailable()
     alertMode.setText("Partner not available");
 }
 
-void UserPort::showPartnerDroppedCall()
-{
-    auto& alertMode = gui.setAlertMode();
-    alertMode.setText("Call Ended");
-    gui.setRejectCallback([this] {
-      showConnected();
-    });
-}
-
 }  // namespace ue
