@@ -98,7 +98,7 @@ void BaseState::handleSmsDrop()
     logger.logError("Unexpected: handleSmsDrop");
 }
 
-void BaseState::handleUnknownRecipient()
+void BaseState::handleUnknownRecipient(common::MessageId failingMessageId)
 {
     logger.logError("Unexpected: handleUnknownRecipient");
 }
@@ -106,6 +106,11 @@ void BaseState::handleUnknownRecipient()
 void BaseState::handleReceiveCallDrop()
 {
     logger.logError("Unexpected: handleCallDropped");
+}
+
+void BaseState::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    logger.logError("Unexpected: handleSendCallResignation");
 }
 
 }  // namespace ue

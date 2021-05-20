@@ -18,7 +18,7 @@ public:
     void handleShowSmsList() final;
     void handleShowSms(IUeGui::IListViewMode::Selection) final;
     void handleSmsDrop() final;
-    void handleUnknownRecipient() final;
+    void handleUnknownRecipient(common::MessageId failingMessageId) final;
     void handleReceiveCallRequest(common::PhoneNumber from) final;
     void handleReceiveCallAccept(common::PhoneNumber from) final;
     void handleReceiveCallDrop() final;
@@ -30,6 +30,7 @@ public:
     void handleSendCallDrop() final;
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
+    void handleSendCallResignation(common::PhoneNumber correspondent) override;
 
     // ITimerEventsHandler
     void handleTimeout() override;

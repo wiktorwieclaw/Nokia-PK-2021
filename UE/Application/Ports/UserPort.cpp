@@ -1,11 +1,14 @@
 #include "UserPort.hpp"
 
+#include <chrono>
+#include <thread>
+
 #include "Sms.hpp"
 #include "UeGui/ICallMode.hpp"
+#include "UeGui/IDialMode.hpp"
 #include "UeGui/IListViewMode.hpp"
 #include "UeGui/ISmsComposeMode.hpp"
 #include "UeGui/ITextMode.hpp"
-#include "UeGui/IDialMode.hpp"
 
 namespace ue
 {
@@ -81,9 +84,11 @@ void UserPort::showNewSmsToEdit()
     auto& mode = gui.setSmsComposeMode();
     gui.setAcceptCallback([this, &mode] {
         auto phoneNum = mode.getPhoneNumber();
-        auto smsText = mode.getSmsText();
-        mode.clearSmsText();
-        handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+        if(phoneNum.isValid()){
+            auto smsText = mode.getSmsText();
+            mode.clearSmsText();
+            handler->handleSendSms(Sms{phoneNum, smsText, SmsState::Sent});
+        }
     });
 
     gui.setRejectCallback([this, &mode] {
@@ -119,13 +124,16 @@ std::string makeSmsLabel(const Sms& sms)
     switch (sms.state)
     {
     case SmsState::NotViewed:
-        ss << "[New] [From]: ";
+        ss << "[New][From]: ";
         break;
     case SmsState::Viewed:
         ss << "[From]: ";
         break;
     case SmsState::Sent:
         ss << "[To]: ";
+        break;
+    case SmsState::Failed:
+        ss << "[Failed][To]: ";
         break;
     }
 
@@ -173,25 +181,46 @@ void UserPort::viewSms(const Sms& sms)
 void UserPort::showEnterPhoneNumber()
 {
     auto& dialView = gui.setDialMode();
-    gui.setAcceptCallback([this,&dialView] {
-      PhoneNumber enteredNumber{dialView.getPhoneNumber()};
-      handler->handleSendCallRequest(this->phoneNumber,enteredNumber);
+    gui.setAcceptCallback([this, &dialView] {
+        PhoneNumber enteredNumber{dialView.getPhoneNumber()};
+        if(enteredNumber.isValid()){
+            handler->handleSendCallRequest(this->phoneNumber, enteredNumber);
+        }
     });
 
     gui.setRejectCallback([this] {
-      showConnected();
+        showConnected();
     });
 }
 
-void UserPort::showDialing()
+void UserPort::showDialing(common::PhoneNumber correspondent)
 {
-    gui.setViewTextMode().setText("Dialling...");
+    auto& textMode = gui.setViewTextMode();
+    textMode.setText("Dialling... " + std::to_string(correspondent.value));
+
+    gui.setAcceptCallback([] {
+        // in this mode acceptCallBack should have no action
+    });
+
+    gui.setRejectCallback([this, &textMode, correspondent] {
+        handler->handleSendCallResignation(correspondent);
+        textMode.setText("");
+    });
 }
 
 void UserPort::showPartnerNotAvailable()
 {
-    auto& alertMode = gui.setAlertMode();
-    alertMode.setText("Partner not available");
+    alertUser("Partner not available");
+}
+
+void UserPort::showCallEndedByPartner()
+{
+    alertUser("Call ended by partner");
+}
+
+void UserPort::alertUser(std::string_view message)
+{
+    gui.setAlertMode().setText(message.data());
 }
 
 }  // namespace ue

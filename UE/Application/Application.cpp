@@ -104,14 +104,18 @@ void Application::handleSmsDrop()
     context.state->handleSmsDrop();
 }
 
-void Application::handleUnknownRecipient()
+void Application::handleUnknownRecipient(common::MessageId failingMessageId)
 {
-    context.state->handleUnknownRecipient();
+    context.state->handleUnknownRecipient(failingMessageId);
 }
 
 void Application::handleReceiveCallDrop()
 {
     context.state->handleReceiveCallDrop();
+}
+void Application::handleSendCallResignation(common::PhoneNumber correspondent)
+{
+    context.state->handleSendCallResignation(correspondent);
 }
 
 }  // namespace ue

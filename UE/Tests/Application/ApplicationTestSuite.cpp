@@ -150,11 +150,19 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
     objectUnderTest.handleSmsDrop();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipientSms)
 {
     EXPECT_CALL(smsDbMock, getNumberOfMessages());
     EXPECT_CALL(smsDbMock, setMessageState(_, SmsState::Failed));
-    objectUnderTest.handleUnknownRecipient();
+    objectUnderTest.handleUnknownRecipient(common::MessageId::Sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipientCall)
+{
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable());
+    // EXPECT_CALL(userPortMock, showConnected()); // todo see how to expect call in another thread
+    objectUnderTest.handleUnknownRecipient(common::MessageId::CallRequest);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
@@ -245,7 +253,7 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallRequest)
     constexpr common::PhoneNumber enteredPhoneNumber{200};
     EXPECT_CALL(btsPortMock, sendCallRequest(PHONE_NUMBER, enteredPhoneNumber));
     EXPECT_CALL(timerPortMock, startTimer(60000ms));
-    EXPECT_CALL(userPortMock, showDialing());
+    EXPECT_CALL(userPortMock, showDialing(enteredPhoneNumber));
     objectUnderTest.handleSendCallRequest(PHONE_NUMBER, enteredPhoneNumber);
 }
 
@@ -264,22 +272,13 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleReceiveCallDrop)
     objectUnderTest.handleReceiveCallDrop();
 }
 
-struct TalkingStateTestSuite : ApplicationConnectedTestSuite
+TEST_F(ApplicationConnectedTestSuite, shallHandleSendCallResignation)
 {
-    TalkingStateTestSuite();
-};
-
-TalkingStateTestSuite::TalkingStateTestSuite()
-{
-    doTalking();
-}
-
-TEST_F(TalkingStateTestSuite, ShallHandleUnknownRecipient)
-{
+    constexpr common::PhoneNumber correspondent{200};
     EXPECT_CALL(timerPortMock, stopTimer);
-    EXPECT_CALL(userPortMock, showPartnerNotAvailable);
+    EXPECT_CALL(btsPortMock, sendCallDropped(correspondent));
     EXPECT_CALL(userPortMock, showConnected);
-    objectUnderTest.handleUnknownRecipient();
+    objectUnderTest.handleSendCallResignation(correspondent);
 }
 
 struct ApplicationTalkingTestSuite : ApplicationConnectedTestSuite
@@ -292,11 +291,25 @@ ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
     ApplicationConnectedTestSuite::doTalking();
 }
 
+TEST_F(ApplicationTalkingTestSuite, ShallHandleUnknownRecipient) {
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable());
+    //EXPECT_CALL(userPortMock, showConnected); // todo see how to expect call in another thread
+    objectUnderTest.handleUnknownRecipient(common::MessageId::CallTalk);
+}
+
 TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 {
     EXPECT_CALL(btsPortMock, sendCallDropped(_));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendCallDrop();
+}
+
+TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
+{
+    EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(userPortMock, showCallEndedByPartner());
+    objectUnderTest.handleReceiveCallDrop();
 }
 
 }  // namespace ue

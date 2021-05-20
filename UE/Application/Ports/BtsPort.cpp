@@ -79,8 +79,9 @@ void BtsPort::handleMessage(BinaryMessage msg)
         }
         case common::MessageId::UnknownRecipient:
         {
-             handler->handleUnknownRecipient();
-             break;
+            const auto failingMessageId = reader.readMessageId();
+            handler->handleUnknownRecipient(failingMessageId);
+            break;
         }
         case common::MessageId::CallDropped:
         {

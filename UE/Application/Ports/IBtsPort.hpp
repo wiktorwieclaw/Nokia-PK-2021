@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Messages/BtsId.hpp"
+#include "Messages/MessageId.hpp"
 #include "Messages/PhoneNumber.hpp"
 
 namespace ue
@@ -19,7 +20,7 @@ public:
     virtual void handleSms(const Sms& sms) = 0;
     virtual void handleReceiveCallRequest(common::PhoneNumber from) = 0;
     virtual void handleReceiveCallDrop() = 0;
-    virtual void handleUnknownRecipient() = 0;
+    virtual void handleUnknownRecipient(common::MessageId failingMessageId) = 0;
     virtual void handleReceiveCallAccept(common::PhoneNumber from) = 0;
 };
 
@@ -29,7 +30,7 @@ public:
     virtual ~IBtsPort() = default;
 
     virtual void sendAttachRequest(common::BtsId) = 0;
-    virtual void sendSms(const Sms &sms) = 0;
+    virtual void sendSms(const Sms& sms) = 0;
     virtual void sendCallAccepted(common::PhoneNumber to) = 0;
     virtual void sendCallDropped(common::PhoneNumber to) = 0;
     virtual void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) = 0;

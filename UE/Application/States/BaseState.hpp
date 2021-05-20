@@ -24,6 +24,7 @@ public:
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
     void handleSmsDrop() override;
+    void handleSendCallResignation(common::PhoneNumber correspondent) override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;
@@ -37,7 +38,7 @@ public:
     void handleReceiveCallRequest(common::PhoneNumber from) override;
     void handleReceiveCallAccept(common::PhoneNumber from) override;
     void handleReceiveCallDrop() override;
-    void handleUnknownRecipient() override;
+    void handleUnknownRecipient(common::MessageId failingMessageId) override;
 
 protected:
     Context& context;
