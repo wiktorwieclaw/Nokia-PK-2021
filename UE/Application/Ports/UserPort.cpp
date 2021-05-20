@@ -1,3 +1,5 @@
+#include <chrono>
+#include <thread>
 #include "UserPort.hpp"
 
 #include "Sms.hpp"
@@ -187,10 +189,12 @@ void UserPort::showDialing()
     gui.setViewTextMode().setText("Dialling...");
 }
 
-void UserPort::showPartnerNotAvailable()
+void UserPort::alertUser(std::string_view message)
 {
     auto& alertMode = gui.setAlertMode();
-    alertMode.setText("Partner not available");
+    using namespace std::chrono_literals;
+    std::this_thread::sleep_for(2s);
+    alertMode.setText(message.data());
 }
 
 }  // namespace ue

@@ -1,8 +1,7 @@
-#include "TalkingState.hpp"
-#include "ConnectedState.hpp"
-
+#include <chrono>
 #include <thread>
 
+#include "TalkingState.hpp"
 #include "ConnectedState.hpp"
 
 using namespace std::chrono_literals;
@@ -19,8 +18,7 @@ TalkingState::TalkingState(Context& context, PhoneNumber callingNumber)
 void TalkingState::handleUnknownRecipient()
 {
     context.timer.stopTimer();
-    context.user.showPartnerNotAvailable();
-    std::this_thread::sleep_for(2s);
+    context.user.alertUser("Partner not available");
     context.setState<ConnectedState>();
 }
 
@@ -32,6 +30,7 @@ void TalkingState::handleSendCallDrop()
 
 void TalkingState::handleReceiveCallDrop()
 {
+    context.user.alertUser("Call ended by partner");
     context.setState<ConnectedState>();
 }
 

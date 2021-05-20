@@ -41,7 +41,7 @@ public:
     MOCK_METHOD(void, showTalking, (), (final));
     MOCK_METHOD(void, showEnterPhoneNumber, (), (final));
     MOCK_METHOD(void, showDialing, (), (final));
-    MOCK_METHOD(void, showPartnerNotAvailable, (), (final));
+    MOCK_METHOD(void, alertUser, (std::string_view message), (final));
 };
 
 }  // namespace ue
