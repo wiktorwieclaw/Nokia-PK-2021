@@ -98,7 +98,7 @@ void BaseState::handleSmsDrop()
     logger.logError("Unexpected: handleSmsDrop");
 }
 
-void BaseState::handleUnknownRecipient()
+void BaseState::handleUnknownRecipient(common::MessageId failingMessageId)
 {
     logger.logError("Unexpected: handleUnknownRecipient");
 }

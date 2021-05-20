@@ -18,7 +18,7 @@ public:
     void handleShowSmsList() final;
     void handleShowSms(IUeGui::IListViewMode::Selection) final;
     void handleSmsDrop() final;
-    void handleUnknownRecipient() final;
+    void handleUnknownRecipient(common::MessageId failingMessageId) final;
     void handleReceiveCallRequest(common::PhoneNumber from) final;
     void handleReceiveCallAccept(common::PhoneNumber from) final;
 

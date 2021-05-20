@@ -204,12 +204,19 @@ void UserPort::showDialing(common::PhoneNumber correspondent)
     });
 }
 
+void UserPort::showPartnerNotAvailable()
+{
+    alertUser("Partner not available");
+}
+
+void UserPort::showCallEndedByPartner()
+{
+    alertUser("Call ended by partner");
+}
+
 void UserPort::alertUser(std::string_view message)
 {
-    auto& alertMode = gui.setAlertMode();
-    using namespace std::chrono_literals;
-    std::this_thread::sleep_for(2s);
-    alertMode.setText(message.data());
+    gui.setAlertMode().setText(message.data());
 }
 
 }  // namespace ue

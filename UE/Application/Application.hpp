@@ -44,7 +44,7 @@ public:
     void handleSms(const Sms& sms) override;
     void handleReceiveCallRequest(common::PhoneNumber from) override;
     void handleReceiveCallAccept(common::PhoneNumber from) override;
-    void handleUnknownRecipient() override;
+    void handleUnknownRecipient(common::MessageId failingMessageId) override;
     void handleReceiveCallDrop() override;
 
 

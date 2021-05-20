@@ -104,9 +104,9 @@ void Application::handleSmsDrop()
     context.state->handleSmsDrop();
 }
 
-void Application::handleUnknownRecipient()
+void Application::handleUnknownRecipient(common::MessageId failingMessageId)
 {
-    context.state->handleUnknownRecipient();
+    context.state->handleUnknownRecipient(failingMessageId);
 }
 
 void Application::handleReceiveCallDrop()
