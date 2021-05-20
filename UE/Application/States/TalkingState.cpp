@@ -1,7 +1,8 @@
+#include "TalkingState.hpp"
+
 #include <chrono>
 #include <thread>
 
-#include "TalkingState.hpp"
 #include "ConnectedState.hpp"
 
 using namespace std::chrono_literals;
@@ -9,7 +10,8 @@ using namespace std::chrono_literals;
 namespace ue
 {
 TalkingState::TalkingState(Context& context, PhoneNumber callingNumber)
-    : BaseState(context, "TalkingState"), callingNumber{callingNumber}
+    : BaseState(context, "TalkingState"),
+      callingNumber{callingNumber}
 {
     // time not given in specification
     context.timer.startTimer(30s);
@@ -19,10 +21,16 @@ void TalkingState::handleUnknownRecipient(common::MessageId failingMessageId)
 {
     using common::MessageId;
 
-    if (failingMessageId == MessageId::CallTalk) {
+    if (failingMessageId == MessageId::CallTalk)
+    {
         context.timer.stopTimer();
         context.user.showPartnerNotAvailable();
-        context.setState<ConnectedState>();
+
+        std::thread([this] {
+            std::this_thread::sleep_for(2s);
+            context.setState<ConnectedState>();
+        }).detach();
+
         return;
     }
 
