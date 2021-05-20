@@ -26,6 +26,7 @@ public:
     void showEnterPhoneNumber() override;
     void showDialing() override;
     void showPartnerNotAvailable() override;
+    void showPartnerDroppedCall() override;
 
 private:
     common::PrefixedLogger logger;
