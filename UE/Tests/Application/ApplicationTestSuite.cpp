@@ -150,11 +150,19 @@ TEST_F(ApplicationConnectedTestSuite, shallHandleSmsDrop)
     objectUnderTest.handleSmsDrop();
 }
 
-TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipient)
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipientSms)
 {
     EXPECT_CALL(smsDbMock, getNumberOfMessages());
     EXPECT_CALL(smsDbMock, setMessageState(_, SmsState::Failed));
-    objectUnderTest.handleUnknownRecipient();
+    objectUnderTest.handleUnknownRecipient(common::MessageId::Sms);
+}
+
+TEST_F(ApplicationConnectedTestSuite, shallHandleUnknowedRecipientCall)
+{
+    EXPECT_CALL(timerPortMock, stopTimer());
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable());
+    // EXPECT_CALL(userPortMock, showConnected()); // todo see how to expect call in another thread
+    objectUnderTest.handleUnknownRecipient(common::MessageId::CallRequest);
 }
 
 TEST_F(ApplicationConnectedTestSuite, shallHandleShowSmsList)
@@ -270,9 +278,9 @@ ApplicationTalkingTestSuite::ApplicationTalkingTestSuite()
 
 TEST_F(ApplicationTalkingTestSuite, ShallHandleUnknownRecipient) {
     EXPECT_CALL(timerPortMock, stopTimer);
-    EXPECT_CALL(userPortMock, alertUser(std::string_view{"Partner not available"}));
+    EXPECT_CALL(userPortMock, showPartnerNotAvailable());
     EXPECT_CALL(userPortMock, showConnected);
-    objectUnderTest.handleUnknownRecipient();
+    objectUnderTest.handleUnknownRecipient(common::MessageId::CallTalk);
 }
 
 TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
@@ -285,7 +293,7 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
 {
     EXPECT_CALL(userPortMock,showConnected());
-    EXPECT_CALL(userPortMock, alertUser(std::string_view{"Call ended by partner"}));
+    EXPECT_CALL(userPortMock, showCallEndedByPartner());
     objectUnderTest.handleReceiveCallDrop();
 }
 

@@ -4,6 +4,9 @@
 #include "Sms.hpp"
 #include "TalkingState.hpp"
 
+#include <thread>
+#include <chrono>
+
 namespace ue
 {
 ConnectedState::ConnectedState(Context& context)
@@ -90,7 +93,7 @@ void ConnectedState::handleStartDial()
 void ConnectedState::handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
 {
     context.user.showDialing();
-    context.bts.sendCallRequest(from,to);
+    context.bts.sendCallRequest(from, to);
     using namespace std::chrono_literals;
     context.timer.startTimer(60s);
 }
@@ -107,11 +110,37 @@ void ConnectedState::handleSmsDrop()
     context.user.showConnected();
 }
 
-void ConnectedState::handleUnknownRecipient()
+void ConnectedState::handleUnknownRecipient(common::MessageId failingMessageId)
 {
-    const auto numberOfMessages = context.smsDb.getNumberOfMessages();
-    const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
-    context.smsDb.setMessageState(index, SmsState::Failed);
+    using namespace std::chrono_literals;
+    using common::MessageId;
+
+    switch (failingMessageId)
+    {
+    case MessageId::CallRequest:
+    {
+        context.timer.stopTimer();
+        context.user.showPartnerNotAvailable();
+
+        std::thread([this] {
+          std::this_thread::sleep_for(2s);
+          context.user.showConnected();
+        }).detach();
+
+        break;
+    }
+    case MessageId::Sms:
+    {
+        const auto numberOfMessages = context.smsDb.getNumberOfMessages();
+        const auto index = gsl::narrow_cast<gsl::index>(numberOfMessages) - 1;
+        context.smsDb.setMessageState(index, SmsState::Failed);
+        break;
+    }
+    default:
+    {
+        logger.logError("Unhandled unknown recipient");
+    }
+    }
 }
 
 }  // namespace ue

@@ -25,9 +25,12 @@ public:
     void showNewSmsToEdit() override;
     void showEnterPhoneNumber() override;
     void showDialing() override;
-    void alertUser(std::string_view message) override;
+    void showPartnerNotAvailable() override;
+    void showCallEndedByPartner() override;
 
 private:
+    void alertUser(std::string_view message);
+
     common::PrefixedLogger logger;
     IUeGui& gui;
     common::PhoneNumber phoneNumber;

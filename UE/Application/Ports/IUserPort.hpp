@@ -39,9 +39,10 @@ public:
     virtual void showCallRequest(common::PhoneNumber from) = 0;
     virtual void showTalking() = 0;
     virtual void showNewSmsToEdit() = 0;
-    virtual void alertUser(std::string_view message) = 0;
+    virtual void showPartnerNotAvailable() = 0;
     virtual void showEnterPhoneNumber() = 0;
     virtual void showDialing() = 0;
+    virtual void showCallEndedByPartner() = 0;
 };
 
 }  // namespace ue

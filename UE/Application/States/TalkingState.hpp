@@ -14,7 +14,7 @@ public:
 
     // IBtsEventsHandler interface
     void handleReceiveCallDrop() override;
-    void handleUnknownRecipient() override;
+    void handleUnknownRecipient(common::MessageId failingMessageId) override;
 
 private:
     common::PhoneNumber callingNumber;

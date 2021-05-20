@@ -15,11 +15,18 @@ TalkingState::TalkingState(Context& context, PhoneNumber callingNumber)
     context.timer.startTimer(30s);
 }
 
-void TalkingState::handleUnknownRecipient()
+void TalkingState::handleUnknownRecipient(common::MessageId failingMessageId)
 {
-    context.timer.stopTimer();
-    context.user.alertUser("Partner not available");
-    context.setState<ConnectedState>();
+    using common::MessageId;
+
+    if (failingMessageId == MessageId::CallTalk) {
+        context.timer.stopTimer();
+        context.user.showPartnerNotAvailable();
+        context.setState<ConnectedState>();
+        return;
+    }
+
+    logger.logError("Unknown failing message ID");
 }
 
 void TalkingState::handleSendCallDrop()
@@ -30,7 +37,7 @@ void TalkingState::handleSendCallDrop()
 
 void TalkingState::handleReceiveCallDrop()
 {
-    context.user.alertUser("Call ended by partner");
+    context.user.showCallEndedByPartner();
     context.setState<ConnectedState>();
 }
 
