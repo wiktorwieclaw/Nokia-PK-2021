@@ -203,8 +203,8 @@ void UserPort::showDialing(common::PhoneNumber correspondent)
     });
 
     gui.setRejectCallback([this, &textMode, correspondent] {
-        handler->handleSendCallResignation(correspondent);
         textMode.setText("");
+        handler->handleSendCallResignation(correspondent);
     });
 }
 
