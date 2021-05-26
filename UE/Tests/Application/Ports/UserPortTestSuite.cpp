@@ -138,8 +138,8 @@ TEST_F(UserPortTestSuite, shallShowDialing)
 TEST_F(UserPortTestSuite, shallShowTalking)
 {
     EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
-    //todo #drop call scenario EXPECT_CALL(guiMock,setAcceptCallback(_));
-    //todo #drop call scenario EXPECT_CALL(guiMock, setRejectCallback(_));
+    EXPECT_CALL(guiMock,setAcceptCallback(_));
+    EXPECT_CALL(guiMock, setRejectCallback(_));
     objectUnderTest.showTalking();
 }
 
