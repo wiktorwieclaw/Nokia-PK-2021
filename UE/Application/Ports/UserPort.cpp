@@ -118,7 +118,7 @@ void UserPort::showTalking()
     gui.setAcceptCallback([this, &callMode]{
         auto callMessageText = callMode.getOutgoingText();
         callMode.appendIncomingText("[Outgoing]: " + callMessageText);
-        handler->handleCallTalk(callMessageText);
+        handler->handleSendCallTalk(callMessageText);
     });
 
     gui.setRejectCallback([this]{

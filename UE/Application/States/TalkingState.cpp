@@ -49,7 +49,7 @@ void TalkingState::handleReceiveCallDrop()
     context.setState<ConnectedState>();
 }
 
-void TalkingState::handleCallTalk(std::string_view message)
+void TalkingState::handleSendCallTalk(const std::string& message)
 {
     context.timer.stopTimer();
     context.timer.startTimer(120s);

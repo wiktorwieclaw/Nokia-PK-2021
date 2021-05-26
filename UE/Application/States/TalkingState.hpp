@@ -11,7 +11,7 @@ public:
 
     // IUserEventsHandler interface
     void handleSendCallDrop() override;
-    void handleCallTalk(std::string_view message) override;
+    void handleSendCallTalk(const std::string& message) override;
 
     // IBtsEventsHandler interface
     void handleReceiveCallDrop() override;
