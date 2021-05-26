@@ -32,6 +32,7 @@ public:
     void handleStartDial() override;
     void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) override;
     void handleSendCallResignation(common::PhoneNumber correspondent) override;
+    void handleCallTalk(std::string_view message) override;
 
     // ITimerEventsHandler interface
     void handleTimeout() override;

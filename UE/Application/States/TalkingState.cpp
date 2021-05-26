@@ -13,8 +13,8 @@ TalkingState::TalkingState(Context& context, PhoneNumber callingNumber)
     : BaseState(context, "TalkingState"),
       callingNumber{callingNumber}
 {
-    // time not given in specification
-    context.timer.startTimer(30s);
+    // max time with no activity
+    context.timer.startTimer(120s);
 }
 
 void TalkingState::handleUnknownRecipient(common::MessageId failingMessageId)
@@ -47,6 +47,13 @@ void TalkingState::handleReceiveCallDrop()
 {
     context.user.showCallEndedByPartner();
     context.setState<ConnectedState>();
+}
+
+void TalkingState::handleCallTalk(std::string_view message)
+{
+    context.timer.stopTimer();
+    context.timer.startTimer(120s);
+    context.bts.sendCallTalkMessage(message, callingNumber);
 }
 
 }  // namespace ue

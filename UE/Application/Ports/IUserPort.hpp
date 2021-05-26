@@ -24,6 +24,7 @@ public:
     virtual void handleSendCallRequest(common::PhoneNumber from, common::PhoneNumber to) = 0;
     virtual void handleSmsDrop() = 0;
     virtual void handleSendCallResignation(common::PhoneNumber correspondent) = 0;
+    virtual void handleCallTalk(std::string_view message) = 0;
 };
 
 class IUserPort
