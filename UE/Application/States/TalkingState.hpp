@@ -18,6 +18,9 @@ public:
     void handleUnknownRecipient(common::MessageId failingMessageId) override;
     void handleReceiveCallMessage(const std::string& text) override;
 
+    // ITimerPort interface
+    void handleTimeout() override;
+
 private:
     common::PhoneNumber callingNumber;
 };

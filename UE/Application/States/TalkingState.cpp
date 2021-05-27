@@ -62,4 +62,10 @@ void TalkingState::handleReceiveCallMessage(const std::string& text)
     context.user.showReceivedCallMessage(text);
 }
 
+void TalkingState::handleTimeout()
+{
+    context.bts.sendCallDropped(callingNumber);
+    context.setState<ConnectedState>();
+}
+
 }  // namespace ue
