@@ -45,6 +45,7 @@ public:
     virtual void showEnterPhoneNumber() = 0;
     virtual void showCallEndedByPartner() = 0;
     virtual void showDialing(common::PhoneNumber correspondent) = 0;
+    virtual void showReceivedCallMessage(const std::string& text) = 0;
 };
 
 }  // namespace ue

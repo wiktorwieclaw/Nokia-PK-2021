@@ -143,4 +143,13 @@ TEST_F(UserPortTestSuite, shallShowTalking)
     objectUnderTest.showTalking();
 }
 
+TEST_F(UserPortTestSuite, shallShowReceivedCallMessage)
+{
+    const std::string& testIncommingMessage = "test";
+    EXPECT_CALL(guiMock, setCallMode()).WillOnce(ReturnRef(callModeMock));
+    EXPECT_CALL(callModeMock, appendIncomingText("[Incoming]: " + testIncommingMessage));
+    objectUnderTest.showReceivedCallMessage(testIncommingMessage);
+}
+
+
 }  // namespace ue

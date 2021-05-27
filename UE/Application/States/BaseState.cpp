@@ -117,5 +117,9 @@ void BaseState::handleSendCallTalk(const std::string& message)
 {
     logger.logError("Unexpected: handleSendCallTalk", message);
 }
+void BaseState::handleReceiveCallMessage(const std::string& text)
+{
+    logger.logError("Unexpected: handleReceiveCallMessage", text);
+}
 
 }  // namespace ue

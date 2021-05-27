@@ -232,4 +232,10 @@ void UserPort::alertUser(std::string_view message)
     gui.setAlertMode().setText(message.data());
 }
 
+void UserPort::showReceivedCallMessage(const std::string& text)
+{
+    auto& callMode = gui.setCallMode();
+    callMode.appendIncomingText("[Incoming]: " + text);
+}
+
 }  // namespace ue

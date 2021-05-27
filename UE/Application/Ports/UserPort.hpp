@@ -27,6 +27,7 @@ public:
     void showDialing(common::PhoneNumber correspondent) override;
     void showPartnerNotAvailable() override;
     void showCallEndedByPartner() override;
+    void showReceivedCallMessage(const std::string& text) override;
 
 private:
     void alertUser(std::string_view message);
