@@ -17,6 +17,9 @@ public:
     void handleReceiveCallDrop() override;
     void handleUnknownRecipient(common::MessageId failingMessageId) override;
 
+    // ITimerPort interface
+    void handleTimeout() override;
+
 private:
     common::PhoneNumber callingNumber;
 };

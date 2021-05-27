@@ -321,4 +321,11 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallTalk)
     objectUnderTest.handleSendCallTalk(message);
 }
 
+TEST_F(ApplicationTalkingTestSuite, shallTimeoutAfterSendingMessage)
+{
+    EXPECT_CALL(btsPortMock, sendCallDropped(_));
+    EXPECT_CALL(userPortMock, showConnected());
+    objectUnderTest.handleTimeout();
+}
+
 }  // namespace ue

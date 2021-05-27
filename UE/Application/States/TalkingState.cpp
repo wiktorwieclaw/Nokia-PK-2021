@@ -56,4 +56,10 @@ void TalkingState::handleSendCallTalk(const std::string& message)
     context.bts.sendCallTalkMessage(message, callingNumber);
 }
 
+void TalkingState::handleTimeout()
+{
+    context.bts.sendCallDropped(callingNumber);
+    context.setState<ConnectedState>();
+}
+
 }  // namespace ue
