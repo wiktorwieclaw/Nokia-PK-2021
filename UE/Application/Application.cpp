@@ -118,4 +118,9 @@ void Application::handleSendCallResignation(common::PhoneNumber correspondent)
     context.state->handleSendCallResignation(correspondent);
 }
 
+void Application::handleSendCallTalk(const std::string& message)
+{
+    context.state->handleSendCallTalk(message);
+}
+
 }  // namespace ue

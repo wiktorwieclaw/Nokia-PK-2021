@@ -114,7 +114,16 @@ void UserPort::showCallRequest(common::PhoneNumber from)
 void UserPort::showTalking()
 {
     auto& callMode = gui.setCallMode();
-    // todo
+
+    gui.setAcceptCallback([this, &callMode]{
+        auto callMessageText = callMode.getOutgoingText();
+        callMode.appendIncomingText("[Outgoing]: " + callMessageText);
+        handler->handleSendCallTalk(callMessageText);
+    });
+
+    gui.setRejectCallback([this]{
+        handler->handleSendCallDrop();
+    });
 }
 
 std::string makeSmsLabel(const Sms& sms)

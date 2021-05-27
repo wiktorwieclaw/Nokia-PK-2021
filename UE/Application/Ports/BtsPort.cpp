@@ -142,4 +142,14 @@ void BtsPort::sendCallRequest(common::PhoneNumber from, common::PhoneNumber to)
     transport.sendMessage(msg.getMessage());
 }
 
+void BtsPort::sendCallTalkMessage(const std::string& message, common::PhoneNumber to)
+{
+    logger.logDebug("sendCallTalkMessage to: ", to);
+    common::OutgoingMessage msg{common::MessageId::CallTalk,
+                                phoneNumber,
+                                to};
+    msg.writeText(message);
+    transport.sendMessage(msg.getMessage());
+}
+
 }  // namespace ue

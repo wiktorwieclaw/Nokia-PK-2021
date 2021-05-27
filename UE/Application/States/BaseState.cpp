@@ -113,4 +113,9 @@ void BaseState::handleSendCallResignation(common::PhoneNumber correspondent)
     logger.logError("Unexpected: handleSendCallResignation");
 }
 
+void BaseState::handleSendCallTalk(const std::string& message)
+{
+    logger.logError("Unexpected: handleSendCallTalk", message);
+}
+
 }  // namespace ue

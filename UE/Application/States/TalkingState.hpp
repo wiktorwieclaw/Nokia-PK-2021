@@ -11,10 +11,14 @@ public:
 
     // IUserEventsHandler interface
     void handleSendCallDrop() override;
+    void handleSendCallTalk(const std::string& message) override;
 
     // IBtsEventsHandler interface
     void handleReceiveCallDrop() override;
     void handleUnknownRecipient(common::MessageId failingMessageId) override;
+
+    // ITimerPort interface
+    void handleTimeout() override;
 
 private:
     common::PhoneNumber callingNumber;

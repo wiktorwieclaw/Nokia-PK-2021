@@ -37,6 +37,7 @@ public:
     MOCK_METHOD(void, sendCallDropped, (common::PhoneNumber to), (final));
     MOCK_METHOD(void, sendSms, (const Sms&), (final));
     MOCK_METHOD(void, sendCallRequest, (common::PhoneNumber from, common::PhoneNumber to), (final));
+    MOCK_METHOD(void, sendCallTalkMessage, (const std::string& message, common::PhoneNumber to), (final));
 };
 
 }  // namespace ue

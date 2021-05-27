@@ -34,6 +34,7 @@ public:
     virtual void sendCallAccepted(common::PhoneNumber to) = 0;
     virtual void sendCallDropped(common::PhoneNumber to) = 0;
     virtual void sendCallRequest(common::PhoneNumber from, common::PhoneNumber to) = 0;
+    virtual void sendCallTalkMessage(const std::string& message, common::PhoneNumber to) = 0;
 };
 
 }  // namespace ue
