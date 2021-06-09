@@ -328,4 +328,14 @@ TEST_F(ApplicationTalkingTestSuite, shallTimeoutAfterSendingMessage)
     objectUnderTest.handleTimeout();
 }
 
+
+TEST_F(ApplicationTalkingTestSuite, handleReceiveCallMessage)
+{
+    const auto message = std::string{"message"};
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(timerPortMock, startTimer(_));
+    EXPECT_CALL(userPortMock, showReceivedCallMessage(message));
+    objectUnderTest.handleReceiveCallMessage(message);
+}
+
 }  // namespace ue

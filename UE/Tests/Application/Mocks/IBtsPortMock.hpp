@@ -23,6 +23,7 @@ public:
     MOCK_METHOD(void, handleReceiveCallDrop, (), (final));
     MOCK_METHOD(void, handleUnknownRecipient, (common::MessageId failingMessageId), (final));
     MOCK_METHOD(void, handleReceiveCallAccept, (common::PhoneNumber from), (final));
+    MOCK_METHOD(void, handleReceiveCallMessage, (const std::string& text), (final));
 
 };
 

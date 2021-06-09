@@ -55,6 +55,12 @@ void TalkingState::handleSendCallTalk(const std::string& message)
     context.timer.startTimer(120s);
     context.bts.sendCallTalkMessage(message, callingNumber);
 }
+void TalkingState::handleReceiveCallMessage(const std::string& text)
+{
+    context.timer.stopTimer();
+    context.timer.startTimer(120s);
+    context.user.showReceivedCallMessage(text);
+}
 
 void TalkingState::handleTimeout()
 {
