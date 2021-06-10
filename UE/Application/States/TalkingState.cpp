@@ -40,12 +40,14 @@ void TalkingState::handleUnknownRecipient(common::MessageId failingMessageId)
 void TalkingState::handleSendCallDrop()
 {
     context.bts.sendCallDropped(callingNumber);
+    context.timer.stopTimer();
     context.setState<ConnectedState>();
 }
 
 void TalkingState::handleReceiveCallDrop()
 {
     context.user.showCallEndedByPartner();
+    context.timer.stopTimer();
     context.setState<ConnectedState>();
 }
 
