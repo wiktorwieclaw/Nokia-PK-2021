@@ -192,7 +192,7 @@ void UserPort::showEnterPhoneNumber()
     auto& dialView = gui.setDialMode();
     gui.setAcceptCallback([this, &dialView] {
         PhoneNumber enteredNumber{dialView.getPhoneNumber()};
-        if(enteredNumber.isValid()){
+        if(enteredNumber.isValid() && enteredNumber.value != phoneNumber.value){
             handler->handleSendCallRequest(this->phoneNumber, enteredNumber);
         }
     });

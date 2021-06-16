@@ -28,7 +28,7 @@ void TimerPort::startTimer(Duration duration)
     constexpr auto interval = 100ms;
     running = true;
 
-    std::thread{[this, interval, numCycles = duration / interval] {
+    future = std::async([this, interval, numCycles = duration / interval] {
         for (auto i = decltype(numCycles){0}; i < numCycles; ++i)
         {
             std::this_thread::sleep_for(interval);
@@ -40,13 +40,14 @@ void TimerPort::startTimer(Duration duration)
         }
 
         handler->handleTimeout();
-    }}.detach();
+        running = false;
+    });
 }
 
 void TimerPort::stopTimer()
 {
-    logger.logDebug("Stop timer");
     running = false;
+    future.get();
 }
 
 }  // namespace ue
