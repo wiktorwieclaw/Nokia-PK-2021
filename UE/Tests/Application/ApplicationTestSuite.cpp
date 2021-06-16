@@ -301,6 +301,7 @@ TEST_F(ApplicationTalkingTestSuite, ShallHandleUnknownRecipient) {
 TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 {
     EXPECT_CALL(btsPortMock, sendCallDropped(_));
+    EXPECT_CALL(timerPortMock, stopTimer);
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleSendCallDrop();
 }
@@ -308,6 +309,7 @@ TEST_F(ApplicationTalkingTestSuite, shallHandleSendCallDrop)
 TEST_F(ApplicationTalkingTestSuite, shallHandleReceiveCallDrop)
 {
     EXPECT_CALL(userPortMock,showConnected());
+    EXPECT_CALL(timerPortMock, stopTimer);
     EXPECT_CALL(userPortMock, showCallEndedByPartner());
     objectUnderTest.handleReceiveCallDrop();
 }
@@ -326,6 +328,16 @@ TEST_F(ApplicationTalkingTestSuite, shallTimeoutAfterSendingMessage)
     EXPECT_CALL(btsPortMock, sendCallDropped(_));
     EXPECT_CALL(userPortMock, showConnected());
     objectUnderTest.handleTimeout();
+}
+
+
+TEST_F(ApplicationTalkingTestSuite, handleReceiveCallMessage)
+{
+    const auto message = std::string{"message"};
+    EXPECT_CALL(timerPortMock, stopTimer);
+    EXPECT_CALL(timerPortMock, startTimer(_));
+    EXPECT_CALL(userPortMock, showReceivedCallMessage(message));
+    objectUnderTest.handleReceiveCallMessage(message);
 }
 
 }  // namespace ue

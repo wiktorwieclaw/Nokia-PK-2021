@@ -40,6 +40,7 @@ public:
     void handleReceiveCallAccept(common::PhoneNumber from) override;
     void handleReceiveCallDrop() override;
     void handleUnknownRecipient(common::MessageId failingMessageId) override;
+    void handleReceiveCallMessage(const std::string& text) override;
 
 protected:
     Context& context;

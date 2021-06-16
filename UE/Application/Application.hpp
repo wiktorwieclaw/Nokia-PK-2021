@@ -47,6 +47,7 @@ public:
     void handleReceiveCallAccept(common::PhoneNumber from) override;
     void handleUnknownRecipient(common::MessageId failingMessageId) override;
     void handleReceiveCallDrop() override;
+    void handleReceiveCallMessage(const std::string& text) override;
 
 
 private:

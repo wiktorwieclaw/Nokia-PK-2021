@@ -117,8 +117,12 @@ void UserPort::showTalking()
 
     gui.setAcceptCallback([this, &callMode]{
         auto callMessageText = callMode.getOutgoingText();
-        callMode.appendIncomingText("[Outgoing]: " + callMessageText);
-        handler->handleSendCallTalk(callMessageText);
+        if(not callMessageText.empty())
+        {
+            callMode.appendIncomingText("[Outgoing]: " + callMessageText);
+            handler->handleSendCallTalk(callMessageText);
+            callMode.clearOutgoingText();
+        }
     });
 
     gui.setRejectCallback([this]{
@@ -230,6 +234,12 @@ void UserPort::showCallEndedByPartner()
 void UserPort::alertUser(std::string_view message)
 {
     gui.setAlertMode().setText(message.data());
+}
+
+void UserPort::showReceivedCallMessage(const std::string& text)
+{
+    auto& callMode = gui.setCallMode();
+    callMode.appendIncomingText("[Incoming]: " + text);
 }
 
 }  // namespace ue
