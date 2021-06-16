@@ -138,7 +138,7 @@ void ConnectedState::handleUnknownRecipient(common::MessageId failingMessageId)
     }
     default:
     {
-        logger.logError("Unhandled unknown recipient");
+        logger.logError("Unhandled unknown recipient - messageID: "+to_string(failingMessageId));
     }
     }
 }
