@@ -1,5 +1,8 @@
 #pragma once
 
+#include <future>
+#include <thread>
+
 #include "ITimerPort.hpp"
 #include "Logger/PrefixedLogger.hpp"
 
@@ -21,6 +24,7 @@ private:
     common::PrefixedLogger logger;
     ITimerEventsHandler* handler = nullptr;
     bool running = false;
+    std::future<void> future;
 };
 
 }  // namespace ue

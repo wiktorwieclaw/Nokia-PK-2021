@@ -1,11 +1,11 @@
 #include "ConnectedState.hpp"
 
+#include <chrono>
+#include <thread>
+
 #include "NotConnectedState.hpp"
 #include "Sms.hpp"
 #include "TalkingState.hpp"
-
-#include <thread>
-#include <chrono>
 
 namespace ue
 {
@@ -54,23 +54,46 @@ void ConnectedState::handleReceiveCallRequest(common::PhoneNumber from)
 
 void ConnectedState::handleSendCallAccept()
 {
-    context.bts.sendCallAccepted(callingNumber.value());
-    context.user.showTalking();
-    context.timer.stopTimer();
-    context.setState<TalkingState>(callingNumber.value());
+    try
+    {
+        context.bts.sendCallAccepted(callingNumber.value());
+        context.user.showTalking();
+        context.timer.stopTimer();
+        context.setState<TalkingState>(callingNumber.value());
+    }
+    catch (std::exception& e)
+    {
+        logger.logError(std::string{"ConnectedState::handleSendCallAccept(): "} + e.what());
+    }
 }
 
 void ConnectedState::handleSendCallDrop()
 {
     context.timer.stopTimer();
-    context.bts.sendCallDropped(callingNumber.value());
+
+    try
+    {
+        context.bts.sendCallDropped(callingNumber.value());
+    }
+    catch (std::exception& e)
+    {
+        logger.logError(std::string{"ConnectedState::handleSendCallDrop(): "} + e.what());
+    }
+
     callingNumber.reset();
     context.user.showConnected();
 }
 
 void ConnectedState::handleTimeout()
 {
-    context.bts.sendCallDropped(callingNumber.value());
+    try
+    {
+        context.bts.sendCallDropped(callingNumber.value());
+    }
+    catch (std::exception& e)
+    {
+        logger.logError(std::string{"ConnectedState::handleTimeout(): "} + e.what());
+    }
     callingNumber.reset();
     context.user.showConnected();
 }
@@ -102,7 +125,14 @@ void ConnectedState::handleReceiveCallAccept(common::PhoneNumber from)
     callingNumber = from;
     context.user.showTalking();
     context.timer.stopTimer();
-    context.setState<TalkingState>(callingNumber.value());
+    try
+    {
+        context.setState<TalkingState>(callingNumber.value());
+    }
+    catch (std::exception& e)
+    {
+        logger.logError(std::string{"ConnectedState::handleReceiveCallAccept(): "} + e.what());
+    }
 }
 
 void ConnectedState::handleSmsDrop()
@@ -123,8 +153,8 @@ void ConnectedState::handleUnknownRecipient(common::MessageId failingMessageId)
         context.user.showPartnerNotAvailable();
 
         std::thread([this] {
-          std::this_thread::sleep_for(2s);
-          context.user.showConnected();
+            std::this_thread::sleep_for(2s);
+            context.user.showConnected();
         }).detach();
 
         break;
@@ -138,7 +168,7 @@ void ConnectedState::handleUnknownRecipient(common::MessageId failingMessageId)
     }
     default:
     {
-        logger.logError("Unhandled unknown recipient");
+        logger.logError("Unhandled unknown recipient - messageID: "+to_string(failingMessageId));
     }
     }
 }
